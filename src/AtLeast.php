@@ -18,7 +18,7 @@ final class AtLeast
      * @param mixed[]        $data
      * @param callable(mixed $datum): bool $callable
      */
-    public static function atLeastOnce(array $data, callable $callable): bool
+    public static function once(array $data, callable $callable): bool
     {
         return self::hasFoundTimes($data, $callable, self::ONCE);
     }
@@ -27,7 +27,7 @@ final class AtLeast
      * @param mixed[]        $data
      * @param callable(mixed $datum): bool $callable
      */
-    public static function atLeastTwice(array $data, callable $callable): bool
+    public static function twice(array $data, callable $callable): bool
     {
         return self::hasFoundTimes($data, $callable, self::TWICE);
     }
@@ -36,7 +36,7 @@ final class AtLeast
      * @param mixed[]        $data
      * @param callable(mixed $datum): bool $callable
      */
-    public static function atLeastTimes(array $data, callable $callable, int $count): bool
+    public static function times(array $data, callable $callable, int $count): bool
     {
         return self::hasFoundTimes($data, $callable, $count);
     }

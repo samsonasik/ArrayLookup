@@ -10,17 +10,17 @@ use PHPUnit\Framework\TestCase;
 final class AtLeastTest extends TestCase
 {
     /**
-     * @dataProvider atLeastOnceDataProvider
+     * @dataProvider onceDataProvider
      */
-    public function testAtLeastOnce(array $data, callable $callable, bool $expected): void
+    public function testOnce(array $data, callable $callable, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            AtLeast::atLeastOnce($data, $callable)
+            AtLeast::once($data, $callable)
         );
     }
 
-    public function atLeastOnceDataProvider(): array
+    public function onceDataProvider(): array
     {
         return [
             [
@@ -37,17 +37,17 @@ final class AtLeastTest extends TestCase
     }
 
     /**
-     * @dataProvider atLeastTwiceDataProvider
+     * @dataProvider twiceDataProvider
      */
-    public function testAtLeastTwice(array $data, callable $callable, bool $expected): void
+    public function testTwice(array $data, callable $callable, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            AtLeast::atLeastTwice($data, $callable)
+            AtLeast::twice($data, $callable)
         );
     }
 
-    public function atLeastTwiceDataProvider(): array
+    public function twiceDataProvider(): array
     {
         return [
             [
@@ -64,17 +64,17 @@ final class AtLeastTest extends TestCase
     }
 
     /**
-     * @dataProvider atLeastTimesDataProvider
+     * @dataProvider timesDataProvider
      */
-    public function testAtLeastTime(array $data, callable $callable, bool $expected): void
+    public function testTimes(array $data, callable $callable, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            AtLeast::atLeastTimes($data, $callable, 3)
+            AtLeast::times($data, $callable, 3)
         );
     }
 
-    public function atLeastTimesDataProvider(): array
+    public function timesDataProvider(): array
     {
         return [
             [

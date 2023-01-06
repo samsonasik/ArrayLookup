@@ -4,33 +4,34 @@ declare(strict_types=1);
 
 namespace ArrayLookup\Tests;
 
+use ArrayLookup\AtLeast;
 use ArrayLookup;
 use PHPUnit\Framework\TestCase;
 
-class AtLeastTest extends TestCase
+final class AtLeastTest extends TestCase
 {
     /**
      * @dataProvider atLeastOnceDataProvider
      */
-    public function testAtLeastOnce($data, $callable, $expected): void
+    public function testAtLeastOnce(array $data, callable $callable, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            ArrayLookup\AtLeast::atLeastOnce($data, $callable)
+            AtLeast::atLeastOnce($data, $callable)
         );
     }
 
-    public function atLeastOnceDataProvider()
+    public function atLeastOnceDataProvider(): array
     {
         return [
             [
                 [1, 2, 3],
-                fn ($datum) => $datum === 1,
+                static fn($datum): bool => $datum === 1,
                 true,
             ],
             [
                 [1, 2, 3],
-                fn ($datum) => $datum === 4,
+                static fn($datum): bool => $datum === 4,
                 false,
             ],
         ];
@@ -39,25 +40,25 @@ class AtLeastTest extends TestCase
     /**
      * @dataProvider atLeastOnceDataProvider
      */
-    public function testAtLeastTwice($data, $callable, $expected): void
+    public function testAtLeastTwice(array $data, callable $callable, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            ArrayLookup\AtLeast::atLeastTwice($data, $callable)
+            AtLeast::atLeastTwice($data, $callable)
         );
     }
 
-    public function atLeastTwiceDataProvider()
+    public function atLeastTwiceDataProvider(): array
     {
         return [
             [
                 [1, "1", 2],
-                fn ($datum) => $datum == 1,
+                static fn($datum): bool => $datum == 1,
                 true,
             ],
             [
                 [1, "1", 3],
-                fn ($datum) => $datum === 1,
+                static fn($datum): bool => $datum === 1,
                 false,
             ],
         ];
@@ -66,25 +67,25 @@ class AtLeastTest extends TestCase
     /**
      * @dataProvider atLeastTimesDataProvider
      */
-    public function testAtLeastTime($data, $callable, $expected): void
+    public function testAtLeastTime(array $data, callable $callable, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            ArrayLookup\AtLeast::atLeastTimes($data, $callable, 3)
+            AtLeast::atLeastTimes($data, $callable, 3)
         );
     }
 
-    public function atLeastTimesDataProvider()
+    public function atLeastTimesDataProvider(): array
     {
         return [
             [
                 [0, false, null],
-                fn ($datum) => ! $datum,
+                static fn($datum): bool => ! $datum,
                 true,
             ],
             [
                 [1, false, null],
-                fn ($datum) => ! $datum,
+                static fn($datum): bool => ! $datum,
                 false,
             ],
         ];

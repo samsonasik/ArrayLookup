@@ -63,6 +63,7 @@ final class AtLeastTest extends TestCase
             ],
         ];
     }
+
     // phpcs:enable
 
     /**

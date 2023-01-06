@@ -21,6 +21,7 @@ final class OnlyTest extends TestCase
         );
     }
 
+    // phpcs:disable
     public function onceDataProvider(): array
     {
         return [
@@ -36,6 +37,8 @@ final class OnlyTest extends TestCase
             ],
         ];
     }
+
+    // phpcs:enable
 
     /**
      * @dataProvider twiceDataProvider
@@ -64,6 +67,7 @@ final class OnlyTest extends TestCase
             ],
         ];
     }
+
     // phpcs:enable
 
     /**

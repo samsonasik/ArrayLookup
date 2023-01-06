@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ArrayLookup\Tests;
 
 use ArrayLookup;
@@ -24,13 +26,13 @@ class AtLeastTest extends TestCase
             [
                 [1, 2, 3],
                 fn ($datum) => $datum === 1,
-                true
+                true,
             ],
             [
                 [1, 2, 3],
                 fn ($datum) => $datum === 4,
-                false
-            ]
+                false,
+            ],
         ];
     }
 
@@ -51,13 +53,13 @@ class AtLeastTest extends TestCase
             [
                 [1, "1", 2],
                 fn ($datum) => $datum == 1,
-                true
+                true,
             ],
             [
                 [1, "1", 3],
                 fn ($datum) => $datum === 1,
-                false
-            ]
+                false,
+            ],
         ];
     }
 
@@ -78,13 +80,13 @@ class AtLeastTest extends TestCase
             [
                 [0, false, null],
                 fn ($datum) => ! $datum,
-                true
+                true,
             ],
             [
                 [1, false, null],
                 fn ($datum) => ! $datum,
-                false
-            ]
+                false,
+            ],
         ];
     }
 }

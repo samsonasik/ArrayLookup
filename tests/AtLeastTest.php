@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ArrayLookup\Tests;
 
 use ArrayLookup\AtLeast;
-use ArrayLookup;
 use PHPUnit\Framework\TestCase;
 
 final class AtLeastTest extends TestCase

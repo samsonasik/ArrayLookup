@@ -30,5 +30,38 @@ composer require samsonasik/array-utils
 Usage
 -----
 
+1. `AtLeast::once()`
+
+It verify that data has filtered found item at least once.
+
+```php
+$data = [1, 2, 3];
+$callable = static fn($datum): bool => $datum === 1;
+
+var_dump(\ArrayLookup\AtLeast::once($data, $callable)) // true
+```
+
+2. `AtLeast::twice()`
+
+It verify that data has filtered found item at least twice.
+
+```php
+$data = [1, "1", 3];
+$callable = static fn($datum): bool => $datum == 1;
+
+var_dump(\ArrayLookup\AtLeast::twice($data, $callable)) // true
+```
+
+3. `AtLeast::times()`
+
+It verify that data has filtered found item at least times passed in 3rd arg.
+
+```php
+$data = [false, null, 0];
+$callable = static fn($datum): bool => ! $datum;
+$times = 3;
+
+var_dump(\ArrayLookup\AtLeast::times($data, $callable, $times)) // true
+```
 
 

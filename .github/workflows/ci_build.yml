@@ -35,21 +35,12 @@ jobs:
           composer rector
       - name: "Run test suite"
         run: "composer test"
-#      - if: matrix.php-versions == '8.1'
-#        name: Run mutation test
-#        env:
-#          INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
-#          STRYKER_DASHBOARD_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
-#        run: |
-#          composer require --dev infection/infection
-#          vendor/bin/infection
-#      - if: matrix.php-versions == '8.1'
-#        name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v1
-#        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
-#          file: ./build/logs/clover.xml
-#          flags: tests
-#          name: codecov-umbrella
-#          yml: ./codecov.yml
-#          fail_ci_if_error: true
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./build/logs/clover.xml
+          flags: tests
+          name: codecov-umbrella
+          yml: ./codecov.yml
+          fail_ci_if_error: true

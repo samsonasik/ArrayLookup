@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace ArrayLookup;
 
 use Webmozart\Assert\Assert;
-final class Atleast
+
+final class AtLeast
 {
     /** @var int */
     private const ONCE = 1;

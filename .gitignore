@@ -5,3 +5,4 @@
 /.php_cs.cache
 /.vscode/
 /build/logs/*
+/.phpunit.result.cache

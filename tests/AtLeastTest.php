@@ -33,4 +33,31 @@ class AtLeastTest extends TestCase
             ]
         ];
     }
+
+        /**
+     * @dataProvider atLeastOnceDataProvider
+     */
+    public function testAtLeastTwice($data, $callable, $expected): void
+    {
+        $this->assertSame(
+            $expected,
+            ArrayLookup\AtLeast::atLeastTwice($data, $callable)
+        );
+    }
+
+    public function atLeastTwiceDataProvider()
+    {
+        return [
+            [
+                [1, "1", 2],
+                fn ($datum) => $datum == 1,
+                true
+            ],
+            [
+                [1, "1", 3],
+                fn ($datum) => $datum === 1,
+                false
+            ]
+        ];
+    }
 }

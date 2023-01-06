@@ -21,7 +21,7 @@ Features
 Installation
 ------------
 
-** Require this library uses [composer](https://getcomposer.org/). **
+**Require this library uses [composer](https://getcomposer.org/).**
 
 ```sh
 composer require samsonasik/array-utils

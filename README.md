@@ -24,7 +24,7 @@ Installation
 **Require this library uses [composer](https://getcomposer.org/).**
 
 ```sh
-composer require samsonasik/array-utils
+composer require samsonasik/array-lookup
 ```
 
 Usage

@@ -47,6 +47,7 @@ final class AtLeastTest extends TestCase
         );
     }
 
+    // phpcs:disable
     public function twiceDataProvider(): array
     {
         return [
@@ -62,6 +63,7 @@ final class AtLeastTest extends TestCase
             ],
         ];
     }
+    // phpcs:enable
 
     /**
      * @dataProvider timesDataProvider

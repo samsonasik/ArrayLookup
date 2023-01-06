@@ -15,8 +15,8 @@ ArrayLookup is a fast array lookup library.
 Features
 --------
 
-- [x] Search at least data, `once()`, `twice()`, `times()`
-
+- [x] Search at least times: `once()`, `twice()`, `times()`
+- [x] Search exact times: `once()`, `twice()`, `times()`
 
 Installation
 ------------
@@ -29,6 +29,9 @@ composer require samsonasik/array-utils
 
 Usage
 -----
+
+**A. AtLeast**
+---------------
 
 1. `AtLeast::once()`
 
@@ -64,4 +67,57 @@ $times = 3;
 var_dump(\ArrayLookup\AtLeast::times($data, $callable, $times)) // true
 ```
 
+**B. Only**
+---------------
 
+1. `Only::once()`
+
+It verify that data has filtered found item exactly found only once.
+
+```php
+$data = [1, 2, 3];
+$callable = static fn($datum): bool => $datum === 1;
+
+var_dump(\ArrayLookup\Only::once($data, $callable)) // true
+
+
+$data = [1, "1", 3]
+$callable = static fn($datum): bool => $datum == 1;
+
+var_dump(\ArrayLookup\Only::once($data, $callable)) // false
+```
+
+2. `Only::twice()`
+
+It verify that data has filtered found item exactly found only once.
+
+```php
+$data = [1, "1", 3];
+$callable = static fn($datum): bool => $datum == 1;
+
+var_dump(\ArrayLookup\Only::twice($data, $callable)) // true
+
+$data = [true, 1, new stdClass()];
+$callable = static fn($datum): bool => (bool) $datum;
+
+var_dump(\ArrayLookup\Only::twice($data, $callable)) // false
+```
+
+3. `Only::times()`
+
+It verify that data has filtered found item exactly found only same with times passed in 3rd arg.
+
+```php
+$data = [false, null, 1];
+$callable = static fn($datum): bool => ! $datum;
+$times = 2;
+
+var_dump(\ArrayLookup\Only::times($data, $callable, $times)) // true
+
+
+$data = [false, null, 0];
+$callable = static fn($datum): bool => ! $datum;
+$times = 2;
+
+var_dump(\ArrayLookup\Only::times($data, $callable, $times)) // false
+```

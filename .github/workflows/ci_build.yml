@@ -1,0 +1,55 @@
+name: "ci build"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    name: PHP ${{ matrix.php-versions }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['7.4', '8.0', '8.1']
+    steps:
+      - name: Setup PHP Action
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: intl
+          php-version: "${{ matrix.php-versions }}"
+          coverage: xdebug
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: "Validate composer.json and composer.lock"
+        run: "composer validate"
+      - name: "Install dependencies"
+        run: "composer install"
+      - name: "CS Check"
+        run: "composer cs-check"
+      - name: "Code analyze"
+        run: |
+          composer phpstan
+          composer rector
+      - name: "Run test suite"
+        run: "composer test"
+#      - if: matrix.php-versions == '8.1'
+#        name: Run mutation test
+#        env:
+#          INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
+#          STRYKER_DASHBOARD_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
+#        run: |
+#          composer require --dev infection/infection
+#          vendor/bin/infection
+#      - if: matrix.php-versions == '8.1'
+#        name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v1
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
+#          file: ./build/logs/clover.xml
+#          flags: tests
+#          name: codecov-umbrella
+#          yml: ./codecov.yml
+#          fail_ci_if_error: true

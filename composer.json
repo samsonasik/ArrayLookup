@@ -1,0 +1,53 @@
+{
+    "name": "samsonasik/array-lookup",
+    "type": "library",
+    "description": " A fast array lookup library ",
+    "keywords": [
+        "array",
+        "search",
+        "filter",
+        "fast"
+    ],
+    "homepage": "https://github.com/samsonasik/ArrayLookup",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Abdul Malik Ikhsan",
+            "email": "samsonasik@gmail.com",
+            "homepage": "http://samsonasik.wordpress.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "laminas/laminas-coding-standard": "^2.4",
+        "phpstan/phpstan": "^1.9",
+        "phpunit/phpunit": "^9.5",
+        "rector/rector": "dev-main"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "ArrayLookup\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ArrayLookup\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "phpstan": "phpstan analyse src/ --level=max -c phpstan.neon"
+    }
+}

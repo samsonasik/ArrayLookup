@@ -7,6 +7,7 @@ namespace ArrayLookup\Tests;
 use ArrayLookup\Finder;
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function sleep;
 
@@ -49,5 +50,6 @@ final class FinderTest extends TestCase
 
         $data = [$dateTime1, $dateTime2];
         $this->assertSame($dateTime2, Finder::last($data, static fn ($datum): bool => $datum instanceof DateTime));
+        $this->assertNull(Finder::last($data, static fn ($datum): bool => $datum instanceof stdClass));
     }
 }

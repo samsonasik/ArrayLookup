@@ -137,7 +137,7 @@ $callable = static fn($datum): bool => $datum === 1;
 var_dump(\ArrayLookup\Finder::first($data, $callable)) // 1
 
 $callable = static fn($datum): bool => $datum == 1000;
-var_dump(\ArrayLookup\Only::once($data, $callable)) // null
+var_dump(\ArrayLookup\Finder::first($data, $callable)) // null
 ```
 
 2. `Finder::last()`
@@ -152,12 +152,12 @@ sleep(1);
 $dateTime2 = new DateTime('now');
 
 $data = [$dateTime1, $dateTime2];
-var_dump(Finder::last(
+var_dump(\ArrayLookup\Finder::last(
     $data,
     static fn ($datum): bool => $datum instanceof DateTime
 )); // DateTime with same value of $dateTime2
 
-var_dump(Finder::last(
+var_dump(\ArrayLookup\Finder::last(
     $data,
     static fn ($datum): bool => $datum instanceof stdClass
 )); // null

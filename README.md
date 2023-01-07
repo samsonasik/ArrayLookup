@@ -34,7 +34,7 @@ Usage
 **A. AtLeast**
 ---------------
 
-1. `AtLeast::once()`
+*1. `AtLeast::once()`*
 
 It verify that data has filtered found item at least once.
 
@@ -50,7 +50,7 @@ $callable = static fn($datum): bool => $datum === 4;
 var_dump(\ArrayLookup\AtLeast::once($data, $callable)) // false
 ```
 
-2. `AtLeast::twice()`
+*2. `AtLeast::twice()`*
 
 It verify that data has filtered found item at least twice.
 
@@ -66,7 +66,7 @@ $callable = static fn($datum): bool => $datum === 1;
 var_dump(\ArrayLookup\AtLeast::twice($data, $callable)) // false
 ```
 
-3. `AtLeast::times()`
+*3. `AtLeast::times()`*
 
 It verify that data has filtered found item at least times passed in 3rd arg.
 
@@ -87,7 +87,7 @@ var_dump(\ArrayLookup\AtLeast::times($data, $callable, $times)) // false
 **B. Only**
 ---------------
 
-1. `Only::once()`
+*1. `Only::once()`*
 
 It verify that data has filtered found item exactly found only once.
 
@@ -104,7 +104,7 @@ $callable = static fn($datum): bool => $datum == 1;
 var_dump(\ArrayLookup\Only::once($data, $callable)) // false
 ```
 
-2. `Only::twice()`
+*2. `Only::twice()`*
 
 It verify that data has filtered found item exactly found only once.
 
@@ -120,7 +120,7 @@ $callable = static fn($datum): bool => (bool) $datum;
 var_dump(\ArrayLookup\Only::twice($data, $callable)) // false
 ```
 
-3. `Only::times()`
+*3. `Only::times()`*
 
 It verify that data has filtered found item exactly found only same with times passed in 3rd arg.
 
@@ -142,7 +142,7 @@ var_dump(\ArrayLookup\Only::times($data, $callable, $times)) // false
 **3. Finder**
 ---------------
 
-1. `Finder::first()`
+*1. `Finder::first()`*
 
 It search first data filtered found.
 
@@ -156,7 +156,7 @@ $callable = static fn($datum): bool => $datum == 1000;
 var_dump(\ArrayLookup\Finder::first($data, $callable)) // null
 ```
 
-2. `Finder::last()`
+*2. `Finder::last()`*
 
 It search first data filtered found.
 

@@ -6,7 +6,7 @@ namespace ArrayLookup;
 
 use Webmozart\Assert\Assert;
 
-use function rsort;
+use function array_reverse;
 
 final class Finder
 {
@@ -35,7 +35,7 @@ final class Finder
     private static function locateFirst(array $data, callable $callable, bool $flip = false): mixed
     {
         if ($flip) {
-            array_reverse($data);
+            $data = array_reverse($data);
         }
 
         foreach ($data as $datum) {

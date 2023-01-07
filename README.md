@@ -156,4 +156,9 @@ var_dump(Finder::last(
     $data,
     static fn ($datum): bool => $datum instanceof DateTime
 )); // DateTime with same value of $dateTime2
+
+var_dump(Finder::last(
+    $data,
+    static fn ($datum): bool => $datum instanceof stdClass
+)); // null
 ```

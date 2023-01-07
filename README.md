@@ -15,8 +15,9 @@ ArrayLookup is a fast array lookup library.
 Features
 --------
 
-- [x] Search at least times: `once()`, `twice()`, `times()`
-- [x] Search exact times: `once()`, `twice()`, `times()`
+- [x] Verify at least times: `once()`, `twice()`, `times()`
+- [x] Verify exact times: `once()`, `twice()`, `times()`
+- [x] Search data: `first()`, `last()`
 
 Installation
 ------------
@@ -120,4 +121,36 @@ $callable = static fn($datum): bool => ! $datum;
 $times = 2;
 
 var_dump(\ArrayLookup\Only::times($data, $callable, $times)) // false
+```
+
+**3. Finder**
+---------------
+
+1. `Finder::first()`
+
+It search first data filtered found.
+
+```php
+$data = [1, 2, 3];
+$callable = static fn($datum): bool => $datum === 1;
+
+var_dump(\ArrayLookup\Finder::first($data, $callable)) // 1
+
+$callable = static fn($datum): bool => $datum == 1000;
+var_dump(\ArrayLookup\Only::once($data, $callable)) // null
+```
+
+2. `Finder::last()`
+
+It search first data filtered found.
+
+```php
+$dateTime1 = new DateTime('now');
+
+sleep(1);
+
+$dateTime2 = new DateTime('now');
+
+$data = [$dateTime1, $dateTime2];
+var_dump(Finder::last($data, static fn ($datum): bool => $datum instanceof DateTime)); // DateTime with same value of $dateTime2
 ```

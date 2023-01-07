@@ -35,8 +35,7 @@ final class Finder
     private static function locateFirst(array $data, callable $callable, bool $flip = false): mixed
     {
         if ($flip) {
-            // todo: update to ensure correct loop back, see https://3v4l.org/sWVpS
-            rsort($data);
+            array_reverse($data);
         }
 
         foreach ($data as $datum) {

@@ -145,20 +145,14 @@ var_dump(\ArrayLookup\Finder::first($data, $callable)) // null
 It search first data filtered found.
 
 ```php
-$dateTime1 = new DateTime('now');
-
-sleep(1);
-
-$dateTime2 = new DateTime('now');
-
-$data = [$dateTime1, $dateTime2];
+$data = [6, 7, 8, 9];
 var_dump(\ArrayLookup\Finder::last(
     $data,
-    static fn ($datum): bool => $datum instanceof DateTime
-)); // DateTime with same value of $dateTime2
+    static fn ($datum): bool => $datum > 5
+)); // 9
 
 var_dump(\ArrayLookup\Finder::last(
     $data,
-    static fn ($datum): bool => $datum instanceof stdClass
+    static fn ($datum): bool => $datum < 5
 )); // null
 ```

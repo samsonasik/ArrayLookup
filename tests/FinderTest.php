@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace ArrayLookup\Tests;
 
 use ArrayLookup\Finder;
-use DateTime;
 use PHPUnit\Framework\TestCase;
-use stdClass;
-
-use function sleep;
 
 final class FinderTest extends TestCase
 {
@@ -40,16 +36,30 @@ final class FinderTest extends TestCase
         ];
     }
 
-    public function testLast(): void
+    /**
+     * @dataProvider lastDataProvider
+     */
+    public function testLast(array $data, callable $callable, mixed $expected): void
     {
-        $dateTime1 = new DateTime('now');
+        $this->assertSame(
+            $expected,
+            Finder::last($data, $callable)
+        );
+    }
 
-        sleep(1);
-
-        $dateTime2 = new DateTime('now');
-
-        $data = [$dateTime1, $dateTime2];
-        $this->assertSame($dateTime2, Finder::last($data, static fn ($datum): bool => $datum instanceof DateTime));
-        $this->assertNull(Finder::last($data, static fn ($datum): bool => $datum instanceof stdClass));
+    public function lastDataProvider(): array
+    {
+        return [
+            [
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum > 5,
+                9,
+            ],
+            [
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum < 5,
+                null,
+            ],
+        ];
     }
 }

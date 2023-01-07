@@ -52,7 +52,7 @@ var_dump(\ArrayLookup\AtLeast::once($data, $callable)) // false
 
 *2. `AtLeast::twice()`*
 
-It verify that data has filtered found item at least twice.
+It verify that data has filtered found items at least twice.
 
 ```php
 $data = [1, "1", 3];
@@ -68,7 +68,7 @@ var_dump(\ArrayLookup\AtLeast::twice($data, $callable)) // false
 
 *3. `AtLeast::times()`*
 
-It verify that data has filtered found item at least times passed in 3rd arg.
+It verify that data has filtered found items at least times passed in 3rd arg.
 
 ```php
 $data = [false, null, 0];
@@ -106,7 +106,7 @@ var_dump(\ArrayLookup\Only::once($data, $callable)) // false
 
 *2. `Only::twice()`*
 
-It verify that data has filtered found item exactly found only once.
+It verify that data has filtered found items exactly found only once.
 
 ```php
 $data = [1, "1", 3];
@@ -122,7 +122,7 @@ var_dump(\ArrayLookup\Only::twice($data, $callable)) // false
 
 *3. `Only::times()`*
 
-It verify that data has filtered found item exactly found only same with times passed in 3rd arg.
+It verify that data has filtered found items exactly found only same with times passed in 3rd arg.
 
 ```php
 $data = [false, null, 1];

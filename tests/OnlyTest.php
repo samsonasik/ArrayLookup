@@ -77,7 +77,7 @@ final class OnlyTest extends TestCase
     {
         $this->assertSame(
             $expected,
-            Only::times($data, $callable, 2)
+            Only::times($data, $callable, 3)
         );
     }
 
@@ -85,13 +85,13 @@ final class OnlyTest extends TestCase
     {
         return [
             [
-                [1, false, null],
-                static fn($datum): bool => ! $datum,
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum > 6,
                 true,
             ],
             [
-                [0, false, null],
-                static fn($datum): bool => ! $datum,
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum > 7,
                 false,
             ],
         ];

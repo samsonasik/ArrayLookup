@@ -43,6 +43,11 @@ $data = [1, 2, 3];
 $callable = static fn($datum): bool => $datum === 1;
 
 var_dump(\ArrayLookup\AtLeast::once($data, $callable)) // true
+
+$data = [1, 2, 3];
+$callable = static fn($datum): bool => $datum === 4;
+
+var_dump(\ArrayLookup\AtLeast::once($data, $callable)) // false
 ```
 
 2. `AtLeast::twice()`
@@ -54,6 +59,11 @@ $data = [1, "1", 3];
 $callable = static fn($datum): bool => $datum == 1;
 
 var_dump(\ArrayLookup\AtLeast::twice($data, $callable)) // true
+
+$data = [1, "1", 3];
+$callable = static fn($datum): bool => $datum === 1;
+
+var_dump(\ArrayLookup\AtLeast::twice($data, $callable)) // false
 ```
 
 3. `AtLeast::times()`
@@ -66,6 +76,12 @@ $callable = static fn($datum): bool => ! $datum;
 $times = 3;
 
 var_dump(\ArrayLookup\AtLeast::times($data, $callable, $times)) // true
+
+$data = [1, null, 0];
+$callable = static fn($datum): bool => ! $datum;
+$times = 3;
+
+var_dump(\ArrayLookup\AtLeast::times($data, $callable, $times)) // false
 ```
 
 **B. Only**

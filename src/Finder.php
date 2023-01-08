@@ -54,7 +54,7 @@ final class Finder
         // go to end of array
         end($data);
 
-        // key null means no longer current data
+        // key = null means no longer current data
         while (key($data) !== null) {
             $current = current($data);
             $isFound = $filter($current);

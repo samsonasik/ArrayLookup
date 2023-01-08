@@ -9,37 +9,37 @@ use Webmozart\Assert\Assert;
 final class AtLeast
 {
     /**
-     * @param mixed[]        $data
+     * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
-    public static function once(array $data, callable $filter): bool
+    public static function once(iterable $data, callable $filter): bool
     {
         return self::hasFoundTimes($data, $filter, 1);
     }
 
     /**
-     * @param mixed[]        $data
+     * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
-    public static function twice(array $data, callable $filter): bool
+    public static function twice(iterable $data, callable $filter): bool
     {
         return self::hasFoundTimes($data, $filter, 2);
     }
 
     /**
-     * @param mixed[]        $data
+     * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
-    public static function times(array $data, callable $filter, int $count): bool
+    public static function times(iterable $data, callable $filter, int $count): bool
     {
         return self::hasFoundTimes($data, $filter, $count);
     }
 
     /**
-     * @param mixed[]        $data
+     * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
-    private static function hasFoundTimes(array $data, callable $filter, int $maxCount): bool
+    private static function hasFoundTimes(iterable $data, callable $filter, int $maxCount): bool
     {
         // usage must be higher than 0
         Assert::greaterThan($maxCount, 0);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ArrayLookup\Tests;
 
 use ArrayLookup\Finder;
+use ArrayObject;
 use PHPUnit\Framework\TestCase;
 
 final class FinderTest extends TestCase
@@ -12,7 +13,7 @@ final class FinderTest extends TestCase
     /**
      * @dataProvider firstDataProvider
      */
-    public function testFirst(array $data, callable $filter, mixed $expected): void
+    public function testFirst(iterable $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
             $expected,
@@ -33,13 +34,23 @@ final class FinderTest extends TestCase
                 static fn($datum): bool => $datum === 1000,
                 null,
             ],
+            [
+                new ArrayObject([1, 2, 3]),
+                static fn($datum): bool => $datum === 2,
+                2,
+            ],
+            [
+                new ArrayObject([1, "1", 3]),
+                static fn($datum): bool => $datum === 1000,
+                null,
+            ],
         ];
     }
 
     /**
      * @dataProvider lastDataProvider
      */
-    public function testLast(array $data, callable $filter, mixed $expected): void
+    public function testLast(iterable $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
             $expected,
@@ -57,6 +68,16 @@ final class FinderTest extends TestCase
             ],
             [
                 [6, 7, 8, 9],
+                static fn($datum): bool => $datum < 5,
+                null,
+            ],
+            [
+                new ArrayObject([6, 7, 8, 9]),
+                static fn($datum): bool => $datum > 5,
+                9,
+            ],
+            [
+                new ArrayObject([6, 7, 8, 9]),
                 static fn($datum): bool => $datum < 5,
                 null,
             ],

@@ -158,7 +158,7 @@ var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
 
 *2. `Finder::last()`*
 
-It search first data filtered found.
+It search last data filtered found.
 
 ```php
 $data = [6, 7, 8, 9];

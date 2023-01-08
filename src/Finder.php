@@ -36,14 +36,14 @@ final class Finder
      */
     private static function locateFirst(iterable $data, callable $filter, bool $isReverse = false): mixed
     {
-        // convert to array if $data is Traversable
-        if ($data instanceof Traversable) {
-            $data = iterator_to_array($data);
-        }
-
-        Assert::isArray($data);
-
         if ($isReverse) {
+            // convert to array if $data is Traversable
+            if ($data instanceof Traversable) {
+                $data = iterator_to_array($data);
+            }
+
+            Assert::isArray($data);
+
             /** @var mixed[] $data */
             $data = array_reverse($data);
         }

@@ -8,19 +8,13 @@ use Webmozart\Assert\Assert;
 
 final class AtLeast
 {
-    /** @var int */
-    private const ONCE = 1;
-
-    /** @var int */
-    private const TWICE = 2;
-
     /**
      * @param mixed[]        $data
      * @param callable(mixed $datum): bool $callable
      */
     public static function once(array $data, callable $callable): bool
     {
-        return self::hasFoundTimes($data, $callable, self::ONCE);
+        return self::hasFoundTimes($data, $callable, 1);
     }
 
     /**
@@ -29,7 +23,7 @@ final class AtLeast
      */
     public static function twice(array $data, callable $callable): bool
     {
-        return self::hasFoundTimes($data, $callable, self::TWICE);
+        return self::hasFoundTimes($data, $callable, 2);
     }
 
     /**

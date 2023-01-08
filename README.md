@@ -106,7 +106,7 @@ var_dump(\ArrayLookup\Only::once($data, $callable)) // false
 
 *2. `Only::twice()`*
 
-It verify that data has filtered found items exactly found only once.
+It verify that data has filtered found items exactly found only twice.
 
 ```php
 $data = [1, "1", 3];

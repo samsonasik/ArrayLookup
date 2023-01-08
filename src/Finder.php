@@ -7,8 +7,11 @@ namespace ArrayLookup;
 use Traversable;
 use Webmozart\Assert\Assert;
 
-use function array_reverse;
+use function current;
+use function end;
 use function iterator_to_array;
+use function key;
+use function prev;
 
 final class Finder
 {
@@ -18,36 +21,6 @@ final class Finder
      */
     public static function first(iterable $data, callable $filter): mixed
     {
-        return self::locateFirst($data, $filter);
-    }
-
-    /**
-     * @param mixed[]|iterable        $data
-     * @param callable(mixed $datum): bool $filter
-     */
-    public static function last(iterable $data, callable $filter): mixed
-    {
-        return self::locateFirst($data, $filter, true);
-    }
-
-    /**
-     * @param mixed[]|iterable        $data
-     * @param callable(mixed $datum): bool $filter
-     */
-    private static function locateFirst(iterable $data, callable $filter, bool $isReverse = false): mixed
-    {
-        if ($isReverse) {
-            // convert to array if $data is Traversable
-            if ($data instanceof Traversable) {
-                $data = iterator_to_array($data);
-            }
-
-            Assert::isArray($data);
-
-            /** @var mixed[] $data */
-            $data = array_reverse($data);
-        }
-
         foreach ($data as $datum) {
             $isFound = $filter($datum);
 
@@ -59,6 +32,43 @@ final class Finder
             }
 
             return $datum;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param mixed[]|iterable        $data
+     * @param callable(mixed $datum): bool $filter
+     */
+    public static function last(iterable $data, callable $filter): mixed
+    {
+        if ($data instanceof Traversable) {
+            $data = iterator_to_array($data);
+        }
+
+        // ensure data is array for end(), key(), current(), prev() usage
+        Assert::isArray($data);
+
+        // go to end of array
+        end($data);
+
+        // key null means no longer current data
+        while (key($data) !== null) {
+            $current = current($data);
+            $isFound = $filter($current);
+
+            // returns of callable must be bool
+            Assert::boolean($isFound);
+
+            if (! $isFound) {
+                // go to previous row
+                prev($data);
+
+                continue;
+            }
+
+            return $current;
         }
 
         return null;

@@ -43,6 +43,7 @@ final class Finder
      */
     public static function last(iterable $data, callable $filter): mixed
     {
+        // convert to array when data is Traversable instance
         if ($data instanceof Traversable) {
             $data = iterator_to_array($data);
         }

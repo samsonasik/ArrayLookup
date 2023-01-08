@@ -1,12 +1,15 @@
 {
     "name": "samsonasik/array-lookup",
     "type": "library",
-    "description": " A fast array lookup library ",
+    "description": "A fast lookup library that help you verify and search array and Traversable data",
     "keywords": [
         "array",
+        "traversable",
+        "iterable",
         "search",
         "filter",
-        "fast"
+        "fast",
+        "lookup"
     ],
     "homepage": "https://github.com/samsonasik/ArrayLookup",
     "license": "MIT",

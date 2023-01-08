@@ -10,7 +10,7 @@ ArrayLookup
 Introduction
 ------------
 
-ArrayLookup is a fast array lookup library that help you verify and search `array` and `Traversable` data.
+ArrayLookup is a fast lookup library that help you verify and search `array` and `Traversable` data.
 
 Features
 --------

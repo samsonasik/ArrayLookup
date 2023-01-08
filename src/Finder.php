@@ -4,36 +4,42 @@ declare(strict_types=1);
 
 namespace ArrayLookup;
 
+use Traversable;
 use Webmozart\Assert\Assert;
 
 use function array_reverse;
+use function iterator_to_array;
 
 final class Finder
 {
     /**
-     * @param mixed[]        $data
+     * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
-    public static function first(array $data, callable $filter): mixed
+    public static function first(iterable $data, callable $filter): mixed
     {
         return self::locateFirst($data, $filter);
     }
 
     /**
-     * @param mixed[]        $data
+     * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
-    public static function last(array $data, callable $filter): mixed
+    public static function last(iterable $data, callable $filter): mixed
     {
         return self::locateFirst($data, $filter, true);
     }
 
     /**
-     * @param mixed[]        $data
+     * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
-    private static function locateFirst(array $data, callable $filter, bool $flip = false): mixed
+    private static function locateFirst(iterable $data, callable $filter, bool $flip = false): mixed
     {
+        if ($data instanceof Traversable) {
+            $data = iterator_to_array($data);
+        }
+
         if ($flip) {
             $data = array_reverse($data);
         }

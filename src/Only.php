@@ -10,43 +10,43 @@ final class Only
 {
     /**
      * @param mixed[]        $data
-     * @param callable(mixed $datum): bool $callable
+     * @param callable(mixed $datum): bool $filter
      */
-    public static function once(array $data, callable $callable): bool
+    public static function once(array $data, callable $filter): bool
     {
-        return self::onlyFoundTimes($data, $callable, 1);
+        return self::onlyFoundTimes($data, $filter, 1);
     }
 
     /**
      * @param mixed[]        $data
-     * @param callable(mixed $datum): bool $callable
+     * @param callable(mixed $datum): bool $filter
      */
-    public static function twice(array $data, callable $callable): bool
+    public static function twice(array $data, callable $filter): bool
     {
-        return self::onlyFoundTimes($data, $callable, 2);
+        return self::onlyFoundTimes($data, $filter, 2);
     }
 
     /**
      * @param mixed[]        $data
-     * @param callable(mixed $datum): bool $callable
+     * @param callable(mixed $datum): bool $filter
      */
-    public static function times(array $data, callable $callable, int $count): bool
+    public static function times(array $data, callable $filter, int $count): bool
     {
-        return self::onlyFoundTimes($data, $callable, $count);
+        return self::onlyFoundTimes($data, $filter, $count);
     }
 
     /**
      * @param mixed[]        $data
-     * @param callable(mixed $datum): bool $callable
+     * @param callable(mixed $datum): bool $filter
      */
-    private static function onlyFoundTimes(array $data, callable $callable, int $maxCount): bool
+    private static function onlyFoundTimes(array $data, callable $filter, int $maxCount): bool
     {
         // usage must be higher than 0
         Assert::greaterThan($maxCount, 0);
 
         $totalFound = 0;
         foreach ($data as $datum) {
-            $isFound = $callable($datum);
+            $isFound = $filter($datum);
 
             // returns of callable must be bool
             Assert::boolean($isFound);

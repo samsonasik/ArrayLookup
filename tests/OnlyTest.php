@@ -13,11 +13,11 @@ final class OnlyTest extends TestCase
     /**
      * @dataProvider onceDataProvider
      */
-    public function testOnce(array $data, callable $callable, bool $expected): void
+    public function testOnce(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            Only::once($data, $callable)
+            Only::once($data, $filter)
         );
     }
 
@@ -43,11 +43,11 @@ final class OnlyTest extends TestCase
     /**
      * @dataProvider twiceDataProvider
      */
-    public function testTwice(array $data, callable $callable, bool $expected): void
+    public function testTwice(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            Only::twice($data, $callable)
+            Only::twice($data, $filter)
         );
     }
 
@@ -73,11 +73,11 @@ final class OnlyTest extends TestCase
     /**
      * @dataProvider timesDataProvider
      */
-    public function testTimes(array $data, callable $callable, bool $expected): void
+    public function testTimes(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            Only::times($data, $callable, 3)
+            Only::times($data, $filter, 3)
         );
     }
 

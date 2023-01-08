@@ -40,14 +40,14 @@ It verify that data has filtered found item at least once.
 
 ```php
 $data = [1, 2, 3];
-$callable = static fn($datum): bool => $datum === 1;
+$filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\AtLeast::once($data, $callable)) // true
+var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // true
 
 $data = [1, 2, 3];
-$callable = static fn($datum): bool => $datum === 4;
+$filter = static fn($datum): bool => $datum === 4;
 
-var_dump(\ArrayLookup\AtLeast::once($data, $callable)) // false
+var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
 ```
 
 *2. `AtLeast::twice()`*
@@ -56,14 +56,14 @@ It verify that data has filtered found items at least twice.
 
 ```php
 $data = [1, "1", 3];
-$callable = static fn($datum): bool => $datum == 1;
+$filter = static fn($datum): bool => $datum == 1;
 
-var_dump(\ArrayLookup\AtLeast::twice($data, $callable)) // true
+var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // true
 
 $data = [1, "1", 3];
-$callable = static fn($datum): bool => $datum === 1;
+$filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\AtLeast::twice($data, $callable)) // false
+var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // false
 ```
 
 *3. `AtLeast::times()`*
@@ -72,16 +72,16 @@ It verify that data has filtered found items at least times passed in 3rd arg.
 
 ```php
 $data = [false, null, 0];
-$callable = static fn($datum): bool => ! $datum;
+$filter = static fn($datum): bool => ! $datum;
 $times = 3;
 
-var_dump(\ArrayLookup\AtLeast::times($data, $callable, $times)) // true
+var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // true
 
 $data = [1, null, 0];
-$callable = static fn($datum): bool => ! $datum;
+$filter = static fn($datum): bool => ! $datum;
 $times = 3;
 
-var_dump(\ArrayLookup\AtLeast::times($data, $callable, $times)) // false
+var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // false
 ```
 
 **B. Only**
@@ -93,15 +93,15 @@ It verify that data has filtered found item exactly found only once.
 
 ```php
 $data = [1, 2, 3];
-$callable = static fn($datum): bool => $datum === 1;
+$filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\Only::once($data, $callable)) // true
+var_dump(\ArrayLookup\Only::once($data, $filter)) // true
 
 
 $data = [1, "1", 3]
-$callable = static fn($datum): bool => $datum == 1;
+$filter = static fn($datum): bool => $datum == 1;
 
-var_dump(\ArrayLookup\Only::once($data, $callable)) // false
+var_dump(\ArrayLookup\Only::once($data, $filter)) // false
 ```
 
 *2. `Only::twice()`*
@@ -110,14 +110,14 @@ It verify that data has filtered found items exactly found only twice.
 
 ```php
 $data = [1, "1", 3];
-$callable = static fn($datum): bool => $datum == 1;
+$filter = static fn($datum): bool => $datum == 1;
 
-var_dump(\ArrayLookup\Only::twice($data, $callable)) // true
+var_dump(\ArrayLookup\Only::twice($data, $filter)) // true
 
 $data = [true, 1, new stdClass()];
-$callable = static fn($datum): bool => (bool) $datum;
+$filter = static fn($datum): bool => (bool) $datum;
 
-var_dump(\ArrayLookup\Only::twice($data, $callable)) // false
+var_dump(\ArrayLookup\Only::twice($data, $filter)) // false
 ```
 
 *3. `Only::times()`*
@@ -126,17 +126,17 @@ It verify that data has filtered found items exactly found only same with times 
 
 ```php
 $data = [false, null, 1];
-$callable = static fn($datum): bool => ! $datum;
+$filter = static fn($datum): bool => ! $datum;
 $times = 2;
 
-var_dump(\ArrayLookup\Only::times($data, $callable, $times)) // true
+var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // true
 
 
 $data = [false, null, 0];
-$callable = static fn($datum): bool => ! $datum;
+$filter = static fn($datum): bool => ! $datum;
 $times = 2;
 
-var_dump(\ArrayLookup\Only::times($data, $callable, $times)) // false
+var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // false
 ```
 
 **3. Finder**
@@ -148,12 +148,12 @@ It search first data filtered found.
 
 ```php
 $data = [1, 2, 3];
-$callable = static fn($datum): bool => $datum === 1;
+$filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\Finder::first($data, $callable)) // 1
+var_dump(\ArrayLookup\Finder::first($data, $filter)) // 1
 
-$callable = static fn($datum): bool => $datum == 1000;
-var_dump(\ArrayLookup\Finder::first($data, $callable)) // null
+$filter = static fn($datum): bool => $datum == 1000;
+var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
 ```
 
 *2. `Finder::last()`*

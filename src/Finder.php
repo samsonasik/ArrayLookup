@@ -12,34 +12,34 @@ final class Finder
 {
     /**
      * @param mixed[]        $data
-     * @param callable(mixed $datum): bool $callable
+     * @param callable(mixed $datum): bool $filter
      */
-    public static function first(array $data, callable $callable): mixed
+    public static function first(array $data, callable $filter): mixed
     {
-        return self::locateFirst($data, $callable);
+        return self::locateFirst($data, $filter);
     }
 
     /**
      * @param mixed[]        $data
-     * @param callable(mixed $datum): bool $callable
+     * @param callable(mixed $datum): bool $filter
      */
-    public static function last(array $data, callable $callable): mixed
+    public static function last(array $data, callable $filter): mixed
     {
-        return self::locateFirst($data, $callable, true);
+        return self::locateFirst($data, $filter, true);
     }
 
     /**
      * @param mixed[]        $data
-     * @param callable(mixed $datum): bool $callable
+     * @param callable(mixed $datum): bool $filter
      */
-    private static function locateFirst(array $data, callable $callable, bool $flip = false): mixed
+    private static function locateFirst(array $data, callable $filter, bool $flip = false): mixed
     {
         if ($flip) {
             $data = array_reverse($data);
         }
 
         foreach ($data as $datum) {
-            $isFound = $callable($datum);
+            $isFound = $filter($datum);
 
             // returns of callable must be bool
             Assert::boolean($isFound);

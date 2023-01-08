@@ -12,11 +12,11 @@ final class AtLeastTest extends TestCase
     /**
      * @dataProvider onceDataProvider
      */
-    public function testOnce(array $data, callable $callable, bool $expected): void
+    public function testOnce(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            AtLeast::once($data, $callable)
+            AtLeast::once($data, $filter)
         );
     }
 
@@ -39,11 +39,11 @@ final class AtLeastTest extends TestCase
     /**
      * @dataProvider twiceDataProvider
      */
-    public function testTwice(array $data, callable $callable, bool $expected): void
+    public function testTwice(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            AtLeast::twice($data, $callable)
+            AtLeast::twice($data, $filter)
         );
     }
 
@@ -69,11 +69,11 @@ final class AtLeastTest extends TestCase
     /**
      * @dataProvider timesDataProvider
      */
-    public function testTimes(array $data, callable $callable, bool $expected): void
+    public function testTimes(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
             $expected,
-            AtLeast::times($data, $callable, 3)
+            AtLeast::times($data, $filter, 3)
         );
     }
 

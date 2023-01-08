@@ -12,11 +12,11 @@ final class FinderTest extends TestCase
     /**
      * @dataProvider firstDataProvider
      */
-    public function testFirst(array $data, callable $callable, mixed $expected): void
+    public function testFirst(array $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
             $expected,
-            Finder::first($data, $callable)
+            Finder::first($data, $filter)
         );
     }
 
@@ -39,11 +39,11 @@ final class FinderTest extends TestCase
     /**
      * @dataProvider lastDataProvider
      */
-    public function testLast(array $data, callable $callable, mixed $expected): void
+    public function testLast(array $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
             $expected,
-            Finder::last($data, $callable)
+            Finder::last($data, $filter)
         );
     }
 

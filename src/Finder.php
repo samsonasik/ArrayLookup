@@ -34,7 +34,7 @@ final class Finder
      * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
-    private static function locateFirst(iterable $data, callable $filter, bool $flip = false): mixed
+    private static function locateFirst(iterable $data, callable $filter, bool $isReverse = false): mixed
     {
         // convert to array if $data is Traversable
         if ($data instanceof Traversable) {
@@ -43,7 +43,7 @@ final class Finder
 
         Assert::isArray($data);
 
-        if ($flip) {
+        if ($isReverse) {
             /** @var mixed[] $data */
             $data = array_reverse($data);
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ArrayLookup;
 
+use ArrayIterator;
 use Traversable;
 use Webmozart\Assert\Assert;
 
@@ -38,6 +39,19 @@ final class Finder
     }
 
     /**
+     * @param Traversable<mixed, mixed> $traversable
+     * @return mixed[]
+     */
+    private static function resolveArrayFromTraversable(Traversable $traversable): array
+    {
+        if ($traversable instanceof ArrayIterator) {
+            return $traversable->getArrayCopy();
+        }
+
+        return iterator_to_array($traversable);
+    }
+
+    /**
      * @param mixed[]|iterable        $data
      * @param callable(mixed $datum): bool $filter
      */
@@ -45,7 +59,7 @@ final class Finder
     {
         // convert to array when data is Traversable instance
         if ($data instanceof Traversable) {
-            $data = iterator_to_array($data);
+            $data = self::resolveArrayFromTraversable($data);
         }
 
         // ensure data is array for end(), key(), current(), prev() usage

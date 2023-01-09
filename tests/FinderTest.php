@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ArrayLookup\Tests;
 
+use ArrayIterator;
 use ArrayLookup\Finder;
 use ArrayObject;
 use PHPUnit\Framework\TestCase;
@@ -34,16 +35,6 @@ final class FinderTest extends TestCase
                 static fn($datum): bool => $datum === 1000,
                 null,
             ],
-            [
-                new ArrayObject([1, 2, 3]),
-                static fn($datum): bool => $datum === 2,
-                2,
-            ],
-            [
-                new ArrayObject([1, "1", 3]),
-                static fn($datum): bool => $datum === 1000,
-                null,
-            ],
         ];
     }
 
@@ -68,6 +59,16 @@ final class FinderTest extends TestCase
             ],
             [
                 [6, 7, 8, 9],
+                static fn($datum): bool => $datum < 5,
+                null,
+            ],
+            [
+                new ArrayIterator([6, 7, 8, 9]),
+                static fn($datum): bool => $datum > 5,
+                9,
+            ],
+            [
+                new ArrayIterator([6, 7, 8, 9]),
                 static fn($datum): bool => $datum < 5,
                 null,
             ],

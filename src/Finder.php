@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ArrayLookup;
 
 use ArrayIterator;
+use ArrayObject;
 use Traversable;
 use Webmozart\Assert\Assert;
 
@@ -44,7 +45,7 @@ final class Finder
      */
     private static function resolveArrayFromTraversable(Traversable $traversable): array
     {
-        if ($traversable instanceof ArrayIterator) {
+        if ($traversable instanceof ArrayIterator || $traversable instanceof ArrayObject) {
             return $traversable->getArrayCopy();
         }
 

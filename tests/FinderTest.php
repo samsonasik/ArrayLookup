@@ -7,6 +7,7 @@ namespace ArrayLookup\Tests;
 use ArrayIterator;
 use ArrayLookup\Finder;
 use ArrayObject;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 final class FinderTest extends TestCase
@@ -51,6 +52,13 @@ final class FinderTest extends TestCase
 
     public function lastDataProvider(): array
     {
+        $generator = static function (): Generator {
+            yield 6;
+            yield 7;
+            yield 8;
+            yield 9;
+        };
+
         return [
             [
                 [6, 7, 8, 9],
@@ -79,6 +87,16 @@ final class FinderTest extends TestCase
             ],
             [
                 new ArrayObject([6, 7, 8, 9]),
+                static fn($datum): bool => $datum < 5,
+                null,
+            ],
+            [
+                $generator(),
+                static fn($datum): bool => $datum > 5,
+                9,
+            ],
+            [
+                $generator(),
                 static fn($datum): bool => $datum < 5,
                 null,
             ],

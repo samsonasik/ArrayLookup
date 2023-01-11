@@ -7,6 +7,9 @@ namespace ArrayLookup\Tests;
 use ArrayLookup\AtLeast;
 use PHPUnit\Framework\TestCase;
 
+use function is_int;
+use function str_contains;
+
 final class AtLeastTest extends TestCase
 {
     /**
@@ -34,6 +37,19 @@ final class AtLeastTest extends TestCase
                 false,
             ],
         ];
+    }
+
+    public function testOnceIncludekey(): void
+    {
+        $filter = static fn(mixed $datum, ?int $key): bool => str_contains((string) $datum, 'test') && is_int($key);
+        $data   = [
+            0 => 'abc',
+            1 => 'def',
+            2 => 'some test',
+        ];
+
+        $this->assertTrue(AtLeast::once($data, $filter, true));
+        $this->assertFalse(AtLeast::once($data, $filter, false));
     }
 
     /**
@@ -66,6 +82,19 @@ final class AtLeastTest extends TestCase
 
     // phpcs:enable
 
+    public function testTwiceIncludekey(): void
+    {
+        $filter = static fn(mixed $datum, ?int $key): bool => str_contains((string) $datum, 'test') && is_int($key);
+        $data   = [
+            0 => 'abc',
+            1 => 'def test',
+            2 => 'some test',
+        ];
+
+        $this->assertTrue(AtLeast::twice($data, $filter, true));
+        $this->assertFalse(AtLeast::twice($data, $filter, false));
+    }
+
     /**
      * @dataProvider timesDataProvider
      */
@@ -91,5 +120,18 @@ final class AtLeastTest extends TestCase
                 false,
             ],
         ];
+    }
+
+    public function testTimesIncludekey(): void
+    {
+        $filter = static fn(mixed $datum, ?int $key): bool => str_contains((string) $datum, 'test') && is_int($key);
+        $data   = [
+            0 => 'abc test',
+            1 => 'def test',
+            2 => 'some test',
+        ];
+
+        $this->assertTrue(AtLeast::times($data, $filter, 3, true));
+        $this->assertFalse(AtLeast::times($data, $filter, 3, false));
     }
 }

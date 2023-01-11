@@ -40,8 +40,12 @@ final class Only
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    private static function onlyFoundTimes(iterable $data, callable $filter, int $maxCount, bool $includeKey = false): bool
-    {
+    private static function onlyFoundTimes(
+        iterable $data,
+        callable $filter,
+        int $maxCount,
+        bool $includeKey = false
+    ): bool {
         // usage must be higher than 0
         Assert::greaterThan($maxCount, 0);
 

@@ -19,12 +19,12 @@ final class Finder
 {
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum): bool $filter
+     * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    public static function first(iterable $data, callable $filter): mixed
+    public static function first(iterable $data, callable $filter, bool $includeKey = false): mixed
     {
-        foreach ($data as $datum) {
-            $isFound = $filter($datum);
+        foreach ($data as $key => $datum) {
+            $isFound = $filter($datum, $includeKey ? $key : null);
 
             // returns of callable must be bool
             Assert::boolean($isFound);
@@ -54,9 +54,9 @@ final class Finder
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum): bool $filter
+     * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    public static function last(iterable $data, callable $filter): mixed
+    public static function last(iterable $data, callable $filter, bool $includeKey = false): mixed
     {
         // convert to array when data is Traversable instance
         if ($data instanceof Traversable) {
@@ -73,10 +73,13 @@ final class Finder
         // go to end of array
         end($data);
 
+        // grab current key
+        $key = key($data);
+
         // key = null means no longer current data
-        while (key($data) !== null) {
+        while ($key !== null) {
             $current = current($data);
-            $isFound = $filter($current);
+            $isFound = $filter($current, $includeKey ? $key : null);
 
             // returns of callable must be bool
             Assert::boolean($isFound);
@@ -84,6 +87,9 @@ final class Finder
             if (! $isFound) {
                 // go to previous row
                 prev($data);
+
+                // re-set key variable with new key value of previous row
+                $key = key($data);
 
                 continue;
             }

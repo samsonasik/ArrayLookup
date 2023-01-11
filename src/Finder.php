@@ -18,7 +18,7 @@ use function prev;
 final class Finder
 {
     /**
-     * @param mixed[]|iterable        $data
+     * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum): bool $filter
      */
     public static function first(iterable $data, callable $filter): mixed
@@ -40,8 +40,8 @@ final class Finder
     }
 
     /**
-     * @param Traversable<mixed, mixed> $traversable
-     * @return mixed[]
+     * @param Traversable<int|string, mixed> $traversable
+     * @return array<int|string, mixed>
      */
     private static function resolveArrayFromTraversable(Traversable $traversable): array
     {
@@ -53,7 +53,7 @@ final class Finder
     }
 
     /**
-     * @param mixed[]|iterable        $data
+     * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum): bool $filter
      */
     public static function last(iterable $data, callable $filter): mixed

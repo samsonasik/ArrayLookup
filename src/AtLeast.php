@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace ArrayLookup;
 
+use Traversable;
 use Webmozart\Assert\Assert;
 
 final class AtLeast
 {
     /**
-     * @param mixed[]|iterable        $data
+     * @param array<int|string, mixed>|Traversable<int|string, mixed>  $data
      * @param callable(mixed $datum): bool $filter
      */
     public static function once(iterable $data, callable $filter): bool
@@ -18,7 +19,7 @@ final class AtLeast
     }
 
     /**
-     * @param mixed[]|iterable        $data
+     * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum): bool $filter
      */
     public static function twice(iterable $data, callable $filter): bool
@@ -27,8 +28,8 @@ final class AtLeast
     }
 
     /**
-     * @param mixed[]|iterable        $data
-     * @param callable(mixed $datum): bool $filter
+     * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
+     * @param callable(mixed $datum): bool  $filter
      */
     public static function times(iterable $data, callable $filter, int $count): bool
     {
@@ -36,7 +37,7 @@ final class AtLeast
     }
 
     /**
-     * @param mixed[]|iterable        $data
+     * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum): bool $filter
      */
     private static function hasFoundTimes(iterable $data, callable $filter, int $maxCount): bool

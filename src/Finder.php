@@ -73,6 +73,7 @@ final class Finder
         // go to end of array
         end($data);
 
+        // grab current key
         $key = key($data);
 
         // key = null means no longer current data
@@ -87,7 +88,7 @@ final class Finder
                 // go to previous row
                 prev($data);
 
-                // re-set key variable with new key value
+                // re-set key variable with new key value of previous row
                 $key = key($data);
 
                 continue;

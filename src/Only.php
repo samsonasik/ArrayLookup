@@ -55,7 +55,7 @@ final class Only
                 continue;
             }
 
-            // already passed
+            // total found already passed maxCount but found new one? stop
             if ($totalFound === $maxCount) {
                 return false;
             }

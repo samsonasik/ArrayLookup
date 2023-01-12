@@ -29,7 +29,7 @@ final class AtLeast
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum): bool  $filter
+     * @param callable(mixed $datum, int|string|null $key=): bool  $filter
      */
     public static function times(iterable $data, callable $filter, int $count): bool
     {

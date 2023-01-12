@@ -233,6 +233,15 @@ var_dump(\ArrayLookup\Finder::first($data, $filter)) // 1
 $filter = static fn($datum): bool => $datum == 1000;
 var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
 
+// RETURN the Array key
+
+$filter = static fn($datum): bool => $datum === 1;
+
+var_dump(\ArrayLookup\Finder::first($data, $filter, true)) // 0
+
+$filter = static fn($datum): bool => $datum == 1000;
+var_dump(\ArrayLookup\Finder::first($data, $filter, true)) // null
+
 // WITH key array included
 
 $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
@@ -257,6 +266,20 @@ var_dump(\ArrayLookup\Finder::last(
 var_dump(\ArrayLookup\Finder::last(
     $data,
     static fn ($datum): bool => $datum < 5
+)); // null
+
+// RETURN the Array key
+
+var_dump(\ArrayLookup\Finder::last(
+    $data,
+    static fn ($datum): bool => $datum > 5,
+    true
+)); // 3
+
+var_dump(\ArrayLookup\Finder::last(
+    $data,
+    static fn ($datum): bool => $datum < 5,
+    3
 )); // null
 
 // WITH key array included

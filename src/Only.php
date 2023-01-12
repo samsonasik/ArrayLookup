@@ -13,27 +13,27 @@ final class Only
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    public static function once(iterable $data, callable $filter, bool $includeKey = false): bool
+    public static function once(iterable $data, callable $filter): bool
     {
-        return self::onlyFoundTimes($data, $filter, 1, $includeKey);
+        return self::onlyFoundTimes($data, $filter, 1);
     }
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    public static function twice(iterable $data, callable $filter, bool $includeKey = false): bool
+    public static function twice(iterable $data, callable $filter): bool
     {
-        return self::onlyFoundTimes($data, $filter, 2, $includeKey);
+        return self::onlyFoundTimes($data, $filter, 2);
     }
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    public static function times(iterable $data, callable $filter, int $count, bool $includeKey = false): bool
+    public static function times(iterable $data, callable $filter, int $count): bool
     {
-        return self::onlyFoundTimes($data, $filter, $count, $includeKey);
+        return self::onlyFoundTimes($data, $filter, $count);
     }
 
     /**
@@ -43,15 +43,14 @@ final class Only
     private static function onlyFoundTimes(
         iterable $data,
         callable $filter,
-        int $maxCount,
-        bool $includeKey = false
+        int $maxCount
     ): bool {
         // usage must be higher than 0
         Assert::greaterThan($maxCount, 0);
 
         $totalFound = 0;
         foreach ($data as $key => $datum) {
-            $isFound = $filter($datum, $includeKey ? $key : null);
+            $isFound = $filter($datum, $key);
 
             // returns of callable must be bool
             Assert::boolean($isFound);

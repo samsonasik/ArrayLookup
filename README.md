@@ -48,6 +48,18 @@ $data = [1, 2, 3];
 $filter = static fn($datum): bool => $datum === 4;
 
 var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
+
+// WITH key array included
+
+$data = [1, 2, 3];
+$filter = static fn($datum, $key): bool => $datum === 1 && $key === 0;
+
+var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // true
+
+$data = [1, 2, 3];
+$filter = static fn($datum, $key): bool => $datum === 4 && $key === 0;
+
+var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
 ```
 
 *2. `AtLeast::twice()`*
@@ -62,6 +74,18 @@ var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // true
 
 $data = [1, "1", 3];
 $filter = static fn($datum): bool => $datum === 1;
+
+var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // false
+
+// WITH key array included
+
+$data = [1, "1", 3];
+$filter = static fn($datum, $key): bool => $datum == 1 && $key >= 0;
+
+var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // true
+
+$data = [1, "1", 3];
+$filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
 
 var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // false
 ```
@@ -79,6 +103,20 @@ var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // true
 
 $data = [1, null, 0];
 $filter = static fn($datum): bool => ! $datum;
+$times = 3;
+
+var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // false
+
+// WITH key array included
+
+$data = [false, null, 0];
+$filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
+$times = 3;
+
+var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // true
+
+$data = [1, null, 0];
+$filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
 $times = 3;
 
 var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // false
@@ -102,6 +140,19 @@ $data = [1, "1", 3]
 $filter = static fn($datum): bool => $datum == 1;
 
 var_dump(\ArrayLookup\Only::once($data, $filter)) // false
+
+// WITH key array included
+
+$data = [1, 2, 3];
+$filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
+
+var_dump(\ArrayLookup\Only::once($data, $filter)) // true
+
+
+$data = [1, "1", 3]
+$filter = static fn($datum, $key): bool => $datum == 1  && $key >= 0;
+
+var_dump(\ArrayLookup\Only::once($data, $filter)) // false
 ```
 
 *2. `Only::twice()`*
@@ -116,6 +167,18 @@ var_dump(\ArrayLookup\Only::twice($data, $filter)) // true
 
 $data = [true, 1, new stdClass()];
 $filter = static fn($datum): bool => (bool) $datum;
+
+var_dump(\ArrayLookup\Only::twice($data, $filter)) // false
+
+// WITH key array included
+
+$data = [1, "1", 3];
+$filter = static fn($datum, $key): bool => $datum == 1 && $key >= 0;
+
+var_dump(\ArrayLookup\Only::twice($data, $filter)) // true
+
+$data = [true, 1, new stdClass()];
+$filter = static fn($datum, $key): bool => (bool) $datum && $key >= 0;
 
 var_dump(\ArrayLookup\Only::twice($data, $filter)) // false
 ```
@@ -137,6 +200,21 @@ $filter = static fn($datum): bool => ! $datum;
 $times = 2;
 
 var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // false
+
+// WITH key array included
+
+$data = [false, null, 1];
+$filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
+$times = 2;
+
+var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // true
+
+
+$data = [false, null, 0];
+$filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
+$times = 2;
+
+var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // false
 ```
 
 **3. Finder**
@@ -154,6 +232,15 @@ var_dump(\ArrayLookup\Finder::first($data, $filter)) // 1
 
 $filter = static fn($datum): bool => $datum == 1000;
 var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
+
+// WITH key array included
+
+$filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
+
+var_dump(\ArrayLookup\Finder::first($data, $filter)) // 1
+
+$filter = static fn($datum, $key): bool => $datum == 1000 && $key >= 0;
+var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
 ```
 
 *2. `Finder::last()`*
@@ -170,5 +257,17 @@ var_dump(\ArrayLookup\Finder::last(
 var_dump(\ArrayLookup\Finder::last(
     $data,
     static fn ($datum): bool => $datum < 5
+)); // null
+
+// WITH key array included
+
+var_dump(\ArrayLookup\Finder::last(
+    $data,
+    static fn ($datum, $key): bool => $datum > 5 && $key >= 0
+)); // 9
+
+var_dump(\ArrayLookup\Finder::last(
+    $data,
+    static fn ($datum, $key): bool => $datum < 5 && $key >= 0
 )); // null
 ```

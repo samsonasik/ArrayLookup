@@ -279,7 +279,7 @@ var_dump(\ArrayLookup\Finder::last(
 var_dump(\ArrayLookup\Finder::last(
     $data,
     static fn ($datum): bool => $datum < 5,
-    3
+    true
 )); // null
 
 // WITH key array included

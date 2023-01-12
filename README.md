@@ -52,12 +52,12 @@ var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
 // WITH key array included
 
 $data = [1, 2, 3];
-$filter = static fn($datum, $key): bool => $datum === 1 && $key === 0;
+$filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
 
 var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // true
 
 $data = [1, 2, 3];
-$filter = static fn($datum, $key): bool => $datum === 4 && $key === 0;
+$filter = static fn($datum, $key): bool => $datum === 4 && $key >= 0;
 
 var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
 ```

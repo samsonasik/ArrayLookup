@@ -10,7 +10,6 @@ use ArrayObject;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
-use function is_int;
 use function str_contains;
 
 final class FinderTest extends TestCase
@@ -39,20 +38,17 @@ final class FinderTest extends TestCase
                 static fn($datum): bool => $datum === 1000,
                 null,
             ],
+            [
+                ['abc test', 'def', 'some test'],
+                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
+                'abc test',
+            ],
+            [
+                ['abc test', 'def', 'some test'],
+                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
+                null,
+            ],
         ];
-    }
-
-    public function testOnceIncludekey(): void
-    {
-        $filter = static fn(mixed $datum, ?int $key): bool => str_contains((string) $datum, 'test') && is_int($key);
-        $data   = [
-            0 => 'abc test',
-            1 => 'def',
-            2 => 'some test',
-        ];
-
-        $this->assertSame('abc test', Finder::first($data, $filter, true));
-        $this->assertNull(Finder::first($data, $filter, false));
     }
 
     /**
@@ -116,19 +112,16 @@ final class FinderTest extends TestCase
                 static fn($datum): bool => $datum < 5,
                 null,
             ],
+            [
+                ['abc test', 'def', 'some test'],
+                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
+                'some test',
+            ],
+            [
+                ['abc test', 'def', 'some test'],
+                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
+                null,
+            ],
         ];
-    }
-
-    public function testLastIncludekey(): void
-    {
-        $filter = static fn(mixed $datum, ?int $key): bool => str_contains((string) $datum, 'test') && is_int($key);
-        $data   = [
-            0 => 'abc test',
-            1 => 'def',
-            2 => 'some test',
-        ];
-
-        $this->assertSame('some test', Finder::last($data, $filter, true));
-        $this->assertNull(Finder::last($data, $filter, false));
     }
 }

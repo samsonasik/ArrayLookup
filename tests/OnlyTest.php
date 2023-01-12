@@ -8,9 +8,6 @@ use ArrayLookup\Only;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function is_int;
-use function str_contains;
-
 final class OnlyTest extends TestCase
 {
     /**
@@ -38,20 +35,17 @@ final class OnlyTest extends TestCase
                 static fn($datum): bool => $datum == 1,
                 false,
             ],
+            [
+                ['abc', 'def', 'some test'],
+                static fn(string $datum, int $key): bool => $datum === 'def' && $key === 1,
+                true
+            ],
+            [
+                ['abc', 'def', 'some test'],
+                static fn(string $datum, int $key): bool => $datum === 'def' && $key === 2,
+                false
+            ]
         ];
-    }
-
-    public function testOnceIncludekey(): void
-    {
-        $filter = static fn(mixed $datum, ?int $key): bool => str_contains((string) $datum, 'test') && is_int($key);
-        $data   = [
-            0 => 'abc',
-            1 => 'def',
-            2 => 'some test',
-        ];
-
-        $this->assertTrue(Only::once($data, $filter, true));
-        $this->assertFalse(Only::once($data, $filter, false));
     }
 
     // phpcs:enable
@@ -81,20 +75,17 @@ final class OnlyTest extends TestCase
                 static fn($datum): bool => (bool) $datum,
                 false,
             ],
+            [
+                ['abc', 'def', 'some test'],
+                static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 0,
+                true
+            ],
+            [
+                ['abc', 'def', 'some test'],
+                static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 1,
+                false
+            ],
         ];
-    }
-
-    public function testTwiceIncludekey(): void
-    {
-        $filter = static fn(mixed $datum, ?int $key): bool => str_contains((string) $datum, 'test') && is_int($key);
-        $data   = [
-            0 => 'abc',
-            1 => 'def test',
-            2 => 'some test',
-        ];
-
-        $this->assertTrue(Only::twice($data, $filter, true));
-        $this->assertFalse(Only::twice($data, $filter, false));
     }
 
     // phpcs:enable
@@ -123,19 +114,16 @@ final class OnlyTest extends TestCase
                 static fn($datum): bool => $datum > 7,
                 false,
             ],
+            [
+                ['abc', 'def', 'some test', 'another test'],
+                static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 0,
+                true,
+            ],
+            [
+                ['abc', 'def', 'some test', 'another test'],
+                static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 1,
+                false,
+            ],
         ];
-    }
-
-    public function testTimesIncludekey(): void
-    {
-        $filter = static fn(mixed $datum, ?int $key): bool => str_contains((string) $datum, 'test') && is_int($key);
-        $data   = [
-            0 => 'abc test',
-            1 => 'def test',
-            2 => 'some test',
-        ];
-
-        $this->assertTrue(Only::times($data, $filter, 3, true));
-        $this->assertFalse(Only::times($data, $filter, 3, false));
     }
 }

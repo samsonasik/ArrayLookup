@@ -49,7 +49,7 @@ $filter = static fn($datum): bool => $datum === 4;
 
 var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
 
-// WITH key array included
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [1, 2, 3];
 $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
@@ -77,7 +77,7 @@ $filter = static fn($datum): bool => $datum === 1;
 
 var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // false
 
-// WITH key array included
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [1, "1", 3];
 $filter = static fn($datum, $key): bool => $datum == 1 && $key >= 0;
@@ -107,7 +107,7 @@ $times = 3;
 
 var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // false
 
-// WITH key array included
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [false, null, 0];
 $filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
@@ -141,7 +141,7 @@ $filter = static fn($datum): bool => $datum == 1;
 
 var_dump(\ArrayLookup\Only::once($data, $filter)) // false
 
-// WITH key array included
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [1, 2, 3];
 $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
@@ -170,7 +170,7 @@ $filter = static fn($datum): bool => (bool) $datum;
 
 var_dump(\ArrayLookup\Only::twice($data, $filter)) // false
 
-// WITH key array included
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [1, "1", 3];
 $filter = static fn($datum, $key): bool => $datum == 1 && $key >= 0;
@@ -201,7 +201,7 @@ $times = 2;
 
 var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // false
 
-// WITH key array included
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [false, null, 1];
 $filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
@@ -233,7 +233,16 @@ var_dump(\ArrayLookup\Finder::first($data, $filter)) // 1
 $filter = static fn($datum): bool => $datum == 1000;
 var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
 
-// WITH key array included
+// RETURN the Array key, pass true to 3rd arg
+
+$filter = static fn($datum): bool => $datum === 1;
+
+var_dump(\ArrayLookup\Finder::first($data, $filter, true)) // 0
+
+$filter = static fn($datum): bool => $datum == 1000;
+var_dump(\ArrayLookup\Finder::first($data, $filter, true)) // null
+
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
 
@@ -259,7 +268,21 @@ var_dump(\ArrayLookup\Finder::last(
     static fn ($datum): bool => $datum < 5
 )); // null
 
-// WITH key array included
+// RETURN the Array key, pass true to 3rd arg
+
+var_dump(\ArrayLookup\Finder::last(
+    $data,
+    static fn ($datum): bool => $datum > 5,
+    true
+)); // 3
+
+var_dump(\ArrayLookup\Finder::last(
+    $data,
+    static fn ($datum): bool => $datum < 5,
+    true
+)); // null
+
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 var_dump(\ArrayLookup\Finder::last(
     $data,

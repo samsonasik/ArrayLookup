@@ -21,7 +21,7 @@ final class Finder
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    public static function first(iterable $data, callable $filter): mixed
+    public static function first(iterable $data, callable $filter, bool $returnKey = false): mixed
     {
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);
@@ -33,7 +33,7 @@ final class Finder
                 continue;
             }
 
-            return $datum;
+            return $returnKey ? $key : $datum;
         }
 
         return null;
@@ -56,7 +56,7 @@ final class Finder
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    public static function last(iterable $data, callable $filter): mixed
+    public static function last(iterable $data, callable $filter, bool $returnKey = false): mixed
     {
         // convert to array when data is Traversable instance
         if ($data instanceof Traversable) {
@@ -94,7 +94,7 @@ final class Finder
                 continue;
             }
 
-            return $current;
+            return $returnKey ? $key : $current;
         }
 
         return null;

@@ -277,7 +277,7 @@ var_dump(\ArrayLookup\Finder::last(
     true
 )); // 3
 
-// ... with RESORT key
+// ... with RESORT key, first key is last record
 var_dump(\ArrayLookup\Finder::last(
     $data,
     static fn ($datum): bool => $datum > 5,

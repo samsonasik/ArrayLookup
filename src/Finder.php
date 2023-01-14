@@ -56,8 +56,12 @@ final class Finder
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      */
-    public static function last(iterable $data, callable $filter, bool $returnKey = false): mixed
-    {
+    public static function last(
+        iterable $data,
+        callable $filter,
+        bool $returnKey = false,
+        bool $preserveKey = true
+    ): mixed {
         // convert to array when data is Traversable instance
         if ($data instanceof Traversable) {
             $data = self::resolveArrayFromTraversable($data);
@@ -74,10 +78,15 @@ final class Finder
         end($data);
 
         // grab current key
-        $key = key($data);
+        $key       = key($data);
+        $resortkey = -1;
 
         // key = null means no longer current data
         while ($key !== null) {
+            if (! $preserveKey && $returnKey) {
+                ++$resortkey;
+            }
+
             $current = current($data);
             $isFound = $filter($current, $key);
 
@@ -94,7 +103,15 @@ final class Finder
                 continue;
             }
 
-            return $returnKey ? $key : $current;
+            if (! $returnKey) {
+                return $current;
+            }
+
+            if ($preserveKey) {
+                return $key;
+            }
+
+            return $resortkey;
         }
 
         return null;

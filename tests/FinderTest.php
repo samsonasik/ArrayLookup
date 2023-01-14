@@ -235,4 +235,31 @@ final class FinderTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider lastReturnKeyResortKeyDataProvider
+     */
+    public function testLastReturnKeyResortKey(iterable $data, callable $filter, mixed $expected): void
+    {
+        $this->assertSame(
+            $expected,
+            Finder::last($data, $filter, true, false)
+        );
+    }
+
+    public function lastReturnKeyResortKeyDataProvider(): array
+    {
+        return [
+            [
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum > 5,
+                0,
+            ],
+            [
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum < 5,
+                null,
+            ],
+        ];
+    }
 }

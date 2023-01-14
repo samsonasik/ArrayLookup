@@ -270,11 +270,20 @@ var_dump(\ArrayLookup\Finder::last(
 
 // RETURN the Array key, pass true to 3rd arg
 
+// ... with PRESERVE original key
 var_dump(\ArrayLookup\Finder::last(
     $data,
     static fn ($datum): bool => $datum > 5,
     true
 )); // 3
+
+// ... with RESORT key
+var_dump(\ArrayLookup\Finder::last(
+    $data,
+    static fn ($datum): bool => $datum > 5,
+    true,
+    false
+)); // 0
 
 var_dump(\ArrayLookup\Finder::last(
     $data,

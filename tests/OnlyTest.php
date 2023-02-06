@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace ArrayLookup\Tests;
 
 use ArrayLookup\Only;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 final class OnlyTest extends TestCase
 {
-    /**
-     * @dataProvider onceDataProvider
-     */
+    #[DataProvider('onceDataProvider')]
     public function testOnce(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
@@ -22,7 +21,7 @@ final class OnlyTest extends TestCase
     }
 
     // phpcs:disable
-    public function onceDataProvider(): array
+    public static function onceDataProvider(): array
     {
         return [
             [
@@ -49,10 +48,7 @@ final class OnlyTest extends TestCase
     }
 
     // phpcs:enable
-
-    /**
-     * @dataProvider twiceDataProvider
-     */
+    #[DataProvider('twiceDataProvider')]
     public function testTwice(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
@@ -62,7 +58,7 @@ final class OnlyTest extends TestCase
     }
 
     // phpcs:disable
-    public function twiceDataProvider(): array
+    public static function twiceDataProvider(): array
     {
         return [
             [
@@ -89,10 +85,7 @@ final class OnlyTest extends TestCase
     }
 
     // phpcs:enable
-
-    /**
-     * @dataProvider timesDataProvider
-     */
+    #[DataProvider('timesDataProvider')]
     public function testTimes(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
@@ -101,7 +94,7 @@ final class OnlyTest extends TestCase
         );
     }
 
-    public function timesDataProvider(): array
+    public static function timesDataProvider(): array
     {
         return [
             [

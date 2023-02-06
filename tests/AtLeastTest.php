@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace ArrayLookup\Tests;
 
 use ArrayLookup\AtLeast;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class AtLeastTest extends TestCase
 {
-    /**
-     * @dataProvider onceDataProvider
-     */
+    #[DataProvider('onceDataProvider')]
     public function testOnce(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
@@ -20,7 +19,7 @@ final class AtLeastTest extends TestCase
         );
     }
 
-    public function onceDataProvider(): array
+    public static function onceDataProvider(): array
     {
         return [
             [
@@ -46,9 +45,7 @@ final class AtLeastTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider twiceDataProvider
-     */
+    #[DataProvider('twiceDataProvider')]
     public function testTwice(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
@@ -58,7 +55,7 @@ final class AtLeastTest extends TestCase
     }
 
     // phpcs:disable
-    public function twiceDataProvider(): array
+    public static function twiceDataProvider(): array
     {
         return [
             [
@@ -85,10 +82,7 @@ final class AtLeastTest extends TestCase
     }
 
     // phpcs:enable
-
-    /**
-     * @dataProvider timesDataProvider
-     */
+    #[DataProvider('timesDataProvider')]
     public function testTimes(array $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
@@ -97,7 +91,7 @@ final class AtLeastTest extends TestCase
         );
     }
 
-    public function timesDataProvider(): array
+    public static function timesDataProvider(): array
     {
         return [
             [

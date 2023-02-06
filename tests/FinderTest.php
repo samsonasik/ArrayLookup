@@ -8,15 +8,14 @@ use ArrayIterator;
 use ArrayLookup\Finder;
 use ArrayObject;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function str_contains;
 
 final class FinderTest extends TestCase
 {
-    /**
-     * @dataProvider firstDataProvider
-     */
+    #[DataProvider('firstDataProvider')]
     public function testFirst(iterable $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
@@ -25,7 +24,7 @@ final class FinderTest extends TestCase
         );
     }
 
-    public function firstDataProvider(): array
+    public static function firstDataProvider(): array
     {
         return [
             [
@@ -51,9 +50,7 @@ final class FinderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider firstReturnKeyDataProvider
-     */
+    #[DataProvider('firstReturnKeyDataProvider')]
     public function testFirstReturnKey(iterable $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
@@ -62,7 +59,7 @@ final class FinderTest extends TestCase
         );
     }
 
-    public function firstReturnKeyDataProvider(): array
+    public static function firstReturnKeyDataProvider(): array
     {
         return [
             [
@@ -88,9 +85,7 @@ final class FinderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider lastDataProvider
-     */
+    #[DataProvider('lastDataProvider')]
     public function testLast(iterable $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
@@ -99,7 +94,7 @@ final class FinderTest extends TestCase
         );
     }
 
-    public function lastDataProvider(): array
+    public static function lastDataProvider(): array
     {
         $generator = static function (): Generator {
             yield 6;
@@ -162,9 +157,7 @@ final class FinderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider lastReturnKeyDataProvider
-     */
+    #[DataProvider('lastReturnKeyDataProvider')]
     public function testLastReturnKey(iterable $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
@@ -173,7 +166,7 @@ final class FinderTest extends TestCase
         );
     }
 
-    public function lastReturnKeyDataProvider(): array
+    public static function lastReturnKeyDataProvider(): array
     {
         $generator = static function (): Generator {
             yield 6;
@@ -236,9 +229,7 @@ final class FinderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider lastReturnKeyResortKeyDataProvider
-     */
+    #[DataProvider('lastReturnKeyResortKeyDataProvider')]
     public function testLastReturnKeyResortKey(iterable $data, callable $filter, mixed $expected): void
     {
         $this->assertSame(
@@ -247,7 +238,7 @@ final class FinderTest extends TestCase
         );
     }
 
-    public function lastReturnKeyResortKeyDataProvider(): array
+    public static function lastReturnKeyResortKeyDataProvider(): array
     {
         return [
             [

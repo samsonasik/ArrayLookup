@@ -29,7 +29,7 @@
         "laminas/laminas-coding-standard": "^2.4",
         "phpstan/phpstan": "^1.9",
         "phpstan/phpstan-webmozart-assert": "^1.2",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.0",
         "rector/rector": "dev-main"
     },
     "config": {

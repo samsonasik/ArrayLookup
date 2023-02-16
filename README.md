@@ -39,27 +39,29 @@ Usage
 It verify that data has filtered found item at least once.
 
 ```php
+use ArrayLookup\AtLeast;
+
 $data = [1, 2, 3];
 $filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // true
+var_dump(AtLeast::once($data, $filter)) // true
 
 $data = [1, 2, 3];
 $filter = static fn($datum): bool => $datum === 4;
 
-var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
+var_dump(AtLeast::once($data, $filter)) // false
 
 // WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [1, 2, 3];
 $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
 
-var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // true
+var_dump(AtLeast::once($data, $filter)) // true
 
 $data = [1, 2, 3];
 $filter = static fn($datum, $key): bool => $datum === 4 && $key >= 0;
 
-var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
+var_dump(AtLeast::once($data, $filter)) // false
 ```
 
 *2. `AtLeast::twice()`*
@@ -67,27 +69,29 @@ var_dump(\ArrayLookup\AtLeast::once($data, $filter)) // false
 It verify that data has filtered found items at least twice.
 
 ```php
+use ArrayLookup\AtLeast;
+
 $data = [1, "1", 3];
 $filter = static fn($datum): bool => $datum == 1;
 
-var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // true
+var_dump(AtLeast::twice($data, $filter)) // true
 
 $data = [1, "1", 3];
 $filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // false
+var_dump(AtLeast::twice($data, $filter)) // false
 
 // WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [1, "1", 3];
 $filter = static fn($datum, $key): bool => $datum == 1 && $key >= 0;
 
-var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // true
+var_dump(AtLeast::twice($data, $filter)) // true
 
 $data = [1, "1", 3];
 $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
 
-var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // false
+var_dump(AtLeast::twice($data, $filter)) // false
 ```
 
 *3. `AtLeast::times()`*
@@ -95,17 +99,19 @@ var_dump(\ArrayLookup\AtLeast::twice($data, $filter)) // false
 It verify that data has filtered found items at least times passed in 3rd arg.
 
 ```php
+use ArrayLookup\AtLeast;
+
 $data = [false, null, 0];
 $filter = static fn($datum): bool => ! $datum;
 $times = 3;
 
-var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // true
+var_dump(AtLeast::times($data, $filter, $times)) // true
 
 $data = [1, null, 0];
 $filter = static fn($datum): bool => ! $datum;
 $times = 3;
 
-var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // false
+var_dump(AtLeast::times($data, $filter, $times)) // false
 
 // WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
@@ -113,13 +119,13 @@ $data = [false, null, 0];
 $filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
 $times = 3;
 
-var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // true
+var_dump(AtLeast::times($data, $filter, $times)) // true
 
 $data = [1, null, 0];
 $filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
 $times = 3;
 
-var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // false
+var_dump(AtLeast::times($data, $filter, $times)) // false
 ```
 
 **B. Only**
@@ -130,29 +136,31 @@ var_dump(\ArrayLookup\AtLeast::times($data, $filter, $times)) // false
 It verify that data has filtered found item exactly found only once.
 
 ```php
+use ArrayLookup\Only;
+
 $data = [1, 2, 3];
 $filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\Only::once($data, $filter)) // true
+var_dump(Only::once($data, $filter)) // true
 
 
 $data = [1, "1", 3]
 $filter = static fn($datum): bool => $datum == 1;
 
-var_dump(\ArrayLookup\Only::once($data, $filter)) // false
+var_dump(Only::once($data, $filter)) // false
 
 // WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [1, 2, 3];
 $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
 
-var_dump(\ArrayLookup\Only::once($data, $filter)) // true
+var_dump(Only::once($data, $filter)) // true
 
 
 $data = [1, "1", 3]
 $filter = static fn($datum, $key): bool => $datum == 1  && $key >= 0;
 
-var_dump(\ArrayLookup\Only::once($data, $filter)) // false
+var_dump(Only::once($data, $filter)) // false
 ```
 
 *2. `Only::twice()`*
@@ -160,27 +168,29 @@ var_dump(\ArrayLookup\Only::once($data, $filter)) // false
 It verify that data has filtered found items exactly found only twice.
 
 ```php
+use ArrayLookup\Only;
+
 $data = [1, "1", 3];
 $filter = static fn($datum): bool => $datum == 1;
 
-var_dump(\ArrayLookup\Only::twice($data, $filter)) // true
+var_dump(Only::twice($data, $filter)) // true
 
 $data = [true, 1, new stdClass()];
 $filter = static fn($datum): bool => (bool) $datum;
 
-var_dump(\ArrayLookup\Only::twice($data, $filter)) // false
+var_dump(Only::twice($data, $filter)) // false
 
 // WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $data = [1, "1", 3];
 $filter = static fn($datum, $key): bool => $datum == 1 && $key >= 0;
 
-var_dump(\ArrayLookup\Only::twice($data, $filter)) // true
+var_dump(Only::twice($data, $filter)) // true
 
 $data = [true, 1, new stdClass()];
 $filter = static fn($datum, $key): bool => (bool) $datum && $key >= 0;
 
-var_dump(\ArrayLookup\Only::twice($data, $filter)) // false
+var_dump(Only::twice($data, $filter)) // false
 ```
 
 *3. `Only::times()`*
@@ -188,18 +198,20 @@ var_dump(\ArrayLookup\Only::twice($data, $filter)) // false
 It verify that data has filtered found items exactly found only same with times passed in 3rd arg.
 
 ```php
+use ArrayLookup\Only;
+
 $data = [false, null, 1];
 $filter = static fn($datum): bool => ! $datum;
 $times = 2;
 
-var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // true
+var_dump(Only::times($data, $filter, $times)) // true
 
 
 $data = [false, null, 0];
 $filter = static fn($datum): bool => ! $datum;
 $times = 2;
 
-var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // false
+var_dump(Only::times($data, $filter, $times)) // false
 
 // WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
@@ -207,14 +219,14 @@ $data = [false, null, 1];
 $filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
 $times = 2;
 
-var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // true
+var_dump(Only::times($data, $filter, $times)) // true
 
 
 $data = [false, null, 0];
 $filter = static fn($datum, $key): bool => ! $datum && $key >= 0;
 $times = 2;
 
-var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // false
+var_dump(Only::times($data, $filter, $times)) // false
 ```
 
 **3. Finder**
@@ -225,31 +237,33 @@ var_dump(\ArrayLookup\Only::times($data, $filter, $times)) // false
 It search first data filtered found.
 
 ```php
+use ArrayLookup\Finder;
+
 $data = [1, 2, 3];
 $filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\Finder::first($data, $filter)) // 1
+var_dump(Finder::first($data, $filter)) // 1
 
 $filter = static fn($datum): bool => $datum == 1000;
-var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
+var_dump(Finder::first($data, $filter)) // null
 
 // RETURN the Array key, pass true to 3rd arg
 
 $filter = static fn($datum): bool => $datum === 1;
 
-var_dump(\ArrayLookup\Finder::first($data, $filter, true)) // 0
+var_dump(Finder::first($data, $filter, true)) // 0
 
 $filter = static fn($datum): bool => $datum == 1000;
-var_dump(\ArrayLookup\Finder::first($data, $filter, true)) // null
+var_dump(Finder::first($data, $filter, true)) // null
 
 // WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
 $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
 
-var_dump(\ArrayLookup\Finder::first($data, $filter)) // 1
+var_dump(Finder::first($data, $filter)) // 1
 
 $filter = static fn($datum, $key): bool => $datum == 1000 && $key >= 0;
-var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
+var_dump(Finder::first($data, $filter)) // null
 ```
 
 *2. `Finder::last()`*
@@ -257,13 +271,15 @@ var_dump(\ArrayLookup\Finder::first($data, $filter)) // null
 It search last data filtered found.
 
 ```php
+use ArrayLookup\Finder;
+
 $data = [6, 7, 8, 9];
-var_dump(\ArrayLookup\Finder::last(
+var_dump(Finder::last(
     $data,
     static fn ($datum): bool => $datum > 5
 )); // 9
 
-var_dump(\ArrayLookup\Finder::last(
+var_dump(Finder::last(
     $data,
     static fn ($datum): bool => $datum < 5
 )); // null
@@ -271,21 +287,21 @@ var_dump(\ArrayLookup\Finder::last(
 // RETURN the Array key, pass true to 3rd arg
 
 // ... with PRESERVE original key
-var_dump(\ArrayLookup\Finder::last(
+var_dump(Finder::last(
     $data,
     static fn ($datum): bool => $datum > 5,
     true
 )); // 3
 
 // ... with RESORT key, first key is last record
-var_dump(\ArrayLookup\Finder::last(
+var_dump(Finder::last(
     $data,
     static fn ($datum): bool => $datum > 5,
     true,
     false
 )); // 0
 
-var_dump(\ArrayLookup\Finder::last(
+var_dump(Finder::last(
     $data,
     static fn ($datum): bool => $datum < 5,
     true
@@ -293,12 +309,12 @@ var_dump(\ArrayLookup\Finder::last(
 
 // WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
 
-var_dump(\ArrayLookup\Finder::last(
+var_dump(Finder::last(
     $data,
     static fn ($datum, $key): bool => $datum > 5 && $key >= 0
 )); // 9
 
-var_dump(\ArrayLookup\Finder::last(
+var_dump(Finder::last(
     $data,
     static fn ($datum, $key): bool => $datum < 5 && $key >= 0
 )); // null

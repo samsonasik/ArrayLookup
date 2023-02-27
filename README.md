@@ -350,3 +350,4 @@ var_dump(Finder::rows(
     static fn ($datum): bool => $datum < 5,
     true
 )); // []
+```

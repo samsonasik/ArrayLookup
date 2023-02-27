@@ -124,7 +124,7 @@ final class Finder
      */
     public static function rows(iterable $data, callable $filter, bool $preserveKey = false): array
     {
-        $rows = [];
+        $rows   = [];
         $newKey = 0;
 
         foreach ($data as $key => $datum) {

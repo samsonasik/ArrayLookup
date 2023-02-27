@@ -297,7 +297,7 @@ final class FinderTest extends TestCase
                 [
                     1 => 7,
                     2 => 8,
-                    3 => 9
+                    3 => 9,
                 ],
             ],
             [

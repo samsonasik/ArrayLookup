@@ -17,7 +17,7 @@ Features
 
 - [x] Verify at least times: `once()`, `twice()`, `times()`
 - [x] Verify exact times: `once()`, `twice()`, `times()`
-- [x] Search data: `first()`, `last()`
+- [x] Search data: `first()`, `last()`, `rows()`
 
 Installation
 ------------
@@ -319,3 +319,34 @@ var_dump(Finder::last(
     static fn ($datum, $key): bool => $datum < 5 && $key >= 0
 )); // null
 ```
+
+*3. `Finder::rows()`*
+
+It get rows data filtered found.
+
+```php
+use ArrayLookup\Finder;
+
+$data = [6, 7, 8, 9];
+var_dump(Finder::rows(
+    $data,
+    static fn($datum): bool => $datum > 6
+)); // [7, 8, 9]
+
+var_dump(Finder::rows(
+    $data,
+    static fn ($datum): bool => $datum < 5
+)); // []
+
+// ... with PRESERVE original key
+var_dump(Finder::rows(
+    $data,
+    static fn ($datum): bool => $datum > 6,
+    true
+)); // [1 => 7, 2 => 8, 3 => 9]
+
+var_dump(Finder::rows(
+    $data,
+    static fn ($datum): bool => $datum < 5,
+    true
+)); // []

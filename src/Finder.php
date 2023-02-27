@@ -116,4 +116,31 @@ final class Finder
 
         return null;
     }
+
+    /**
+     * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
+     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @return mixed[]
+     */
+    public static function rows(iterable $data, callable $filter, bool $preserveKey = false): array
+    {
+        $rows   = [];
+        $newKey = 0;
+
+        foreach ($data as $key => $datum) {
+            $isFound = $filter($datum, $key);
+
+            // returns of callable must be bool
+            Assert::boolean($isFound);
+
+            if (! $isFound) {
+                continue;
+            }
+
+            $rows[$preserveKey ? $key : $newKey] = $datum;
+            ++$newKey;
+        }
+
+        return $rows;
+    }
 }

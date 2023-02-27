@@ -253,4 +253,58 @@ final class FinderTest extends TestCase
             ],
         ];
     }
+
+    #[DataProvider('rowsDataProvider')]
+    public function testRows(iterable $data, callable $filter, array $expected): void
+    {
+        $this->assertSame(
+            $expected,
+            Finder::rows($data, $filter)
+        );
+    }
+
+    public static function rowsDataProvider(): array
+    {
+        return [
+            [
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum > 6,
+                [7, 8, 9],
+            ],
+            [
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum < 5,
+                [],
+            ],
+        ];
+    }
+
+    #[DataProvider('rowsDataProviderPreserveKey')]
+    public function testRowsPreserveKey(iterable $data, callable $filter, array $expected): void
+    {
+        $this->assertSame(
+            $expected,
+            Finder::rows($data, $filter, true)
+        );
+    }
+
+    public static function rowsDataProviderPreserveKey(): array
+    {
+        return [
+            [
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum > 6,
+                [
+                    1 => 7,
+                    2 => 8,
+                    3 => 9,
+                ],
+            ],
+            [
+                [6, 7, 8, 9],
+                static fn($datum): bool => $datum < 5,
+                [],
+            ],
+        ];
+    }
 }

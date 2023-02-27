@@ -350,4 +350,10 @@ var_dump(Finder::rows(
     static fn ($datum): bool => $datum < 5,
     true
 )); // []
+
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
+var_dump(Finder::rows(
+    $data,
+    static fn($datum, $key): bool => $datum > 6 && $key > 1
+)); // [8, 9]
 ```

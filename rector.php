@@ -17,11 +17,9 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::DEAD_CODE,
         SetList::NAMING,
         SetList::PRIVATIZATION,
-        SetList::PSR_4,
         SetList::TYPE_DECLARATION,
         PHPUnitSetList::PHPUNIT_100,
     ]);
-    $rectorConfig->rule(InlineSimplePropertyAnnotationRector::class);
 
     $rectorConfig->parallel();
     $rectorConfig->paths([__DIR__ . '/src', __DIR__ . '/tests', __FILE__]);

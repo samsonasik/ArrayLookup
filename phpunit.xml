@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" bootstrap="vendor/autoload.php" colors="true" executionOrder="defects" cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" bootstrap="vendor/autoload.php" colors="true" executionOrder="defects" cacheDirectory=".phpunit.cache">
   <coverage includeUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./src</directory>
-    </include>
     <report>
       <clover outputFile="build/logs/clover.xml"/>
       <html outputDirectory="build/logs/html"/>
@@ -21,4 +18,9 @@
     <testdoxText outputFile="build/logs/testdox.txt"/>
     <junit outputFile="build/logs/logfile.xml"/>
   </logging>
+  <source>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+  </source>
 </phpunit>

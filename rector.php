@@ -19,5 +19,6 @@ return RectorConfig::configure()
         PHPUnitSetList::PHPUNIT_100,
     ])
     ->withParallel()
-    ->withPaths([__DIR__ . '/src', __DIR__ . '/tests', __FILE__])
+    ->withRootFiles()
+    ->withPaths([__DIR__ . '/src', __DIR__ . '/tests'])
     ->withImportNames();

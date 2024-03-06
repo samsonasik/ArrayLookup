@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
 
 use function current;
 use function end;
-use function is_string;
+use function is_numeric;
 use function iterator_to_array;
 use function key;
 use function prev;
@@ -138,7 +138,7 @@ final class Finder
                 continue;
             }
 
-            if (is_string($key)) {
+            if (! is_numeric($key)) {
                 $rowKey = $key;
             } else {
                 $rowKey = $preserveKey ? $key : $newKey;

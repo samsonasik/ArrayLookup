@@ -138,10 +138,10 @@ final class Finder
                 continue;
             }
 
-            if (! is_numeric($key)) {
+            if ($preserveKey || ! is_numeric($key)) {
                 $rowKey = $key;
             } else {
-                $rowKey = $preserveKey ? $key : $newKey;
+                $rowKey = $newKey;
                 ++$newKey;
             }
 

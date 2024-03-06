@@ -286,6 +286,12 @@ final class FinderTest extends TestCase
                 static fn($datum): bool => $datum > 7,
                 ['foo' => 8, 9],
             ],
+            // @see https://3v4l.org/0KWZ7Y
+            [
+                [6, 7, '0' => 8, 9],
+                static fn($datum): bool => $datum > 7,
+                [8, 9],
+            ],
         ];
     }
 

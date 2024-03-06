@@ -11,6 +11,7 @@ use Webmozart\Assert\Assert;
 
 use function current;
 use function end;
+use function is_string;
 use function iterator_to_array;
 use function key;
 use function prev;
@@ -137,8 +138,14 @@ final class Finder
                 continue;
             }
 
-            $rows[$preserveKey ? $key : $newKey] = $datum;
-            ++$newKey;
+            if (is_string($key)) {
+                $rowKey = $key;
+            } else {
+                $rowKey = $preserveKey ? $key : $newKey;
+                ++$newKey;
+            }
+
+            $rows[$rowKey] = $datum;
         }
 
         return $rows;

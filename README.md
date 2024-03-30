@@ -361,8 +361,9 @@ var_dump(Finder::rows(
 // WITH gather only limited found data
 $data = [1, 2];
 $filter = static fn($datum): bool => $datum >= 0;
+$limit = 1;
 
 var_dump(
-    Finder::rows($data, $filter, limit: 1)
+    Finder::rows($data, $filter, limit: $limit)
 ); // [1]
 ```

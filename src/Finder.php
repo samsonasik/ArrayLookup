@@ -129,7 +129,7 @@ final class Finder
         iterable $data,
         callable $filter,
         bool $preserveKey = false,
-        int $limit = PHP_INT_MAX
+        ?int $limit = null
     ): array {
         $rows   = [];
         $newKey = 0;
@@ -153,6 +153,10 @@ final class Finder
             }
 
             $rows[$rowKey] = $datum;
+
+            if ($limit === null) {
+                continue;
+            }
 
             ++$total;
             if ($total === $limit) {

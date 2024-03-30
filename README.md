@@ -356,4 +356,12 @@ var_dump(Finder::rows(
     $data,
     static fn($datum, $key): bool => $datum > 6 && $key > 1
 )); // [8, 9]
+
+
+// WITH gather only limited found data
+$data = [1, 2];
+var_dump(Finder::rows(
+    $data,
+    static fn($datum): bool => $datum >= 0
+)); // [1]
 ```

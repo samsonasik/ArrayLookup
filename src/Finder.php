@@ -125,8 +125,12 @@ final class Finder
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      * @return mixed[]
      */
-    public static function rows(iterable $data, callable $filter, bool $preserveKey = false, int $limit = PHP_INT_MAX): array
-    {
+    public static function rows(
+        iterable $data,
+        callable $filter,
+        bool $preserveKey = false,
+        int $limit = PHP_INT_MAX
+    ): array {
         $rows   = [];
         $newKey = 0;
         $total  = 0;

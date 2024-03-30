@@ -360,9 +360,9 @@ var_dump(Finder::rows(
 
 // WITH gather only limited found data
 $data = [1, 2];
-var_dump(Finder::rows(
-    $data,
-    static fn($datum): bool => $datum >= 0,
-    limit: 1
-)); // [1]
+$filter = static fn($datum): bool => $datum >= 0;
+
+var_dump(
+    Finder::rows($data, $filter, limit: 1)
+); // [1]
 ```

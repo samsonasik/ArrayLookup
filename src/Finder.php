@@ -123,10 +123,15 @@ final class Finder
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      * @return mixed[]
      */
-    public static function rows(iterable $data, callable $filter, bool $preserveKey = false): array
-    {
-        $rows   = [];
-        $newKey = 0;
+    public static function rows(
+        iterable $data,
+        callable $filter,
+        bool $preserveKey = false,
+        ?int $limit = null
+    ): array {
+        $rows       = [];
+        $newKey     = 0;
+        $totalFound = 0;
 
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);
@@ -146,6 +151,15 @@ final class Finder
             }
 
             $rows[$rowKey] = $datum;
+
+            if ($limit === null) {
+                continue;
+            }
+
+            ++$totalFound;
+            if ($totalFound === $limit) {
+                break;
+            }
         }
 
         return $rows;

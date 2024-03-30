@@ -323,4 +323,17 @@ final class FinderTest extends TestCase
             ],
         ];
     }
+
+    public function testRowsWithLimit(): void
+    {
+        $data   = [1, 2];
+        $filter = static fn ($datum): bool => $datum >= 0;
+
+        $this->assertSame(
+            [
+                1,
+            ],
+            Finder::rows($data, $filter, limit: 1)
+        );
+    }
 }

@@ -16,8 +16,6 @@ use function iterator_to_array;
 use function key;
 use function prev;
 
-use const PHP_INT_MAX;
-
 final class Finder
 {
     /**

@@ -129,9 +129,9 @@ final class Finder
         bool $preserveKey = false,
         ?int $limit = null
     ): array {
-        $rows   = [];
-        $newKey = 0;
-        $total  = 0;
+        $rows       = [];
+        $newKey     = 0;
+        $totalFound = 0;
 
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);
@@ -156,8 +156,8 @@ final class Finder
                 continue;
             }
 
-            ++$total;
-            if ($total === $limit) {
+            ++$totalFound;
+            if ($totalFound === $limit) {
                 break;
             }
         }

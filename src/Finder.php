@@ -16,6 +16,8 @@ use function iterator_to_array;
 use function key;
 use function prev;
 
+use const PHP_INT_MAX;
+
 final class Finder
 {
     /**
@@ -123,10 +125,11 @@ final class Finder
      * @param callable(mixed $datum, int|string|null $key=): bool $filter
      * @return mixed[]
      */
-    public static function rows(iterable $data, callable $filter, bool $preserveKey = false): array
+    public static function rows(iterable $data, callable $filter, bool $preserveKey = false, int $limit = PHP_INT_MAX): array
     {
         $rows   = [];
         $newKey = 0;
+        $total  = 0;
 
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);
@@ -146,6 +149,11 @@ final class Finder
             }
 
             $rows[$rowKey] = $datum;
+
+            ++$total;
+            if ($total === $limit) {
+                break;
+            }
         }
 
         return $rows;

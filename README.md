@@ -362,6 +362,7 @@ var_dump(Finder::rows(
 $data = [1, 2];
 var_dump(Finder::rows(
     $data,
-    static fn($datum): bool => $datum >= 0
+    static fn($datum): bool => $datum >= 0,
+    limit: 1
 )); // [1]
 ```

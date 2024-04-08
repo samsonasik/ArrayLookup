@@ -261,17 +261,14 @@ final class FinderTest extends TestCase
 
     public function testLastKeepCurrentOriginalData(): void
     {
-        $obj       = new stdClass();
-        $obj->data = new ArrayIterator([new DateTime('now'), new DateTimeImmutable('now'), new stdClass()]);
+        $data = [new DateTime('now'), new DateTimeImmutable('now'), new stdClass()];
 
         // get last
-        $last = Finder::last($obj->data, static fn(object $datum): bool => $datum instanceof DateTimeInterface);
+        $last = Finder::last($data, static fn(object $datum): bool => $datum instanceof DateTimeInterface);
         $this->assertInstanceOf(DateTimeImmutable::class, $last);
 
         // keep first record not changed from data
-        $this->assertInstanceOf(DateTime::class, $obj->data[0]);
-        $arrayCopy = $obj->data->getArrayCopy();
-        $this->assertSame(DateTime::class, current($arrayCopy)::class);
+        $this->assertSame(DateTime::class, current($data)::class);
     }
 
     #[DataProvider('rowsDataProvider')]

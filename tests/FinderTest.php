@@ -7,10 +7,15 @@ namespace ArrayLookup\Tests;
 use ArrayIterator;
 use ArrayLookup\Finder;
 use ArrayObject;
+use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
+use function current;
 use function str_contains;
 
 final class FinderTest extends TestCase
@@ -252,6 +257,21 @@ final class FinderTest extends TestCase
                 null,
             ],
         ];
+    }
+
+    public function testLastKeepCurrentOriginalData(): void
+    {
+        $obj       = new stdClass();
+        $obj->data = new ArrayIterator([new DateTime('now'), new DateTimeImmutable('now'), new stdClass()]);
+
+        // get last
+        $last = Finder::last($obj->data, static fn(object $datum): bool => $datum instanceof DateTimeInterface);
+        $this->assertInstanceOf(DateTimeImmutable::class, $last);
+
+        // keep first record not changed from data
+        $this->assertInstanceOf(DateTime::class, $obj->data[0]);
+        $arrayCopy = $obj->data->getArrayCopy();
+        $this->assertSame(DateTime::class, current($arrayCopy)::class);
     }
 
     #[DataProvider('rowsDataProvider')]

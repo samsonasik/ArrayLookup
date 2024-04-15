@@ -271,6 +271,21 @@ final class FinderTest extends TestCase
         $this->assertSame(DateTime::class, current($data)::class);
     }
 
+    private function getGenerator(): Generator
+    {
+        yield 1;
+        yield 2;
+        yield 3;
+    }
+
+    public function testLastFromGenerator(): void
+    {
+        $generator = $this->getGenerator();
+        $filter    = static fn(int $datum): bool => $datum > 1;
+
+        $this->assertSame(3, Finder::last($generator, $filter));
+    }
+
     #[DataProvider('rowsDataProvider')]
     public function testRows(iterable $data, callable $filter, array $expected): void
     {

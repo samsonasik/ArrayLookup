@@ -118,8 +118,6 @@ final class Finder
 
             return $resortkey;
         }
-
-        return null;
     }
 
     /**

@@ -71,6 +71,10 @@ final class Finder
         // ensure data is array for end(), key(), current(), prev() usage
         Assert::isArray($data);
 
+        if ($data === []) {
+            return null;
+        }
+
         // Use end(), key(), current(), prev() usage instead of array_reverse()
         // to avoid immediatelly got "Out of memory" on many data
         // see https://3v4l.org/IHo2H vs https://3v4l.org/Wqejc

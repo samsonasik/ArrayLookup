@@ -159,6 +159,11 @@ final class FinderTest extends TestCase
                 static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
                 null,
             ],
+            [
+                [],
+                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
+                null,
+            ],
         ];
     }
 

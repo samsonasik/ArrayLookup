@@ -86,6 +86,11 @@ final class OnlyTest extends TestCase
                 static fn($datum): bool => $datum == 1,
                 false,
             ],
+            [
+                [1, "1"],
+                static fn($datum): bool => $datum == 1,
+                true,
+            ],
         ];
     }
 

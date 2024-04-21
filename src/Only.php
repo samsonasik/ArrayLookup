@@ -50,7 +50,7 @@ final class Only
         // usage must be higher than 0
         Assert::greaterThan($maxCount, 0);
 
-        if (count($data) < $maxCount) {
+        if (iterator_count($data) < $maxCount) {
             return false;
         }
 

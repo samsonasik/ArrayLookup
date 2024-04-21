@@ -10,6 +10,9 @@ use function count;
 use function is_array;
 use function iterator_count;
 
+/**
+ * @internal
+ */
 final class Counter
 {
     /**

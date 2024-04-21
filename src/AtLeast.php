@@ -7,7 +7,7 @@ namespace ArrayLookup;
 use Traversable;
 use Webmozart\Assert\Assert;
 
-use function count;
+use function iterator_count;
 
 final class AtLeast
 {

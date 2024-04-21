@@ -78,6 +78,11 @@ final class AtLeastTest extends TestCase
                 static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 1,
                 false
             ],
+            [
+                [1],
+                static fn($datum): bool => $datum == 1,
+                false,
+            ],
         ];
     }
 

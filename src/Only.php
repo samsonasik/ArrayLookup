@@ -7,6 +7,8 @@ namespace ArrayLookup;
 use Traversable;
 use Webmozart\Assert\Assert;
 
+use function count;
+
 final class Only
 {
     /**
@@ -47,6 +49,10 @@ final class Only
     ): bool {
         // usage must be higher than 0
         Assert::greaterThan($maxCount, 0);
+
+        if (count($data) < $maxCount) {
+            return false;
+        }
 
         $totalFound = 0;
         foreach ($data as $key => $datum) {

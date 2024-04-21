@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ArrayLookup\Tests;
 
+use ArrayIterator;
 use ArrayLookup\AtLeast;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -46,7 +47,7 @@ final class AtLeastTest extends TestCase
     }
 
     #[DataProvider('twiceDataProvider')]
-    public function testTwice(array $data, callable $filter, bool $expected): void
+    public function testTwice(iterable $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
             $expected,
@@ -84,7 +85,17 @@ final class AtLeastTest extends TestCase
                 false,
             ],
             [
+                new ArrayIterator([1]),
+                static fn($datum): bool => $datum == 1,
+                false,
+            ],
+            [
                 [1, "1"],
+                static fn($datum): bool => $datum == 1,
+                true,
+            ],
+            [
+                new ArrayIterator([1, "1"]),
                 static fn($datum): bool => $datum == 1,
                 true,
             ],
@@ -94,7 +105,17 @@ final class AtLeastTest extends TestCase
                 true,
             ],
             [
+                new ArrayIterator([1, true]),
+                static fn($datum): bool => $datum == 1,
+                true,
+            ],
+            [
                 [1, true, "1"],
+                static fn($datum): bool => $datum == 1,
+                true,
+            ],
+            [
+                new ArrayIterator([1, true, "1"]),
                 static fn($datum): bool => $datum == 1,
                 true,
             ],

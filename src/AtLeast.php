@@ -7,8 +7,6 @@ namespace ArrayLookup;
 use Traversable;
 use Webmozart\Assert\Assert;
 
-use function iterator_count;
-
 final class AtLeast
 {
     /**
@@ -50,7 +48,7 @@ final class AtLeast
         // usage must be higher than 0
         Assert::greaterThan($maxCount, 0);
 
-        if (iterator_count($data) < $maxCount) {
+        if (Counter::count($data) < $maxCount) {
             return false;
         }
 

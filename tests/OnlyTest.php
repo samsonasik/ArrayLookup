@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ArrayLookup\Tests;
 
+use ArrayIterator;
 use ArrayLookup\Only;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -49,7 +50,7 @@ final class OnlyTest extends TestCase
 
     // phpcs:enable
     #[DataProvider('twiceDataProvider')]
-    public function testTwice(array $data, callable $filter, bool $expected): void
+    public function testTwice(iterable $data, callable $filter, bool $expected): void
     {
         $this->assertSame(
             $expected,
@@ -87,7 +88,17 @@ final class OnlyTest extends TestCase
                 false,
             ],
             [
+                new ArrayIterator([1]),
+                static fn($datum): bool => $datum == 1,
+                false,
+            ],
+            [
                 [1, "1"],
+                static fn($datum): bool => $datum == 1,
+                true,
+            ],
+            [
+                new ArrayIterator([1, "1"]),
                 static fn($datum): bool => $datum == 1,
                 true,
             ],
@@ -97,7 +108,17 @@ final class OnlyTest extends TestCase
                 true,
             ],
             [
+                new ArrayIterator([1, true]),
+                static fn($datum): bool => $datum == 1,
+                true,
+            ],
+            [
                 [1, true, "1"],
+                static fn($datum): bool => $datum == 1,
+                false,
+            ],
+            [
+                new ArrayIterator([1, true, "1"]),
                 static fn($datum): bool => $datum == 1,
                 false,
             ],

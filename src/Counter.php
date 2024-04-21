@@ -10,7 +10,7 @@ use function count;
 use function is_array;
 use function iterator_count;
 
-class Counter
+final class Counter
 {
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data

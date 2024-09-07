@@ -9,19 +9,13 @@ use Webmozart\Assert\Assert;
 
 final class Collector
 {
-    /**
-     * @var array<int|string, mixed>|Traversable<int|string, mixed>
-     */
+    /** @var array<int|string, mixed>|Traversable<int|string, mixed> */
     private static iterable $data = [];
 
-    /**
-     * @var callable(mixed $datum, int|string|null $key=): bool|null
-     */
+    /** @var callable(mixed $datum, int|string|null $key=): bool|null */
     private $when;
 
-    /**
-     * @var callable(mixed $datum, int|string|null $key=): mixed
-     */
+    /** @var callable(mixed $datum, int|string|null $key=): mixed */
     private $transform;
 
     private ?int $limit = null;
@@ -31,7 +25,7 @@ final class Collector
      */
     public static function setUp(iterable $data): self
     {
-        $self = new self();
+        $self        = new self();
         $self->$data = $data;
 
         return $self;
@@ -72,7 +66,7 @@ final class Collector
         Assert::isCallable($this->when);
         Assert::isCallable($this->transform);
 
-        $count = 0;
+        $count         = 0;
         $collectedData = [];
 
         foreach ($this->data as $key => $datum) {

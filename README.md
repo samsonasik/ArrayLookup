@@ -18,6 +18,7 @@ Features
 - [x] Verify at least times: `once()`, `twice()`, `times()`
 - [x] Verify exact times: `once()`, `twice()`, `times()`
 - [x] Search data: `first()`, `last()`, `rows()`
+- [x] Collect data with filter and transform
 
 Installation
 ------------
@@ -366,4 +367,37 @@ $limit = 1;
 var_dump(
     Finder::rows($data, $filter, limit: $limit)
 ); // [1]
+```
+
+**4. Collector**
+---------------
+
+It collect filtered data, with new transformed each data found:
+
+**Before**
+
+```php
+$newArray = [];
+
+foreach ($data as $datum) {
+    if (is_string($datum)) {
+        $newArray[] = trim($datum);
+    }
+}
+```
+
+**After**
+
+```php
+use ArrayLookup::Collector;
+
+$when = fn ($datum): bool => is_string($datum);
+$limit = 2;
+$transform = fn ($datum): string => trim($datum);
+
+$newArray = Collector::setUp($data)
+       ->when($when)
+       ->withLimit(2) // optional to only collect some data provided by limit config
+       ->withTransform($transform)
+       ->getResults();
 ```

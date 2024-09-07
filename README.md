@@ -396,7 +396,7 @@ $limit = 2;
 $transform = fn ($datum): string => trim($datum);
 
 $newArray = Collector::setUp($data)
-       ->when($when)
+       ->when($when) // optional, can just transform without filtering
        ->withLimit(2) // optional to only collect some data provided by limit config
        ->withTransform($transform)
        ->getResults();

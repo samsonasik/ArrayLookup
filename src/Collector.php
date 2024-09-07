@@ -7,15 +7,17 @@ namespace ArrayLookup;
 use Traversable;
 use Webmozart\Assert\Assert;
 
+use function is_callable;
+
 final class Collector
 {
     /** @var array<int|string, mixed>|Traversable<int|string, mixed> */
     private iterable $data = [];
 
-    /** @var callable(mixed $datum, int|string|null $key=): bool|null */
+    /** @var null|callable(mixed $datum, int|string|null $key=): bool */
     private $when;
 
-    /** @var callable(mixed $datum, int|string|null $key=): mixed */
+    /** @var null|callable(mixed $datum, int|string|null $key=): mixed */
     private $transform;
 
     private ?int $limit = null;
@@ -62,20 +64,26 @@ final class Collector
      */
     public function getResults(): array
     {
-        // ensure when property is set early via ->when() and ->withTransform() method
-        Assert::isCallable($this->when);
+        // ensure transform property is set early ->withTransform() method
         Assert::isCallable($this->transform);
 
-        $count         = 0;
-        $collectedData = [];
+        $count          = 0;
+        $collectedData  = [];
+        $isCallableWhen = is_callable($this->when);
 
         foreach ($this->data as $key => $datum) {
-            $isFound = ($this->when)($datum, $key);
+            if ($isCallableWhen) {
+                /**
+                 * @var callable(mixed $datum, int|string|null $key=): bool $when
+                 */
+                $when    = $this->when;
+                $isFound = ($when)($datum, $key);
 
-            Assert::boolean($isFound);
+                Assert::boolean($isFound);
 
-            if (! $isFound) {
-                continue;
+                if (! $isFound) {
+                    continue;
+                }
             }
 
             $collectedData[] = ($this->transform)($datum, $key);

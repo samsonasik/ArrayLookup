@@ -70,11 +70,13 @@ final class Collector
         $count          = 0;
         $collectedData  = [];
         $isCallableWhen = is_callable($this->when);
-        $when           = $this->when;
 
         foreach ($this->data as $key => $datum) {
             if ($isCallableWhen) {
-                /** @var callable(mixed $datum, int|string|null $key=): bool $when */
+                /**
+                 * @var callable(mixed $datum, int|string|null $key=): bool $when
+                 */
+                $when    = $this->when;
                 $isFound = ($when)($datum, $key);
 
                 Assert::boolean($isFound);

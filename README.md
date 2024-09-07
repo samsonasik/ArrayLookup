@@ -389,7 +389,7 @@ foreach ($data as $datum) {
 **After**
 
 ```php
-use ArrayLookup::Collector;
+use ArrayLookup\Collector;
 
 $when = fn ($datum): bool => is_string($datum);
 $limit = 2;

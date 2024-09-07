@@ -13,6 +13,21 @@ use function trim;
 
 final class CollectorTest extends TestCase
 {
+    public function testWithoutWhen(): void
+    {
+        $data = [
+            ' a ',
+            ' b ',
+            ' c ',
+        ];
+
+        $results = Collector::setUp($data)
+            ->withTransform(fn (string $datum): string => trim($datum))
+            ->getResults();
+
+        $this->assertSame(['a', 'b', 'c'], $results);
+    }
+
     public function testWithoutLimit(): void
     {
         $data = [

@@ -7,6 +7,8 @@ namespace ArrayLookup;
 use Traversable;
 use Webmozart\Assert\Assert;
 
+use function is_callable;
+
 final class Collector
 {
     /** @var array<int|string, mixed>|Traversable<int|string, mixed> */
@@ -65,9 +67,9 @@ final class Collector
         // ensure transform property is set early ->withTransform() method
         Assert::isCallable($this->transform);
 
-        $count         = 0;
-        $collectedData = [];
-        $isCallableWhen = is_callable($this-when);
+        $count          = 0;
+        $collectedData  = [];
+        $isCallableWhen = is_callable($this->when);
 
         foreach ($this->data as $key => $datum) {
             if ($isCallableWhen) {

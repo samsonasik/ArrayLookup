@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 final class Collector
 {
     /** @var array<int|string, mixed>|Traversable<int|string, mixed> */
-    private static iterable $data = [];
+    private iterable $data = [];
 
     /** @var callable(mixed $datum, int|string|null $key=): bool|null */
     private $when;
@@ -25,8 +25,8 @@ final class Collector
      */
     public static function setUp(iterable $data): self
     {
-        $self        = new self();
-        $self->$data = $data;
+        $self       = new self();
+        $self->data = $data;
 
         return $self;
     }

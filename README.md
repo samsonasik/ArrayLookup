@@ -230,7 +230,7 @@ $times = 2;
 var_dump(Only::times($data, $filter, $times)) // false
 ```
 
-**3. Finder**
+**C. Finder**
 ---------------
 
 *1. `Finder::first()`*
@@ -369,7 +369,7 @@ var_dump(
 ); // [1]
 ```
 
-**4. Collector**
+**D. Collector**
 ---------------
 
 It collect filtered data, with new transformed each data found:

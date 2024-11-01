@@ -20,7 +20,7 @@ final class Finder
 {
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
      */
     public static function first(iterable $data, callable $filter, bool $returnKey = false): mixed
     {
@@ -55,7 +55,7 @@ final class Finder
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
      */
     public static function last(
         iterable $data,
@@ -120,7 +120,7 @@ final class Finder
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
      * @return mixed[]
      */
     public static function rows(

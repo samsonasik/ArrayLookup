@@ -7,3 +7,4 @@
 /build/logs/*
 /.phpunit.result.cache
 /.phpunit.cache
+/.idea/

@@ -36,6 +36,7 @@ jobs:
       - name: "Run test suite"
         run: "composer test"
       - name: Upload coverage to Codecov
+        if: github.event.pull_request.head.repo.full_name == 'samsonasik/ArrayLookup'
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

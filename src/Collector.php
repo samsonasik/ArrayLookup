@@ -14,10 +14,10 @@ final class Collector
     /** @var array<int|string, mixed>|Traversable<int|string, mixed> */
     private iterable $data = [];
 
-    /** @var null|callable(mixed $datum, int|string|null $key=): bool */
+    /** @var null|callable(mixed $datum, int|string|null $key): bool */
     private $when;
 
-    /** @var null|callable(mixed $datum, int|string|null $key=): mixed */
+    /** @var null|callable(mixed $datum, int|string|null $key): mixed */
     private $transform;
 
     private ?int $limit = null;
@@ -34,7 +34,7 @@ final class Collector
     }
 
     /**
-     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
      */
     public function when(callable $filter): self
     {
@@ -51,7 +51,7 @@ final class Collector
     }
 
     /**
-     * @param callable(mixed $datum, int|string|null $key=): mixed $transform
+     * @param callable(mixed $datum, int|string|null $key): mixed $transform
      */
     public function withTransform(callable $transform): self
     {
@@ -74,7 +74,7 @@ final class Collector
         foreach ($this->data as $key => $datum) {
             if ($isCallableWhen) {
                 /**
-                 * @var callable(mixed $datum, int|string|null $key=): bool $when
+                 * @var callable(mixed $datum, int|string|null $key): bool $when
                  */
                 $when    = $this->when;
                 $isFound = ($when)($datum, $key);

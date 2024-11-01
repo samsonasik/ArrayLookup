@@ -11,7 +11,7 @@ final class Only
 {
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
      */
     public static function once(iterable $data, callable $filter): bool
     {
@@ -20,7 +20,7 @@ final class Only
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
      */
     public static function twice(iterable $data, callable $filter): bool
     {
@@ -29,7 +29,7 @@ final class Only
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
      */
     public static function times(iterable $data, callable $filter, int $count): bool
     {
@@ -38,7 +38,7 @@ final class Only
 
     /**
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
-     * @param callable(mixed $datum, int|string|null $key=): bool $filter
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
      */
     private static function onlyFoundTimes(
         iterable $data,

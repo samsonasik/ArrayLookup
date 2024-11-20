@@ -1,2 +1,5 @@
 includes:
 	- vendor/phpstan/phpstan-webmozart-assert/extension.neon
+
+parameters:
+	treatPhpDocTypesAsCertain: false

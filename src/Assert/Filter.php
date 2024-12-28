@@ -11,7 +11,10 @@ use ReflectionMethod;
 use ReflectionNamedType;
 use Webmozart\Assert\Assert;
 
+use function explode;
+use function is_object;
 use function sprintf;
+use function str_contains;
 
 final class Filter
 {

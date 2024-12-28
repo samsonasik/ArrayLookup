@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ArrayLookup;
 
+use ArrayLookup\Assert\Filter;
 use Traversable;
 use Webmozart\Assert\Assert;
 
@@ -67,19 +68,21 @@ final class Collector
         // ensure transform property is set early ->withTransform() method
         Assert::isCallable($this->transform);
 
-        $count          = 0;
-        $collectedData  = [];
-        $isCallableWhen = is_callable($this->when);
+        $count         = 0;
+        $collectedData = [];
+
+        if (is_callable($this->when)) {
+            // filter must be a callable with bool return type
+            Filter::boolean($this->when);
+        }
 
         foreach ($this->data as $key => $datum) {
-            if ($isCallableWhen) {
+            if ($this->when !== null) {
                 /**
                  * @var callable(mixed $datum, int|string|null $key): bool $when
                  */
                 $when    = $this->when;
                 $isFound = ($when)($datum, $key);
-
-                Assert::boolean($isFound);
 
                 if (! $isFound) {
                     continue;

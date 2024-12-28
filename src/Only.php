@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ArrayLookup;
 
+use ArrayLookup\Assert\Filter;
 use Traversable;
 use Webmozart\Assert\Assert;
 
@@ -47,13 +48,12 @@ final class Only
     ): bool {
         // usage must be higher than 0
         Assert::greaterThan($maxCount, 0);
+        // filter must be a callable with bool return type
+        Filter::boolean($filter);
 
         $totalFound = 0;
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);
-
-            // returns of callable must be bool
-            Assert::boolean($isFound);
 
             if (! $isFound) {
                 continue;

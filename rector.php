@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\PHPUnit\Set\PHPUnitSetList;
+use Rector\TypeDeclaration\Rector\ClassMethod\BoolReturnTypeFromBooleanStrictReturnsRector;
 
 return RectorConfig::configure()
     ->withPhpSets(php81: true)
@@ -15,8 +15,11 @@ return RectorConfig::configure()
         privatization: true,
         typeDeclarations: true
     )
-    ->withSets([
-        PHPUnitSetList::PHPUNIT_100,
+    ->withComposerBased(phpunit: true)
+    ->withSkip([
+        BoolReturnTypeFromBooleanStrictReturnsRector::class => [
+            __DIR__ . '/tests/FilterTest.php',
+        ],
     ])
     ->withParallel()
     ->withRootFiles()

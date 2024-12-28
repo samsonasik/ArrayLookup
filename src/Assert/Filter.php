@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace ArrayLookup\Assert;
 
+use Closure;
 use InvalidArgumentException;
 use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionNamedType;
-use TypeError;
+use Webmozart\Assert\Assert;
 
 use function sprintf;
 
@@ -16,10 +17,19 @@ final class Filter
 {
     public static function boolean(callable $filter): void
     {
-        try {
+        if ($filter instanceof Closure) {
             $reflection = new ReflectionFunction($filter);
-        } catch (TypeError) {
+        } elseif (is_object($filter)) {
             $reflection = new ReflectionMethod($filter, '__invoke');
+        } else {
+            Assert::string($filter);
+
+            if (! str_contains($filter, '::')) {
+                $reflection = new ReflectionFunction($filter);
+            } else {
+                [, $method] = explode('::', $filter);
+                $reflection = new ReflectionMethod($filter, $method);
+            }
         }
 
         $returnType = $reflection->getReturnType();

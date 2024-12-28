@@ -70,15 +70,14 @@ final class Collector
 
         $count          = 0;
         $collectedData  = [];
-        $isCallableWhen = is_callable($this->when);
 
-        if ($isCallableWhen) {
+        if (is_callable($this->when)) {
             // filter must be a callable with bool return type
             Filter::boolean($this->when);
         }
 
         foreach ($this->data as $key => $datum) {
-            if ($isCallableWhen) {
+            if ($this->when !== null) {
                 /**
                  * @var callable(mixed $datum, int|string|null $key): bool $when
                  */

@@ -78,11 +78,7 @@ final class Collector
 
         foreach ($this->data as $key => $datum) {
             if ($this->when !== null) {
-                /**
-                 * @var callable(mixed $datum, int|string|null $key): bool $when
-                 */
-                $when    = $this->when;
-                $isFound = ($when)($datum, $key);
+                $isFound = ($this->when)($datum, $key);
 
                 if (! $isFound) {
                     continue;

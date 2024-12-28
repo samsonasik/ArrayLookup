@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ArrayLookup;
 
 use ArrayIterator;
+use ArrayLookup\Assert\Filter;
 use ArrayObject;
 use Traversable;
 use Webmozart\Assert\Assert;
@@ -24,11 +25,11 @@ final class Finder
      */
     public static function first(iterable $data, callable $filter, bool $returnKey = false): mixed
     {
+        // filter must be a callable with bool return type
+        Filter::boolean($filter);
+
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);
-
-            // returns of callable must be bool
-            Assert::boolean($isFound);
 
             if (! $isFound) {
                 continue;
@@ -71,6 +72,9 @@ final class Finder
         // ensure data is array for end(), key(), current(), prev() usage
         Assert::isArray($data);
 
+        // filter must be a callable with bool return type
+        Filter::boolean($filter);
+
         // Use end(), key(), current(), prev() usage instead of array_reverse()
         // to avoid immediatelly got "Out of memory" on many data
         // see https://3v4l.org/IHo2H vs https://3v4l.org/Wqejc
@@ -90,9 +94,6 @@ final class Finder
 
             $current = current($data);
             $isFound = $filter($current, $key);
-
-            // returns of callable must be bool
-            Assert::boolean($isFound);
 
             if (! $isFound) {
                 // go to previous row
@@ -133,11 +134,11 @@ final class Finder
         $newKey     = 0;
         $totalFound = 0;
 
+        // filter must be a callable with bool return type
+        Filter::boolean($filter);
+
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);
-
-            // returns of callable must be bool
-            Assert::boolean($isFound);
 
             if (! $isFound) {
                 continue;

@@ -72,7 +72,7 @@ final class Collector
         $collectedData  = [];
         $isCallableWhen = is_callable($this->when);
 
-        if (is_callable($this->when)) {
+        if ($isCallableWhen) {
             // filter must be a callable with bool return type
             Filter::boolean($this->when);
         }

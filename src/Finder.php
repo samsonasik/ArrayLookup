@@ -76,7 +76,7 @@ final class Finder
         Filter::boolean($filter);
 
         // Use end(), key(), current(), prev() usage instead of array_reverse()
-        // to avoid immediatelly got "Out of memory" on many data
+        // to avoid immediately got "Out of memory" on many data
         // see https://3v4l.org/IHo2H vs https://3v4l.org/Wqejc
 
         // go to end of array

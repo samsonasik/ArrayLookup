@@ -23,6 +23,17 @@ final class FilterTest extends TestCase
         $this->assertTrue(AtLeast::once($data, $filter));
     }
 
+    public function testOnceWithStringFilter(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected Closure or invokable object, string given');
+
+        $data   = [1, 'f'];
+        $filter = 'is_string';
+
+        AtLeast::once($data, $filter);
+    }
+
     public function testWithoutReturnTypeCallable(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -39,7 +50,7 @@ final class FilterTest extends TestCase
         };
         // phpcs:enable
 
-        $this->assertTrue(AtLeast::once($data, $filter));
+        AtLeast::once($data, $filter);
     }
 
     public function testWithNonBoolReturnTypeCallable(): void
@@ -55,6 +66,6 @@ final class FilterTest extends TestCase
             }
         };
 
-        $this->assertTrue(AtLeast::once($data, $filter));
+        AtLeast::once($data, $filter);
     }
 }

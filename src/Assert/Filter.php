@@ -9,12 +9,9 @@ use InvalidArgumentException;
 use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionNamedType;
-use Webmozart\Assert\Assert;
 
-use function explode;
 use function is_object;
 use function sprintf;
-use function str_contains;
 
 final class Filter
 {
@@ -25,14 +22,7 @@ final class Filter
         } elseif (is_object($filter)) {
             $reflection = new ReflectionMethod($filter, '__invoke');
         } else {
-            Assert::string($filter);
-
-            if (! str_contains($filter, '::')) {
-                $reflection = new ReflectionFunction($filter);
-            } else {
-                [, $method] = explode('::', $filter);
-                $reflection = new ReflectionMethod($filter, $method);
-            }
+            throw new InvalidArgumentException('Expected Closure or invokable object, string given');
         }
 
         $returnType = $reflection->getReturnType();

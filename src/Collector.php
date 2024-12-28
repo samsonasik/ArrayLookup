@@ -68,8 +68,8 @@ final class Collector
         // ensure transform property is set early ->withTransform() method
         Assert::isCallable($this->transform);
 
-        $count          = 0;
-        $collectedData  = [];
+        $count         = 0;
+        $collectedData = [];
 
         if (is_callable($this->when)) {
             // filter must be a callable with bool return type

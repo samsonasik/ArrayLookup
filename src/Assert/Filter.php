@@ -10,6 +10,7 @@ use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionNamedType;
 
+use function gettype;
 use function is_object;
 use function sprintf;
 

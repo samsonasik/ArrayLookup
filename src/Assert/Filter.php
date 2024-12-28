@@ -24,7 +24,7 @@ final class Filter
             $reflection = new ReflectionMethod($filter, '__invoke');
         } else {
             throw new InvalidArgumentException(
-                sprintf('Expected Closure or invokable object, %s given', gettype($filter))
+                sprintf('Expected Closure or invokable object on callable filter, %s given', gettype($filter))
             );
         }
 

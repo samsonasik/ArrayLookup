@@ -26,7 +26,7 @@ final class FilterTest extends TestCase
     public function testOnceWithStringFilter(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected Closure or invokable object, string given');
+        $this->expectExceptionMessage('Expected Closure or invokable object on callable filter, string given');
 
         $data   = [1, 'f'];
         $filter = 'is_string';

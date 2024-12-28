@@ -22,7 +22,9 @@ final class Filter
         } elseif (is_object($filter)) {
             $reflection = new ReflectionMethod($filter, '__invoke');
         } else {
-            throw new InvalidArgumentException('Expected Closure or invokable object, string given');
+            throw new InvalidArgumentException(
+                sprintf('Expected Closure or invokable object, %s given', gettype($filter))
+            );
         }
 
         $returnType = $reflection->getReturnType();

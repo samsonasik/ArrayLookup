@@ -35,7 +35,7 @@ Usage
 **A. AtLeast**
 ---------------
 
-### 1. `AtLeast::once()`
+#### 1. `AtLeast::once()`
 
 It verify that data has filtered found item at least once.
 
@@ -65,7 +65,7 @@ $filter = static fn($datum, $key): bool => $datum === 4 && $key >= 0;
 var_dump(AtLeast::once($data, $filter)) // false
 ```
 
-### 2. `AtLeast::twice()`
+#### 2. `AtLeast::twice()`
 
 It verify that data has filtered found items at least twice.
 
@@ -95,7 +95,7 @@ $filter = static fn($datum, $key): bool => $datum === 1 && $key >= 0;
 var_dump(AtLeast::twice($data, $filter)) // false
 ```
 
-### 3. `AtLeast::times()`
+#### 3. `AtLeast::times()`
 
 It verify that data has filtered found items at least times passed in 3rd arg.
 
@@ -132,7 +132,7 @@ var_dump(AtLeast::times($data, $filter, $times)) // false
 **B. Only**
 ---------------
 
-### 1. `Only::once()`
+#### 1. `Only::once()`
 
 It verify that data has filtered found item exactly found only once.
 
@@ -164,7 +164,7 @@ $filter = static fn($datum, $key): bool => $datum == 1  && $key >= 0;
 var_dump(Only::once($data, $filter)) // false
 ```
 
-### 2. `Only::twice()`
+#### 2. `Only::twice()`
 
 It verify that data has filtered found items exactly found only twice.
 
@@ -194,7 +194,7 @@ $filter = static fn($datum, $key): bool => (bool) $datum && $key >= 0;
 var_dump(Only::twice($data, $filter)) // false
 ```
 
-### 3. `Only::times()`
+#### 3. `Only::times()`
 
 It verify that data has filtered found items exactly found only same with times passed in 3rd arg.
 
@@ -233,7 +233,7 @@ var_dump(Only::times($data, $filter, $times)) // false
 **C. Finder**
 ---------------
 
-### 1. `Finder::first()`
+#### 1. `Finder::first()`
 
 It search first data filtered found.
 
@@ -267,7 +267,7 @@ $filter = static fn($datum, $key): bool => $datum == 1000 && $key >= 0;
 var_dump(Finder::first($data, $filter)) // null
 ```
 
-### 2. `Finder::last()`
+#### 2. `Finder::last()`
 
 It search last data filtered found.
 
@@ -321,7 +321,7 @@ var_dump(Finder::last(
 )); // null
 ```
 
-### 3. `Finder::rows()`
+#### 3. `Finder::rows()`
 
 It get rows data filtered found.
 

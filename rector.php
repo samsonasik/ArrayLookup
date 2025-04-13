@@ -13,7 +13,8 @@ return RectorConfig::configure()
         deadCode: true,
         naming: true,
         privatization: true,
-        typeDeclarations: true
+        typeDeclarations: true,
+        phpunitCodeQuality: true
     )
     ->withComposerBased(phpunit: true)
     ->withSkip([

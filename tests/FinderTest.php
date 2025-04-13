@@ -11,6 +11,7 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Generator;
+use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -29,29 +30,27 @@ final class FinderTest extends TestCase
         );
     }
 
-    public static function firstDataProvider(): array
+    public static function firstDataProvider(): Iterator
     {
-        return [
-            [
-                [1, 2, 3],
-                static fn($datum): bool => $datum === 2,
-                2,
-            ],
-            [
-                [1, "1", 3],
-                static fn($datum): bool => $datum === 1000,
-                null,
-            ],
-            [
-                ['abc test', 'def', 'some test'],
-                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
-                'abc test',
-            ],
-            [
-                ['abc test', 'def', 'some test'],
-                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
-                null,
-            ],
+        yield [
+            [1, 2, 3],
+            static fn($datum): bool => $datum === 2,
+            2,
+        ];
+        yield [
+            [1, "1", 3],
+            static fn($datum): bool => $datum === 1000,
+            null,
+        ];
+        yield [
+            ['abc test', 'def', 'some test'],
+            static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
+            'abc test',
+        ];
+        yield [
+            ['abc test', 'def', 'some test'],
+            static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
+            null,
         ];
     }
 
@@ -64,29 +63,27 @@ final class FinderTest extends TestCase
         );
     }
 
-    public static function firstReturnKeyDataProvider(): array
+    public static function firstReturnKeyDataProvider(): Iterator
     {
-        return [
-            [
-                [1, 2, 3],
-                static fn($datum): bool => $datum === 2,
-                1,
-            ],
-            [
-                [1, "1", 3],
-                static fn($datum): bool => $datum === 1000,
-                null,
-            ],
-            [
-                ['abc test', 'def', 'some test'],
-                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
-                0,
-            ],
-            [
-                ['abc test', 'def', 'some test'],
-                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
-                null,
-            ],
+        yield [
+            [1, 2, 3],
+            static fn($datum): bool => $datum === 2,
+            1,
+        ];
+        yield [
+            [1, "1", 3],
+            static fn($datum): bool => $datum === 1000,
+            null,
+        ];
+        yield [
+            ['abc test', 'def', 'some test'],
+            static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
+            0,
+        ];
+        yield [
+            ['abc test', 'def', 'some test'],
+            static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
+            null,
         ];
     }
 
@@ -99,7 +96,7 @@ final class FinderTest extends TestCase
         );
     }
 
-    public static function lastDataProvider(): array
+    public static function lastDataProvider(): Iterator
     {
         $generator = static function (): Generator {
             yield 6;
@@ -107,58 +104,55 @@ final class FinderTest extends TestCase
             yield 8;
             yield 9;
         };
-
-        return [
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum > 5,
-                9,
-            ],
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
-            [
-                new ArrayIterator([6, 7, 8, 9]),
-                static fn($datum): bool => $datum > 5,
-                9,
-            ],
-            [
-                new ArrayIterator([6, 7, 8, 9]),
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
-            [
-                new ArrayObject([6, 7, 8, 9]),
-                static fn($datum): bool => $datum > 5,
-                9,
-            ],
-            [
-                new ArrayObject([6, 7, 8, 9]),
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
-            [
-                $generator(),
-                static fn($datum): bool => $datum > 5,
-                9,
-            ],
-            [
-                $generator(),
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
-            [
-                ['abc test', 'def', 'some test'],
-                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
-                'some test',
-            ],
-            [
-                ['abc test', 'def', 'some test'],
-                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
-                null,
-            ],
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum > 5,
+            9,
+        ];
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum < 5,
+            null,
+        ];
+        yield [
+            new ArrayIterator([6, 7, 8, 9]),
+            static fn($datum): bool => $datum > 5,
+            9,
+        ];
+        yield [
+            new ArrayIterator([6, 7, 8, 9]),
+            static fn($datum): bool => $datum < 5,
+            null,
+        ];
+        yield [
+            new ArrayObject([6, 7, 8, 9]),
+            static fn($datum): bool => $datum > 5,
+            9,
+        ];
+        yield [
+            new ArrayObject([6, 7, 8, 9]),
+            static fn($datum): bool => $datum < 5,
+            null,
+        ];
+        yield [
+            $generator(),
+            static fn($datum): bool => $datum > 5,
+            9,
+        ];
+        yield [
+            $generator(),
+            static fn($datum): bool => $datum < 5,
+            null,
+        ];
+        yield [
+            ['abc test', 'def', 'some test'],
+            static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
+            'some test',
+        ];
+        yield [
+            ['abc test', 'def', 'some test'],
+            static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
+            null,
         ];
     }
 
@@ -171,7 +165,7 @@ final class FinderTest extends TestCase
         );
     }
 
-    public static function lastReturnKeyDataProvider(): array
+    public static function lastReturnKeyDataProvider(): Iterator
     {
         $generator = static function (): Generator {
             yield 6;
@@ -179,58 +173,55 @@ final class FinderTest extends TestCase
             yield 8;
             yield 9;
         };
-
-        return [
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum > 5,
-                3,
-            ],
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
-            [
-                new ArrayIterator([6, 7, 8, 9]),
-                static fn($datum): bool => $datum > 5,
-                3,
-            ],
-            [
-                new ArrayIterator([6, 7, 8, 9]),
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
-            [
-                new ArrayObject([6, 7, 8, 9]),
-                static fn($datum): bool => $datum > 5,
-                3,
-            ],
-            [
-                new ArrayObject([6, 7, 8, 9]),
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
-            [
-                $generator(),
-                static fn($datum): bool => $datum > 5,
-                3,
-            ],
-            [
-                $generator(),
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
-            [
-                ['abc test', 'def', 'some test'],
-                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
-                2,
-            ],
-            [
-                ['abc test', 'def', 'some test'],
-                static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
-                null,
-            ],
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum > 5,
+            3,
+        ];
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum < 5,
+            null,
+        ];
+        yield [
+            new ArrayIterator([6, 7, 8, 9]),
+            static fn($datum): bool => $datum > 5,
+            3,
+        ];
+        yield [
+            new ArrayIterator([6, 7, 8, 9]),
+            static fn($datum): bool => $datum < 5,
+            null,
+        ];
+        yield [
+            new ArrayObject([6, 7, 8, 9]),
+            static fn($datum): bool => $datum > 5,
+            3,
+        ];
+        yield [
+            new ArrayObject([6, 7, 8, 9]),
+            static fn($datum): bool => $datum < 5,
+            null,
+        ];
+        yield [
+            $generator(),
+            static fn($datum): bool => $datum > 5,
+            3,
+        ];
+        yield [
+            $generator(),
+            static fn($datum): bool => $datum < 5,
+            null,
+        ];
+        yield [
+            ['abc test', 'def', 'some test'],
+            static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key >= 0,
+            2,
+        ];
+        yield [
+            ['abc test', 'def', 'some test'],
+            static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
+            null,
         ];
     }
 
@@ -243,19 +234,17 @@ final class FinderTest extends TestCase
         );
     }
 
-    public static function lastReturnKeyResortKeyDataProvider(): array
+    public static function lastReturnKeyResortKeyDataProvider(): Iterator
     {
-        return [
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum > 5,
-                0,
-            ],
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum < 5,
-                null,
-            ],
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum > 5,
+            0,
+        ];
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum < 5,
+            null,
         ];
     }
 
@@ -280,35 +269,33 @@ final class FinderTest extends TestCase
         );
     }
 
-    public static function rowsDataProvider(): array
+    public static function rowsDataProvider(): Iterator
     {
-        return [
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum > 6,
-                [7, 8, 9],
-            ],
-            [
-                [6, 7, 8, 9],
-                static fn($datum, $key): bool => $datum > 6 && $key > 1,
-                [8, 9],
-            ],
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum < 5,
-                [],
-            ],
-            [
-                [6, 7, 'foo' => 8, 9],
-                static fn($datum): bool => $datum > 7,
-                ['foo' => 8, 9],
-            ],
-            // @see https://3v4l.org/0KWZ7Y
-            [
-                [6, 7, '0' => 8, 9],
-                static fn($datum): bool => $datum > 7,
-                [8, 9],
-            ],
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum > 6,
+            [7, 8, 9],
+        ];
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum, $key): bool => $datum > 6 && $key > 1,
+            [8, 9],
+        ];
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum < 5,
+            [],
+        ];
+        yield [
+            [6, 7, 'foo' => 8, 9],
+            static fn($datum): bool => $datum > 7,
+            ['foo' => 8, 9],
+        ];
+        // @see https://3v4l.org/0KWZ7Y
+        yield [
+            [6, 7, '0' => 8, 9],
+            static fn($datum): bool => $datum > 7,
+            [8, 9],
         ];
     }
 
@@ -321,23 +308,21 @@ final class FinderTest extends TestCase
         );
     }
 
-    public static function rowsDataProviderPreserveKey(): array
+    public static function rowsDataProviderPreserveKey(): Iterator
     {
-        return [
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum > 6,
             [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum > 6,
-                [
-                    1 => 7,
-                    2 => 8,
-                    3 => 9,
-                ],
+                1 => 7,
+                2 => 8,
+                3 => 9,
             ],
-            [
-                [6, 7, 8, 9],
-                static fn($datum): bool => $datum < 5,
-                [],
-            ],
+        ];
+        yield [
+            [6, 7, 8, 9],
+            static fn($datum): bool => $datum < 5,
+            [],
         ];
     }
 

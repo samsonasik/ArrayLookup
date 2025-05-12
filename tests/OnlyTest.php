@@ -21,6 +21,7 @@ final class OnlyTest extends TestCase
         );
     }
 
+    // phpcs:disable
     public static function onceDataProvider(): Iterator
     {
         yield [
@@ -36,15 +37,16 @@ final class OnlyTest extends TestCase
         yield [
             ['abc', 'def', 'some test'],
             static fn(string $datum, int $key): bool => $datum === 'def' && $key === 1,
-            true,
+            true
         ];
         yield [
             ['abc', 'def', 'some test'],
             static fn(string $datum, int $key): bool => $datum === 'def' && $key === 2,
-            false,
+            false
         ];
     }
 
+    // phpcs:enable
     #[DataProvider('twiceDataProvider')]
     public function testTwice(array $data, callable $filter, bool $expected): void
     {
@@ -54,6 +56,7 @@ final class OnlyTest extends TestCase
         );
     }
 
+    // phpcs:disable
     public static function twiceDataProvider(): Iterator
     {
         yield [
@@ -69,15 +72,16 @@ final class OnlyTest extends TestCase
         yield [
             ['abc', 'def', 'some test'],
             static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 0,
-            true,
+            true
         ];
         yield [
             ['abc', 'def', 'some test'],
             static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 1,
-            false,
+            false
         ];
     }
 
+    // phpcs:enable
     #[DataProvider('timesDataProvider')]
     public function testTimes(array $data, callable $filter, bool $expected): void
     {

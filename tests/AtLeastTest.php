@@ -53,7 +53,6 @@ final class AtLeastTest extends TestCase
         );
     }
 
-    // phpcs:disable
     public static function twiceDataProvider(): Iterator
     {
         yield [
@@ -69,16 +68,15 @@ final class AtLeastTest extends TestCase
         yield [
             ['abc', 'def', 'some test'],
             static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 0,
-            true
+            true,
         ];
         yield [
             ['abc', 'def', 'some test'],
             static fn(string $datum, int $key): bool => $datum !== 'abc' && $key > 1,
-            false
+            false,
         ];
     }
 
-    // phpcs:enable
     #[DataProvider('timesDataProvider')]
     public function testTimes(array $data, callable $filter, bool $expected): void
     {

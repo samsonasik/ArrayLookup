@@ -68,4 +68,37 @@ final class FilterTest extends TestCase
 
         AtLeast::once($data, $filter);
     }
+
+    public function testWithUnionReturnTypeCallable(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected a bool return type on callable filter, string|bool given');
+
+        $data   = [1, 2, 3];
+        $filter = new class {
+            public function __invoke(int $datum): string|bool
+            {
+                return 'test';
+            }
+        };
+
+        AtLeast::once($data, $filter);
+    }
+
+    public function testWithIntersectionTypeCallable(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Expected a bool return type on callable filter, ArrayLookup\Tests\A&ArrayLookup\Tests\B given'
+        );
+
+        $data   = [1, 2, 3];
+        $filter = new class {
+            public function __invoke(int $datum): A&B
+            {
+            }
+        };
+
+        AtLeast::once($data, $filter);
+    }
 }

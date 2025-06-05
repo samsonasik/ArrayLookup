@@ -37,7 +37,7 @@ final class FilterTest extends TestCase
     public function testWithoutReturnTypeCallable(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected a bool return type on callable filter, null given');
+        $this->expectExceptionMessage('Expected a bool return type on callable filter, mixed given');
 
         $data = [1, 2, 3];
 

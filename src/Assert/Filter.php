@@ -50,7 +50,7 @@ final class Filter
         }
 
         if (! $returnType instanceof ReflectionNamedType) {
-            throw new InvalidArgumentException('Expected a bool return type on callable filter, null given');
+            throw new InvalidArgumentException('Expected a bool return type on callable filter, mixed given');
         }
 
         $returnTypeName = $returnType->getName();

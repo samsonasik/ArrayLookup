@@ -28,15 +28,13 @@ final class Filter
 
     public static function boolean(callable $filter): void
     {
-        if ($filter instanceof Closure) {
-            $reflection = new ReflectionFunction($filter);
-        } elseif (is_object($filter)) {
-            $reflection = new ReflectionMethod($filter, '__invoke');
-        } else {
-            throw new InvalidArgumentException(
+        $reflection = match (true) {
+            $filter instanceof Closure => new ReflectionFunction($filter),
+            is_object($filter) => new ReflectionMethod($filter, '__invoke'),
+            default => throw new InvalidArgumentException(
                 sprintf('Expected Closure or invokable object on callable filter, %s given', gettype($filter))
-            );
-        }
+            ),
+        };
 
         $returnType = $reflection->getReturnType();
 

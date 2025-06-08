@@ -11,6 +11,7 @@ use ReflectionIntersectionType;
 use ReflectionMethod;
 use ReflectionNamedType;
 use ReflectionUnionType;
+use Webmozart\Assert\Assert;
 
 use function array_map;
 use function gettype;
@@ -36,8 +37,10 @@ final class Filter
 
         if ($returnType instanceof ReflectionUnionType || $returnType instanceof ReflectionIntersectionType) {
             $separator = $returnType instanceof ReflectionUnionType ? '|' : '&';
-            /** @var ReflectionNamedType[] $types */
-            $types = $returnType->getTypes();
+            $types     = $returnType->getTypes();
+
+            Assert::allIsInstanceOf($types, ReflectionNamedType::class);
+
             throw new InvalidArgumentException(
                 sprintf(
                     'Expected a bool return type on callable filter, %s given',

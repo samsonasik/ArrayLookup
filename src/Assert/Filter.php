@@ -21,6 +21,11 @@ use function sprintf;
 
 final class Filter
 {
+    /**
+     * @var string
+     */
+    private const MESSAGE = 'Expected a bool return type on callable filter, %s given';
+
     public static function boolean(callable $filter): void
     {
         if ($filter instanceof Closure) {
@@ -43,7 +48,7 @@ final class Filter
 
             throw new InvalidArgumentException(
                 sprintf(
-                    'Expected a bool return type on callable filter, %s given',
+                    self::MESSAGE,
                     implode($separator, array_map(
                         static fn (ReflectionNamedType $reflectionNamedType): string => $reflectionNamedType->getName(),
                         $types
@@ -53,13 +58,13 @@ final class Filter
         }
 
         if (! $returnType instanceof ReflectionNamedType) {
-            throw new InvalidArgumentException('Expected a bool return type on callable filter, mixed given');
+            throw new InvalidArgumentException(sprintf(self::MESSAGE, 'mixed'));
         }
 
         $returnTypeName = $returnType->getName();
         if ($returnTypeName !== 'bool') {
             throw new InvalidArgumentException(sprintf(
-                'Expected a bool return type on callable filter, %s given',
+                self::MESSAGE,
                 $returnTypeName
             ));
         }

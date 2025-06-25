@@ -61,17 +61,17 @@ final class Filter
 
         $returnTypeName = $returnType->getName();
 
-        if ($returnTypeName !== 'bool') {
-            throw new InvalidArgumentException(sprintf(
-                self::MESSAGE,
-                $returnTypeName
-            ));
-        }
-
         if ($returnType->allowsNull()) {
             throw new InvalidArgumentException(sprintf(
                 self::MESSAGE,
                 '?' . $returnTypeName
+            ));
+        }
+
+        if ($returnTypeName !== 'bool') {
+            throw new InvalidArgumentException(sprintf(
+                self::MESSAGE,
+                $returnTypeName
             ));
         }
     }

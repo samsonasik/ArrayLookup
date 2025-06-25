@@ -85,6 +85,22 @@ final class FilterTest extends TestCase
         AtLeast::once($data, $filter);
     }
 
+    public function testWithNullableReturnNonBoolTypeCallable(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected a bool return type on callable filter, ?string given');
+
+        $data   = [1, 2, 3];
+        $filter = new class {
+            public function __invoke(int $datum): ?string
+            {
+                return 'test';
+            }
+        };
+
+        AtLeast::once($data, $filter);
+    }
+
     public function testWithUnionReturnTypeCallable(): void
     {
         $this->expectException(InvalidArgumentException::class);

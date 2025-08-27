@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\FunctionLike\NarrowTooWideReturnTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\BoolReturnTypeFromBooleanStrictReturnsRector;
 
 return RectorConfig::configure()
@@ -19,6 +20,9 @@ return RectorConfig::configure()
     ->withComposerBased(phpunit: true)
     ->withSkip([
         BoolReturnTypeFromBooleanStrictReturnsRector::class => [
+            __DIR__ . '/tests/FilterTest.php',
+        ],
+        NarrowTooWideReturnTypeRector::class                => [
             __DIR__ . '/tests/FilterTest.php',
         ],
     ])

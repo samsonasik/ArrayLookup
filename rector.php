@@ -26,6 +26,9 @@ return RectorConfig::configure()
             __DIR__ . '/tests/FilterTest.php',
         ],
     ])
+    ->withSets([
+        __DIR__ . '/vendor/rector/rector/config/set/type-declaration-docblocks.php',
+    ])
     ->withParallel()
     ->withRootFiles()
     ->withPaths([__DIR__ . '/src', __DIR__ . '/tests'])

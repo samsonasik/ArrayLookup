@@ -12,6 +12,9 @@ use stdClass;
 
 final class OnlyTest extends TestCase
 {
+    /**
+     * @param int[]|string[] $data
+     */
     #[DataProvider('onceDataProvider')]
     public function testOnce(array $data, callable $filter, bool $expected): void
     {
@@ -22,6 +25,9 @@ final class OnlyTest extends TestCase
     }
 
     // phpcs:disable
+    /**
+     * @return Iterator<mixed>
+     */
     public static function onceDataProvider(): Iterator
     {
         yield [
@@ -47,6 +53,9 @@ final class OnlyTest extends TestCase
     }
 
     // phpcs:enable
+    /**
+     * @param stdClass[]|int[]|string[]|bool[] $data
+     */
     #[DataProvider('twiceDataProvider')]
     public function testTwice(array $data, callable $filter, bool $expected): void
     {
@@ -57,6 +66,9 @@ final class OnlyTest extends TestCase
     }
 
     // phpcs:disable
+    /**
+     * @return Iterator<mixed>
+     */
     public static function twiceDataProvider(): Iterator
     {
         yield [
@@ -82,6 +94,9 @@ final class OnlyTest extends TestCase
     }
 
     // phpcs:enable
+    /**
+     * @param int[]|string[] $data
+     */
     #[DataProvider('timesDataProvider')]
     public function testTimes(array $data, callable $filter, bool $expected): void
     {
@@ -91,6 +106,9 @@ final class OnlyTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<mixed>
+     */
     public static function timesDataProvider(): Iterator
     {
         yield [

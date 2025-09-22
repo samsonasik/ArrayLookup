@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
 
 final class AtLeastTest extends TestCase
 {
+    /**
+     * @param int[]|string[] $data
+     */
     #[DataProvider('onceDataProvider')]
     public function testOnce(array $data, callable $filter, bool $expected): void
     {
@@ -20,6 +23,9 @@ final class AtLeastTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<mixed>
+     */
     public static function onceDataProvider(): Iterator
     {
         yield [
@@ -44,6 +50,9 @@ final class AtLeastTest extends TestCase
         ];
     }
 
+    /**
+     * @param int[]|string[] $data
+     */
     #[DataProvider('twiceDataProvider')]
     public function testTwice(array $data, callable $filter, bool $expected): void
     {
@@ -54,6 +63,9 @@ final class AtLeastTest extends TestCase
     }
 
     // phpcs:disable
+    /**
+     * @return Iterator<mixed>
+     */
     public static function twiceDataProvider(): Iterator
     {
         yield [
@@ -79,6 +91,9 @@ final class AtLeastTest extends TestCase
     }
 
     // phpcs:enable
+    /**
+     * @param int[]|bool[]|null[]|string[] $data
+     */
     #[DataProvider('timesDataProvider')]
     public function testTimes(array $data, callable $filter, bool $expected): void
     {
@@ -88,6 +103,9 @@ final class AtLeastTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<mixed>
+     */
     public static function timesDataProvider(): Iterator
     {
         yield [

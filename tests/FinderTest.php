@@ -30,6 +30,9 @@ final class FinderTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<mixed>
+     */
     public static function firstDataProvider(): Iterator
     {
         yield [
@@ -63,6 +66,9 @@ final class FinderTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<mixed>
+     */
     public static function firstReturnKeyDataProvider(): Iterator
     {
         yield [
@@ -96,6 +102,9 @@ final class FinderTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<mixed>
+     */
     public static function lastDataProvider(): Iterator
     {
         $generator = static function (): Generator {
@@ -165,6 +174,9 @@ final class FinderTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<mixed>
+     */
     public static function lastReturnKeyDataProvider(): Iterator
     {
         $generator = static function (): Generator {
@@ -234,6 +246,9 @@ final class FinderTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<array<int, (array<int, int>|Closure(mixed $datum):bool|int|null)>>
+     */
     public static function lastReturnKeyResortKeyDataProvider(): Iterator
     {
         yield [
@@ -260,6 +275,9 @@ final class FinderTest extends TestCase
         $this->assertSame(DateTime::class, current($data)::class);
     }
 
+    /**
+     * @param array<int|string, int> $expected
+     */
     #[DataProvider('rowsDataProvider')]
     public function testRows(iterable $data, callable $filter, array $expected): void
     {
@@ -269,6 +287,9 @@ final class FinderTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<mixed>
+     */
     public static function rowsDataProvider(): Iterator
     {
         yield [
@@ -299,6 +320,9 @@ final class FinderTest extends TestCase
         ];
     }
 
+    /**
+     * @param int[] $expected
+     */
     #[DataProvider('rowsDataProviderPreserveKey')]
     public function testRowsPreserveKey(iterable $data, callable $filter, array $expected): void
     {
@@ -308,6 +332,9 @@ final class FinderTest extends TestCase
         );
     }
 
+    /**
+     * @return Iterator<array<int, (array|Closure(mixed $datum):bool)>>
+     */
     public static function rowsDataProviderPreserveKey(): Iterator
     {
         yield [

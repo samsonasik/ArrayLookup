@@ -21,6 +21,9 @@ use function str_contains;
 
 final class FinderTest extends TestCase
 {
+    /**
+     * @param int[]|string[] $data
+     */
     #[DataProvider('firstDataProvider')]
     public function testFirst(iterable $data, callable $filter, mixed $expected): void
     {
@@ -57,6 +60,9 @@ final class FinderTest extends TestCase
         ];
     }
 
+    /**
+     * @param int[]|string[] $data
+     */
     #[DataProvider('firstReturnKeyDataProvider')]
     public function testFirstReturnKey(iterable $data, callable $filter, mixed $expected): void
     {
@@ -93,6 +99,9 @@ final class FinderTest extends TestCase
         ];
     }
 
+    /**
+     * @param mixed[] $data
+     */
     #[DataProvider('lastDataProvider')]
     public function testLast(iterable $data, callable $filter, mixed $expected): void
     {
@@ -165,6 +174,9 @@ final class FinderTest extends TestCase
         ];
     }
 
+    /**
+     * @param mixed[] $data
+     */
     #[DataProvider('lastReturnKeyDataProvider')]
     public function testLastReturnKey(iterable $data, callable $filter, mixed $expected): void
     {
@@ -237,6 +249,9 @@ final class FinderTest extends TestCase
         ];
     }
 
+    /**
+     * @param int[] $data
+     */
     #[DataProvider('lastReturnKeyResortKeyDataProvider')]
     public function testLastReturnKeyResortKey(iterable $data, callable $filter, mixed $expected): void
     {
@@ -277,6 +292,7 @@ final class FinderTest extends TestCase
 
     /**
      * @param array<int|string, int> $expected
+     * @param array<int|string, int> $data
      */
     #[DataProvider('rowsDataProvider')]
     public function testRows(iterable $data, callable $filter, array $expected): void
@@ -322,6 +338,7 @@ final class FinderTest extends TestCase
 
     /**
      * @param int[] $expected
+     * @param int[] $data
      */
     #[DataProvider('rowsDataProviderPreserveKey')]
     public function testRowsPreserveKey(iterable $data, callable $filter, array $expected): void

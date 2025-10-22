@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Rector\CodingStyle\Rector\FunctionLike\FunctionLikeToFirstClassCallableRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\FunctionLike\NarrowTooWideReturnTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\BoolReturnTypeFromBooleanStrictReturnsRector;
@@ -26,8 +25,6 @@ return RectorConfig::configure()
         NarrowTooWideReturnTypeRector::class                => [
             __DIR__ . '/tests/FilterTest.php',
         ],
-
-        FunctionLikeToFirstClassCallableRector::class,
     ])
     ->withSets([
         __DIR__ . '/vendor/rector/rector/config/set/type-declaration-docblocks.php',

@@ -15,6 +15,7 @@ return RectorConfig::configure()
         naming: true,
         privatization: true,
         typeDeclarations: true,
+        typeDeclarationDocblocks: true,
         phpunitCodeQuality: true
     )
     ->withComposerBased(phpunit: true)
@@ -25,9 +26,6 @@ return RectorConfig::configure()
         NarrowWideUnionReturnTypeRector::class              => [
             __DIR__ . '/tests/FilterTest.php',
         ],
-    ])
-    ->withSets([
-        __DIR__ . '/vendor/rector/rector/config/set/type-declaration-docblocks.php',
     ])
     ->withParallel()
     ->withRootFiles()

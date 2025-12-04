@@ -196,12 +196,17 @@ final class Finder
                     $matching[$matchKey] = $datum;
                     ++$matchKey;
                 }
-            } elseif ($preserveKey || ! is_numeric($key)) {
-                $notMatching[$key] = $datum;
-            } else {
-                $notMatching[$notMatchKey] = $datum;
-                ++$notMatchKey;
+
+                continue;
             }
+
+            if ($preserveKey || ! is_numeric($key)) {
+                $notMatching[$key] = $datum;
+                continue;
+            }
+
+            $notMatching[$notMatchKey] = $datum;
+            ++$notMatchKey;
         }
 
         return [$matching, $notMatching];

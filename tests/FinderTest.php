@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function current;
+use function is_string;
 use function str_contains;
 
 final class FinderTest extends TestCase

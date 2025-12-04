@@ -27,7 +27,7 @@ return RectorConfig::configure()
         NarrowWideUnionReturnTypeRector::class              => [
             __DIR__ . '/tests/FilterTest.php',
         ],
-        FunctionLikeToFirstClassCallableRector::class => [
+        FunctionLikeToFirstClassCallableRector::class       => [
             __DIR__ . '/tests/FinderTest.php',
         ],
     ])

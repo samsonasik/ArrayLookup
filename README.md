@@ -17,7 +17,7 @@ Features
 
 - [x] Verify at least times: `once()`, `twice()`, `times()`
 - [x] Verify exact times: `once()`, `twice()`, `times()`
-- [x] Search data: `first()`, `last()`, `rows()`
+- [x] Search data: `first()`, `last()`, `rows()`, `partition()`
 - [x] Collect data with filter and transform
 
 Installation
@@ -367,6 +367,38 @@ $limit = 1;
 var_dump(
     Finder::rows($data, $filter, limit: $limit)
 ); // [1]
+```
+
+#### 4. `Finder::partition()`
+
+It splits data into two arrays: matching and non-matching items based on a filter.
+
+```php
+use ArrayLookup\Finder;
+
+// Basic partition - split numbers into greater than 5 and not
+$data = [1, 6, 3, 8, 4, 9];
+$filter = static fn($datum): bool => $datum > 5;
+
+[$matching, $notMatching] = Finder::partition($data, $filter);
+
+var_dump($matching);    // [6, 8, 9]
+var_dump($notMatching); // [1, 3, 4]
+
+// Partition with preserved keys
+[$matching, $notMatching] = Finder::partition($data, $filter, preserveKey: true);
+
+var_dump($matching);    // [1 => 6, 3 => 8, 5 => 9]
+var_dump($notMatching); // [0 => 1, 2 => 3, 4 => 4]
+
+// Using the array key inside the filter
+$data = [10, 20, 30, 40];
+$keyFilter = static fn($datum, $key): bool => $key % 2 === 0;
+
+[$even, $odd] = Finder::partition($data, $keyFilter, preserveKey: true);
+
+var_dump($even); // [0 => 10, 2 => 30]
+var_dump($odd);  // [1 => 20, 3 => 40]
 ```
 
 **D. Collector**

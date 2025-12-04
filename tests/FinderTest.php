@@ -382,4 +382,76 @@ final class FinderTest extends TestCase
             Finder::rows($data, $filter, limit: 1)
         );
     }
+
+    /**
+     * @param array<int|string, mixed> $expectedMatching
+     * @param array<int|string, mixed> $expectedNotMatching
+     * @param array<int|string, int|string> $data
+     */
+    #[DataProvider('partitionDataProvider')]
+    public function testPartition(
+        iterable $data,
+        callable $filter,
+        array $expectedMatching,
+        array $expectedNotMatching,
+        bool $preserveKey = false
+    ): void {
+        [$matching, $notMatching] = Finder::partition($data, $filter, $preserveKey);
+
+        $this->assertSame($expectedMatching, $matching);
+        $this->assertSame($expectedNotMatching, $notMatching);
+    }
+
+    /**
+     * @return Iterator<string, array{iterable, callable, array<int|string, mixed>, array<int|string, mixed>, bool}>
+     */
+    public static function partitionDataProvider(): Iterator
+    {
+        yield 'partition numbers greater than 5' => [
+            [1, 6, 3, 8, 4, 9],
+            static fn($datum): bool => $datum > 5,
+            [6, 8, 9],
+            [1, 3, 4],
+            false,
+        ];
+
+        yield 'partition numbers with preserved keys' => [
+            [1, 6, 3, 8, 4, 9],
+            static fn($datum): bool => $datum > 5,
+            [1 => 6, 3 => 8, 5 => 9],
+            [0 => 1, 2 => 3, 4 => 4],
+            true,
+        ];
+
+        yield 'partition using key in filter' => [
+            [10, 20, 30, 40],
+            static fn($datum, $key): bool => $key % 2 === 0,
+            [0 => 10, 2 => 30],
+            [1 => 20, 3 => 40],
+            true,
+        ];
+
+        yield 'partition associative array' => [
+            ['name' => 'John', 'age' => 25, 'city' => 'NYC', 'score' => 100],
+            static fn($datum): bool => is_string($datum),
+            ['name' => 'John', 'city' => 'NYC'],
+            ['age' => 25, 'score' => 100],
+            false,
+        ];
+    }
+
+    public function testPartitionPreservesOriginalData(): void
+    {
+        $data = [1, 2, 3];
+        $copy = $data;
+
+        [$matching, $notMatching] = Finder::partition(
+            $data,
+            static fn($datum): bool => $datum > 1
+        );
+
+        $this->assertSame([2, 3], $matching);
+        $this->assertSame([1], $notMatching);
+        $this->assertSame($copy, $data);
+    }
 }

@@ -165,4 +165,45 @@ final class Finder
 
         return $rows;
     }
+
+    /**
+     * Partitions data into two arrays: [matching, notMatching] based on filter.
+     *
+     * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
+     * @return array{0: array<int|string, mixed>, 1: array<int|string, mixed>}
+     */
+    public static function partition(
+        iterable $data,
+        callable $filter,
+        bool $preserveKey = false
+    ): array {
+        // filter must be a callable with bool return type
+        Filter::boolean($filter);
+
+        $matching    = [];
+        $notMatching = [];
+        $matchKey    = 0;
+        $notMatchKey = 0;
+
+        foreach ($data as $key => $datum) {
+            $isFound = $filter($datum, $key);
+
+            if ($isFound) {
+                if ($preserveKey || ! is_numeric($key)) {
+                    $matching[$key] = $datum;
+                } else {
+                    $matching[$matchKey] = $datum;
+                    ++$matchKey;
+                }
+            } elseif ($preserveKey || ! is_numeric($key)) {
+                $notMatching[$key] = $datum;
+            } else {
+                $notMatching[$notMatchKey] = $datum;
+                ++$notMatchKey;
+            }
+        }
+
+        return [$matching, $notMatching];
+    }
 }

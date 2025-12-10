@@ -188,9 +188,10 @@ final class Finder
 
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);
+            $useOriginalKey = $preserveKey || ! is_numeric($key);
 
             if ($isFound) {
-                if ($preserveKey || ! is_numeric($key)) {
+                if ($useOriginalKey) {
                     $matching[$key] = $datum;
                 } else {
                     $matching[$matchKey] = $datum;
@@ -200,7 +201,7 @@ final class Finder
                 continue;
             }
 
-            if ($preserveKey || ! is_numeric($key)) {
+            if ($useOriginalKey) {
                 $notMatching[$key] = $datum;
                 continue;
             }

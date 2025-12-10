@@ -187,7 +187,7 @@ final class Finder
         $notMatchKey = 0;
 
         foreach ($data as $key => $datum) {
-            $isFound = $filter($datum, $key);
+            $isFound        = $filter($datum, $key);
             $useOriginalKey = $preserveKey || ! is_numeric($key);
 
             if ($isFound) {

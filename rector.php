@@ -21,13 +21,13 @@ return RectorConfig::configure()
     )
     ->withComposerBased(phpunit: true)
     ->withSkip([
-        BoolReturnTypeFromBooleanStrictReturnsRector::class => [
+        BoolReturnTypeFromBooleanStrictReturnsRector::class          => [
             __DIR__ . '/tests/FilterTest.php',
         ],
-        NarrowWideUnionReturnTypeRector::class              => [
+        NarrowWideUnionReturnTypeRector::class                       => [
             __DIR__ . '/tests/FilterTest.php',
         ],
-        ArrowFunctionDelegatingCallToFirstClassCallableRector::class       => [
+        ArrowFunctionDelegatingCallToFirstClassCallableRector::class => [
             __DIR__ . '/tests/FinderTest.php',
         ],
     ])

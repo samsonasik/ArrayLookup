@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Rector\CodingStyle\Rector\FunctionLike\FunctionLikeToFirstClassCallableRector;
+use Rector\CodingStyle\Rector\ArrowFunction\ArrowFunctionDelegatingCallToFirstClassCallableRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\FunctionLike\NarrowWideUnionReturnTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\BoolReturnTypeFromBooleanStrictReturnsRector;
@@ -27,7 +27,7 @@ return RectorConfig::configure()
         NarrowWideUnionReturnTypeRector::class              => [
             __DIR__ . '/tests/FilterTest.php',
         ],
-        FunctionLikeToFirstClassCallableRector::class       => [
+        ArrowFunctionDelegatingCallToFirstClassCallableRector::class       => [
             __DIR__ . '/tests/FinderTest.php',
         ],
     ])

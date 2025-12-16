@@ -14,6 +14,7 @@ use Generator;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use SplFixedArray;
 use stdClass;
 
 use function current;
@@ -246,6 +247,16 @@ final class FinderTest extends TestCase
         yield [
             ['abc test', 'def', 'some test'],
             static fn(string $datum, int $key): bool => str_contains($datum, 'test') && $key === 1,
+            null,
+        ];
+        yield [
+            SplFixedArray::fromArray([6, 7, 8, 9]),
+            static fn($datum): bool => $datum > 5,
+            3,
+        ];
+        yield [
+            SplFixedArray::fromArray([6, 7, 8, 9]),
+            static fn($datum): bool => $datum < 5,
             null,
         ];
     }

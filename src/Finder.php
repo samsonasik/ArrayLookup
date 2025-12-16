@@ -7,6 +7,7 @@ namespace ArrayLookup;
 use ArrayIterator;
 use ArrayLookup\Assert\Filter;
 use ArrayObject;
+use SplFixedArray;
 use Traversable;
 use Webmozart\Assert\Assert;
 
@@ -49,6 +50,10 @@ final class Finder
     {
         if ($traversable instanceof ArrayIterator || $traversable instanceof ArrayObject) {
             return $traversable->getArrayCopy();
+        }
+
+        if ($traversable instanceof SplFixedArray) {
+            return $traversable->toArray();
         }
 
         return iterator_to_array($traversable);

@@ -55,6 +55,7 @@ final class AtMostTest extends TestCase
             false,
         ];
     }
+
     // phpcs:enable
 
     /**
@@ -96,6 +97,7 @@ final class AtMostTest extends TestCase
             false,
         ];
     }
+
     // phpcs:enable
 
     /**

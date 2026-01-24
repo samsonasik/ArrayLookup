@@ -23,6 +23,7 @@ final class AtMostTest extends TestCase
         );
     }
 
+    // phpcs:disable
     /**
      * @return Iterator<mixed>
      */
@@ -54,6 +55,7 @@ final class AtMostTest extends TestCase
             false,
         ];
     }
+    // phpcs:enable
 
     /**
      * @param int[]|string[] $data
@@ -67,6 +69,7 @@ final class AtMostTest extends TestCase
         );
     }
 
+    // phpcs:disable
     /**
      * @return Iterator<mixed>
      */
@@ -93,6 +96,7 @@ final class AtMostTest extends TestCase
             false,
         ];
     }
+    // phpcs:enable
 
     /**
      * @param int[]|bool[]|null[]|string[] $data

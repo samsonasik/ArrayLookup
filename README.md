@@ -16,6 +16,7 @@ Features
 --------
 
 - [x] Verify at least times: `once()`, `twice()`, `times()`
+- [x] Verify at most times: `once()`, `twice()`, `times()`
 - [x] Verify exact times: `once()`, `twice()`, `times()`
 - [x] Search data: `first()`, `last()`, `rows()`, `partition()`
 - [x] Collect data with filter and transform
@@ -129,7 +130,78 @@ $times = 3;
 var_dump(AtLeast::times($data, $filter, $times)) // false
 ```
 
-**B. Only**
+**B. AtMost**
+---------------
+
+#### 1. `AtMost::once()`
+
+It verify that data has filtered found item at most once.
+
+```php
+use ArrayLookup\AtMost;
+
+$data = [1, 2, 3];
+$filter = static fn($datum): bool => $datum === 1;
+
+var_dump(AtMost::once($data, $filter)) // true
+
+$data = [1, "1", 3];
+$filter = static fn($datum): bool => $datum == 1;
+
+var_dump(AtMost::once($data, $filter)) // false
+
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
+
+$data = ['abc', 'def', 'some test'];
+$filter = static fn(string $datum, int $key): bool => $datum === 'def' && $key === 1;
+
+var_dump(AtMost::once($data, $filter)) // true
+
+$data = ['abc', 'def', 'some test'];
+$filter = static fn(string $datum, int $key): bool => $key > 0;
+
+var_dump(AtMost::once($data, $filter)) // false
+```
+
+#### 2. `AtMost::twice()`
+
+It verify that data has filtered found items at most twice.
+
+```php
+use ArrayLookup\AtMost;
+
+$data = [1, "1", 2];
+$filter = static fn($datum): bool => $datum == 1;
+
+var_dump(AtMost::twice($data, $filter)) // true
+
+$data = [1, "1", 2, 1];
+$filter = static fn($datum): bool => $datum == 1;
+
+var_dump(AtMost::twice($data, $filter)) // false
+```
+
+#### 3. `AtMost::times()`
+
+It verify that data has filtered found items at most times passed in 3rd arg.
+
+```php
+use ArrayLookup\AtMost;
+
+$data = [false, null, 0];
+$filter = static fn($datum): bool => ! $datum;
+$times = 3;
+
+var_dump(AtMost::times($data, $filter, $times)) // true
+
+$data = [false, null, 0, 0];
+$filter = static fn($datum): bool => ! $datum;
+$times = 3;
+
+var_dump(AtMost::times($data, $filter, $times)) // false
+```
+
+**C. Only**
 ---------------
 
 #### 1. `Only::once()`
@@ -230,7 +302,7 @@ $times = 2;
 var_dump(Only::times($data, $filter, $times)) // false
 ```
 
-**C. Finder**
+**D. Finder**
 ---------------
 
 #### 1. `Finder::first()`
@@ -401,7 +473,7 @@ var_dump($even); // [0 => 10, 2 => 30]
 var_dump($odd);  // [1 => 20, 3 => 40]
 ```
 
-**D. Collector**
+**E. Collector**
 ---------------
 
 It collect filtered data, with new transformed each data found:

@@ -52,7 +52,8 @@ final class Filter
                             $reflectionType instanceof ReflectionNamedType
                                 ? $reflectionType->getName()
                                 : '(' . implode('&', array_map(
-                                    static fn (ReflectionNamedType $reflectionNamedType): string => $reflectionNamedType->getName(),
+                                    static fn (ReflectionNamedType $reflectionNamedType): string
+                                        => $reflectionNamedType->getName(),
                                     $reflectionType->getTypes()
                                 )) . ')',
                         $types

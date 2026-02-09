@@ -133,4 +133,21 @@ final class FilterTest extends TestCase
 
         AtLeast::once($data, $filter);
     }
+
+    public function testWithUnionedIntersectionTypeCallable(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Expected a bool return type on callable filter, (ArrayLookup\Tests\A&ArrayLookup\Tests\B)|string given'
+        );
+
+        $data   = [1, 2, 3];
+        $filter = new class {
+            public function __invoke(int $datum): (A&B)|string
+            {
+            }
+        };
+
+        AtLeast::once($data, $filter);
+    }
 }

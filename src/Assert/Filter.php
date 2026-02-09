@@ -42,13 +42,19 @@ final class Filter
             $separator = $returnType instanceof ReflectionUnionType ? '|' : '&';
             $types     = $returnType->getTypes();
 
-            Assert::allIsInstanceOf($types, ReflectionNamedType::class);
+            Assert::allIsInstanceOfAny($types, [ReflectionNamedType::class, ReflectionIntersectionType::class]);
 
             throw new InvalidArgumentException(
                 sprintf(
                     self::MESSAGE,
                     implode($separator, array_map(
-                        static fn (ReflectionNamedType $reflectionNamedType): string => $reflectionNamedType->getName(),
+                        static fn (ReflectionNamedType|ReflectionIntersectionType $reflectionType): string =>
+                            $reflectionType instanceof ReflectionNamedType
+                                ? $reflectionType->getName()
+                                : '(' . implode('&', array_map(
+                                    static fn (ReflectionNamedType $reflectionNamedType): string => $reflectionNamedType->getName(),
+                                    $reflectionType->getTypes()
+                                )) . ')',
                         $types
                     ))
                 )

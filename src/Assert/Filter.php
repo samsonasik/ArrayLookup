@@ -48,14 +48,20 @@ final class Filter
                 sprintf(
                     self::MESSAGE,
                     implode($separator, array_map(
-                        static fn (ReflectionNamedType|ReflectionIntersectionType $reflectionType): string =>
-                            $reflectionType instanceof ReflectionNamedType
-                                ? $reflectionType->getName()
-                                : '(' . implode('&', array_map(
-                                    static fn (ReflectionNamedType $reflectionNamedType): string
-                                        => $reflectionNamedType->getName(),
-                                    $reflectionType->getTypes()
-                                )) . ')',
+                        function (ReflectionNamedType|ReflectionIntersectionType $reflectionType): string {
+                            if ($reflectionType instanceof ReflectionNamedType) {
+                                return $reflectionType->getName();
+                            }
+
+                            $subTypes = $reflectionType->getTypes();
+                            Assert::allIsInstanceOf($subTypes, ReflectionNamedType::class);
+
+                            return '(' . implode('&', array_map(
+                                static fn (ReflectionNamedType $reflectionNamedType): string
+                                    => $reflectionNamedType->getName(),
+                                $subTypes
+                            )) . ')';
+                        },
                         $types
                     ))
                 )

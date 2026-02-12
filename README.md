@@ -15,11 +15,12 @@ ArrayLookup is a fast lookup library that help you verify and search `array` and
 Features
 --------
 
-- [x] Verify at least times: `once()`, `twice()`, `times()`
-- [x] Verify at most times: `once()`, `twice()`, `times()`
-- [x] Verify exact times: `once()`, `twice()`, `times()`
-- [x] Search data: `first()`, `last()`, `rows()`, `partition()`
-- [x] Collect data with filter and transform
+- [x] Verify at least times: [`once()`](#1-atleastonce), [`twice()`](#2-atleasttwice), [`times()`](#3-atleasttimes)
+- [x] Verify at most times: [`once()`](#1-atmostonce), [`twice()`](#2-atmosttwice), [`times()`](#3-atmosttimes)
+- [x] Verify exact times: [`once()`](#1-onlyonce), [`twice()`](#2-onlytwice), [`times()`](#3-onlytimes)
+- [x] Verify in interval range: [`isInclusiveOf()`](#1-intervalisinclusiveof), [`isExclusiveOf()`](#2-intervalisexclusiveof)
+- [x] Search data: [`first()`](#1-finderfirst), [`last()`](#2-finderlast), [`rows()`](#3-finderrows), [`partition()`](#4-finderpartition)
+- [x] Collect data with [filter and transform](#e-collector)
 
 Installation
 ------------
@@ -302,7 +303,52 @@ $times = 2;
 var_dump(Only::times($data, $filter, $times)) // false
 ```
 
-**D. Finder**
+**D. Interval**
+---------------
+
+#### 1. `Interval::isInclusiveOf()`
+
+It verify that data has filtered found items within min and max (inclusive).
+
+```php
+use ArrayLookup\Interval;
+
+$orders = [
+    ['status' => 'paid'],
+    ['status' => 'paid'],
+    ['status' => 'pending'],
+    ['status' => 'paid'],
+];
+
+$filter = static fn(array $order): bool => $order['status'] === 'paid';
+
+// inclusive means min and max boundaries are allowed
+var_dump(Interval::isInclusiveOf($orders, $filter, 3, 5)) // true
+var_dump(Interval::isInclusiveOf($orders, $filter, 2, 5)) // true
+```
+
+#### 2. `Interval::isExclusiveOf()`
+
+It verify that data has filtered found items between min and max (exclusive).
+
+```php
+use ArrayLookup\Interval;
+
+$orders = [
+    ['status' => 'paid'],
+    ['status' => 'paid'],
+    ['status' => 'pending'],
+    ['status' => 'paid'],
+];
+
+$filter = static fn(array $order): bool => $order['status'] === 'paid';
+
+// exclusive means strictly between min and max
+var_dump(Interval::isExclusiveOf($orders, $filter, 3, 5)) // false
+var_dump(Interval::isExclusiveOf($orders, $filter, 2, 5)) // true
+```
+
+**E. Finder**
 ---------------
 
 #### 1. `Finder::first()`
@@ -473,7 +519,7 @@ var_dump($even); // [0 => 10, 2 => 30]
 var_dump($odd);  // [1 => 20, 3 => 40]
 ```
 
-**E. Collector**
+**F. Collector**
 ---------------
 
 It collect filtered data, with new transformed each data found:

@@ -20,7 +20,7 @@ Features
 - [x] Verify exact times: [`once()`](#1-onlyonce), [`twice()`](#2-onlytwice), [`times()`](#3-onlytimes)
 - [x] Verify in interval range: [`isInclusiveOf()`](#1-intervalisinclusiveof), [`isExclusiveOf()`](#2-intervalisexclusiveof)
 - [x] Search data: [`first()`](#1-finderfirst), [`last()`](#2-finderlast), [`rows()`](#3-finderrows), [`partition()`](#4-finderpartition)
-- [x] Collect data with [filter and transform](#e-collector)
+- [x] Collect data with [filter and transform](#f-collector)
 
 Installation
 ------------

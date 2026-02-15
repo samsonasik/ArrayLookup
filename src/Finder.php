@@ -141,6 +141,7 @@ final class Finder
 
         // filter must be a callable with bool return type
         Filter::boolean($filter);
+        Assert::nullOrPositiveInteger($limit);
 
         foreach ($data as $key => $datum) {
             $isFound = $filter($datum, $key);

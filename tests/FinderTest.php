@@ -393,6 +393,9 @@ final class FinderTest extends TestCase
             ],
             Finder::rows($data, $filter, limit: 1)
         );
+
+        $this->expectExceptionMessage('Expected a positive integer. Got: 0');
+        Finder::rows($data, $filter, limit: 0);
     }
 
     /**

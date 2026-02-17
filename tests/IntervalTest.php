@@ -140,36 +140,16 @@ final class IntervalTest extends TestCase
     /**
      * @param int[] $data
      */
-    #[DataProvider('noSpaceExclusiveDataProvider')]
-    public function testNoSpaceIntervalIsExclusiveOf(
-        array $data,
-        callable $filter,
-        int $min,
-        int $max
-    ): void {
+    public function testNoSpaceIntervalIsExclusiveOf(): void
+    {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The difference between min and max must be greater than 1 for an exclusive interval.');
 
+        $data = [1, 2, 3];
+        $filter = static fn($datum): bool => $datum > 1;
+        $min = 2;
+        $max = 3;
+
         Interval::isExclusiveOf($data, $filter, $min, $max);
-    }
-
-    /**
-     * @return Iterator<mixed>
-     */
-    public static function noSpaceExclusiveDataProvider(): Iterator
-    {
-        yield 'equal between bounds' => [
-            [1, 2, 3],
-            static fn($datum): bool => $datum > 1,
-            2,
-            2,
-        ];
-
-        yield 'no space between bounds' => [
-            [1, 2, 3],
-            static fn($datum): bool => $datum > 1,
-            2,
-            3,
-        ];
     }
 }

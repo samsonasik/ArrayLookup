@@ -145,10 +145,10 @@ final class IntervalTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The difference between min and max must be greater than 1 for an exclusive interval.');
 
-        $data = [1, 2, 3];
+        $data   = [1, 2, 3];
         $filter = static fn($datum): bool => $datum > 1;
-        $min = 2;
-        $max = 3;
+        $min    = 2;
+        $max    = 3;
 
         Interval::isExclusiveOf($data, $filter, $min, $max);
     }

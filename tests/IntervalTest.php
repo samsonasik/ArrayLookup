@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ArrayLookup\Tests;
 
 use ArrayLookup\Interval;
+use InvalidArgumentException;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -134,12 +135,39 @@ final class IntervalTest extends TestCase
             5,
             false,
         ];
+    }
+
+    /**
+     * @param int[] $data
+     */
+    #[DataProvider('noSpaceExclusiveDataProvider')]
+    public function testNoSpaceInterval(
+        array $data,
+        callable $filter,
+        int $min,
+        int $max
+    ): void {
+        $this->expectException(InvalidArgumentException::class);
+        Interval::isExclusiveOf($data, $filter, $min, $max);
+    }
+
+    /**
+     * @return Iterator<mixed>
+     */
+    public static function noSpaceExclusiveDataProvider(): Iterator
+    {
+        yield 'equal between bounds' => [
+            [1, 2, 3],
+            static fn($datum): bool => $datum > 1,
+            2,
+            2,
+        ];
+
         yield 'no space between bounds' => [
             [1, 2, 3],
             static fn($datum): bool => $datum > 1,
             2,
             3,
-            false,
         ];
     }
 }

@@ -137,13 +137,12 @@ final class IntervalTest extends TestCase
         ];
     }
 
-    /**
-     * @param int[] $data
-     */
     public function testNoSpaceIntervalIsExclusiveOf(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The difference between min and max must be greater than 1 for an exclusive interval.');
+        $this->expectExceptionMessage(
+            'The difference between min and max must be greater than 1 for an exclusive interval.'
+        );
 
         $data   = [1, 2, 3];
         $filter = static fn($datum): bool => $datum > 1;

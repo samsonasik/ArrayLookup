@@ -141,7 +141,7 @@ final class IntervalTest extends TestCase
      * @param int[] $data
      */
     #[DataProvider('noSpaceExclusiveDataProvider')]
-    public function testNoSpaceInterval(
+    public function testNoSpaceIntervalIsExclusiveOf(
         array $data,
         callable $filter,
         int $min,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ArrayLookup\Tests;
 
 use ArrayLookup\Interval;
+use InvalidArgumentException;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -134,12 +135,20 @@ final class IntervalTest extends TestCase
             5,
             false,
         ];
-        yield 'no space between bounds' => [
-            [1, 2, 3],
-            static fn($datum): bool => $datum > 1,
-            2,
-            3,
-            false,
-        ];
+    }
+
+    public function testNoSpaceIntervalIsExclusiveOf(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The difference between min and max must be greater than 1 for an exclusive interval.'
+        );
+
+        $data   = [1, 2, 3];
+        $filter = static fn($datum): bool => $datum > 1;
+        $min    = 2;
+        $max    = 3;
+
+        Interval::isExclusiveOf($data, $filter, $min, $max);
     }
 }

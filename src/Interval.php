@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ArrayLookup;
 
 use ArrayLookup\Assert\Filter;
+use InvalidArgumentException;
 use Traversable;
 use Webmozart\Assert\Assert;
 
@@ -59,7 +60,9 @@ final class Interval
         Filter::boolean($filter);
 
         if ($max - $min <= 1) {
-            return false;
+            throw new InvalidArgumentException(
+                'The difference between min and max must be greater than 1 for an exclusive interval.'
+            );
         }
 
         $totalFound = 0;

@@ -4,12 +4,15 @@
     "description": "A fast lookup library that help you verify and search array and Traversable data",
     "keywords": [
         "array",
+        "collector",
         "traversable",
         "iterable",
         "search",
         "filter",
         "fast",
-        "lookup"
+        "finder",
+        "lookup",
+        "spl"
     ],
     "homepage": "https://github.com/samsonasik/ArrayLookup",
     "license": "MIT",

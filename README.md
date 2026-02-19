@@ -19,8 +19,9 @@ Features
 - [x] Verify at most times: [`once()`](#1-atmostonce), [`twice()`](#2-atmosttwice), [`times()`](#3-atmosttimes)
 - [x] Verify exact times: [`once()`](#1-onlyonce), [`twice()`](#2-onlytwice), [`times()`](#3-onlytimes)
 - [x] Verify in interval range: [`isInclusiveOf()`](#1-intervalisinclusiveof), [`isExclusiveOf()`](#2-intervalisexclusiveof)
+- [x] Verify all or none match: [`match()`](#1-allmatch), [`none()`](#2-allnone)
 - [x] Search data: [`first()`](#1-finderfirst), [`last()`](#2-finderlast), [`rows()`](#3-finderrows), [`partition()`](#4-finderpartition)
-- [x] Collect data with [filter and transform](#f-collector)
+- [x] Collect data with [filter and transform](#g-collector)
 
 Installation
 ------------
@@ -348,7 +349,70 @@ var_dump(Interval::isExclusiveOf($orders, $filter, 3, 5)) // false
 var_dump(Interval::isExclusiveOf($orders, $filter, 2, 5)) // true
 ```
 
-**E. Finder**
+**E. All**
+---------------
+
+#### 1. `All::match()`
+
+It verify that all items match the filter and data is non-empty.
+
+```php
+use ArrayLookup\All;
+
+$data = [1, 2, 3];
+$filter = static fn($datum): bool => $datum > 0;
+
+var_dump(All::match($data, $filter)) // true
+
+$data = [1, 0, 3];
+$filter = static fn($datum): bool => $datum > 0;
+
+var_dump(All::match($data, $filter)) // false
+
+$data = [];
+$filter = static fn($datum): bool => $datum !== null;
+
+var_dump(All::match($data, $filter)) // false
+
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
+
+$data = ['abc', 'def'];
+$filter = static fn($datum, $key): bool => $datum !== '' && $key >= 0;
+
+var_dump(All::match($data, $filter)) // true
+```
+
+#### 2. `All::none()`
+
+It verify that no items match the filter (empty data returns true).
+
+```php
+use ArrayLookup\All;
+
+$data = [1, 2, 3];
+$filter = static fn($datum): bool => $datum === 4;
+
+var_dump(All::none($data, $filter)) // true
+
+$data = [1, 2, 3];
+$filter = static fn($datum): bool => $datum === 2;
+
+var_dump(All::none($data, $filter)) // false
+
+$data = [];
+$filter = static fn($datum): bool => $datum !== null;
+
+var_dump(All::none($data, $filter)) // true
+
+// WITH key array included, pass $key variable as 2nd arg on  filter to be used in filter
+
+$data = ['abc', 'def'];
+$filter = static fn($datum, $key): bool => $key === 0 && $datum === 'abc';
+
+var_dump(All::none($data, $filter)) // false
+```
+
+**F. Finder**
 ---------------
 
 #### 1. `Finder::first()`
@@ -519,7 +583,7 @@ var_dump($even); // [0 => 10, 2 => 30]
 var_dump($odd);  // [1 => 20, 3 => 40]
 ```
 
-**F. Collector**
+**G. Collector**
 ---------------
 
 It collect filtered data, with new transformed each data found:

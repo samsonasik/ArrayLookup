@@ -10,6 +10,7 @@ use ReflectionFunction;
 use ReflectionIntersectionType;
 use ReflectionMethod;
 use ReflectionNamedType;
+use ReflectionType;
 use ReflectionUnionType;
 use Webmozart\Assert\Assert;
 
@@ -37,6 +38,9 @@ final class Filter
         };
 
         $returnType = $reflection->getReturnType();
+        if (! $returnType instanceof ReflectionType) {
+            throw new InvalidArgumentException(sprintf(self::MESSAGE, 'none'));
+        }
 
         if ($returnType instanceof ReflectionUnionType || $returnType instanceof ReflectionIntersectionType) {
             $separator = $returnType instanceof ReflectionUnionType ? '|' : '&';
@@ -68,12 +72,9 @@ final class Filter
             );
         }
 
-        if (! $returnType instanceof ReflectionNamedType) {
-            throw new InvalidArgumentException(sprintf(self::MESSAGE, 'mixed'));
-        }
+        Assert::isInstanceOf($returnType, ReflectionNamedType::class);
 
         $returnTypeName = $returnType->getName();
-
         if ($returnType->allowsNull()) {
             throw new InvalidArgumentException(sprintf(
                 self::MESSAGE,

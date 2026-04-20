@@ -20,7 +20,7 @@ Features
 - [x] Verify exact times: [`once()`](#1-onlyonce), [`twice()`](#2-onlytwice), [`times()`](#3-onlytimes)
 - [x] Verify in interval range: [`isInclusiveOf()`](#1-intervalisinclusiveof), [`isExclusiveOf()`](#2-intervalisexclusiveof)
 - [x] Verify all or none match: [`match()`](#1-allmatch), [`none()`](#2-allnone)
-- [x] Search data: [`first()`](#1-finderfirst), [`last()`](#2-finderlast), [`rows()`](#3-finderrows), [`partition()`](#4-finderpartition)
+- [x] Search data: [`first()`](#1-finderfirst), [`last()`](#2-finderlast), [`nth()`](#3-findernth), [`rows()`](#4-finderrows), [`partition()`](#5-finderpartition)
 - [x] Collect data with [filter and transform](#g-collector)
 
 Installation
@@ -503,7 +503,37 @@ var_dump(Finder::last(
 )); // null
 ```
 
-#### 3. `Finder::rows()`
+
+#### 3. `Finder::nth()`
+
+It returns the nth (or multiple nth) filtered data found. You can specify a single position (1-based) or an array of positions. If no match is found, returns `null` (single) or an empty array (multiple). Pass `true` to the 4th argument to return the key(s) instead of the value(s).
+
+```php
+use ArrayLookup\Finder;
+
+$data = [10, 20, 30, 40, 50];
+$filter = static fn($datum): bool => $datum > 15;
+
+// Get the 2nd matching value (should be 30)
+var_dump(Finder::nth($data, $filter, 2)); // 30
+
+// Get the 2nd matching key (should be 2)
+var_dump(Finder::nth($data, $filter, 2, returnKey: true)); // 2
+
+// Get the 1st and 3rd matching values (should be [20, 40])
+var_dump(Finder::nth($data, $filter, [1, 3])); // [20, 40]
+
+// Get the 1st and 3rd matching keys (should be [1, 3])
+var_dump(Finder::nth($data, $filter, [1, 3], returnKey: true)); // [1, 3]
+
+// No match (single)
+var_dump(Finder::nth($data, $filter, 5)); // null
+
+// No match (multiple)
+var_dump(Finder::nth($data, $filter, [5, 6])); // []
+```
+
+#### 4. `Finder::rows()`
 
 It get rows data filtered found.
 

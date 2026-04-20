@@ -469,4 +469,67 @@ final class FinderTest extends TestCase
         $this->assertSame([1], $notMatching);
         $this->assertSame($copy, $data);
     }
+
+    /**
+     * @param mixed $expected
+     * @param int[] $data
+     */
+    #[DataProvider('nthDataProvider')]
+    public function testNth(
+        iterable $data,
+        callable $filter,
+        int|array $n,
+        int|array|null $expected,
+        bool $returnKey = false
+    ): void {
+        $this->assertSame(
+            $expected,
+            Finder::nth($data, $filter, $n, $returnKey)
+        );
+    }
+
+    /**
+     * @return Iterator<mixed>
+     */
+    public static function nthDataProvider(): Iterator
+    {
+        yield 'single nth match' => [
+            [10, 20, 30, 40, 50],
+            static fn($datum): bool => $datum > 15,
+            2,
+            30,
+        ];
+        yield 'single nth no match' => [
+            [10, 20, 30],
+            static fn($datum): bool => $datum > 15,
+            5,
+            null,
+        ];
+        yield 'multiple nth matches' => [
+            [10, 20, 30, 40, 50],
+            static fn($datum): bool => $datum > 15,
+            [1, 3],
+            [20, 40],
+        ];
+        yield 'multiple nth no matches' => [
+            [10, 20, 30],
+            static fn($datum): bool => $datum > 15,
+            [5, 6],
+            [],
+        ];
+        yield 'single nth match returnKey' => [
+            [10, 20, 30, 40, 50],
+            static fn($datum): bool => $datum > 15,
+            2,
+            2,
+            true,
+        ];
+        yield 'multiple nth matches returnKey' => [
+            [10, 20, 30, 40, 50],
+            static fn($datum): bool => $datum > 15,
+            [1, 3],
+            [1, 3],
+            true,
+        ];
+    }
 }

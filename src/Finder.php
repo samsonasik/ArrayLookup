@@ -11,8 +11,11 @@ use SplFixedArray;
 use Traversable;
 use Webmozart\Assert\Assert;
 
+use function count;
 use function current;
 use function end;
+use function in_array;
+use function is_int;
 use function is_numeric;
 use function iterator_to_array;
 use function key;
@@ -217,5 +220,63 @@ final class Finder
         }
 
         return [$matching, $notMatching];
+    }
+
+    /**
+     * Find the 1st, 2nd, 3rd, and so on matching item, or multiple matching items at specific positions.
+     *
+     * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
+     * @param callable(mixed $datum, int|string|null $key): bool $filter
+     * @param int|array<int, int> $n The match position(s) to find
+     */
+    public static function nth(iterable $data, callable $filter, int|array $n, bool $returnKey = false): mixed
+    {
+        // filter must be a callable with bool return type
+        Filter::boolean($filter);
+
+        $singleMode = is_int($n);
+
+        if ($singleMode) {
+            Assert::positiveInteger($n);
+            $positions = [$n];
+        } else {
+            Assert::notEmpty($n);
+            Assert::uniqueValues($n);
+            Assert::allPositiveInteger($n);
+
+            $positions = $n;
+        }
+
+        $currentMatchIndex = 0;
+        $collectedCount    = 0;
+        $totalExpected     = count($positions);
+        $result            = [];
+
+        foreach ($data as $key => $datum) {
+            if (! $filter($datum, $key)) {
+                continue;
+            }
+
+            ++$currentMatchIndex;
+
+            if (! in_array($currentMatchIndex, $positions, true)) {
+                continue;
+            }
+
+            $value = $returnKey ? $key : $datum;
+
+            if ($singleMode) {
+                return $value;
+            }
+
+            $result[] = $value;
+            ++$collectedCount;
+
+            if ($collectedCount === $totalExpected) {
+                break;
+            }
+        }
+
+        return $singleMode ? null : $result;
     }
 }

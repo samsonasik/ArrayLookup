@@ -223,7 +223,7 @@ final class Finder
     }
 
     /**
-     * Find the matched item at a specific occurrence, or matched items at multiple occurrences.
+     * Find the 1st, 2nd, 3rd, and so on matching item, or multiple matching items at specific positions.
      *
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key): bool $filter

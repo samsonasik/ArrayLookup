@@ -475,8 +475,13 @@ final class FinderTest extends TestCase
      * @param int[] $data
      */
     #[DataProvider('nthDataProvider')]
-    public function testNth(iterable $data, callable $filter, int|array $n, int|array|null $expected, bool $returnKey = false): void
-    {
+    public function testNth(
+        iterable $data,
+        callable $filter,
+        int|array $n,
+        int|array|null $expected,
+        bool $returnKey = false
+    ): void {
         $this->assertSame(
             $expected,
             Finder::nth($data, $filter, $n, $returnKey)

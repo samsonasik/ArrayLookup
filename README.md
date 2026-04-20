@@ -503,10 +503,9 @@ var_dump(Finder::last(
 )); // null
 ```
 
-
 #### 3. `Finder::nth()`
 
-It returns the nth (or multiple nth) filtered data found. You can specify a single position (1-based) or an array of positions. If no match is found, returns `null` (single) or an empty array (multiple). Pass `true` to the 4th argument to return the key(s) instead of the value(s).
+It returns the 1st, 2nd, 3rd, and so on matching item, or multiple matching items at specific positions. The position is 1-based among matched results, not the original array index. Pass a single position to get one matching item, or an array of positions to get multiple matching items. If no match is found, it returns `null` for a single position or an empty array for multiple positions. Pass `true` to the 4th argument to return the key(s) instead of the value(s).
 
 ```php
 use ArrayLookup\Finder;
@@ -518,13 +517,13 @@ $filter = static fn($datum): bool => $datum > 15;
 var_dump(Finder::nth($data, $filter, 2)); // 30
 
 // Get the 2nd matching key (should be 2)
-var_dump(Finder::nth($data, $filter, 2, returnKey: true)); // 2
+var_dump(Finder::nth($data, $filter, 2, true)); // 2
 
 // Get the 1st and 3rd matching values (should be [20, 40])
 var_dump(Finder::nth($data, $filter, [1, 3])); // [20, 40]
 
 // Get the 1st and 3rd matching keys (should be [1, 3])
-var_dump(Finder::nth($data, $filter, [1, 3], returnKey: true)); // [1, 3]
+var_dump(Finder::nth($data, $filter, [1, 3], true)); // [1, 3]
 
 // No match (single)
 var_dump(Finder::nth($data, $filter, 5)); // null

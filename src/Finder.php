@@ -227,7 +227,7 @@ final class Finder
      *
      * @param array<int|string, mixed>|Traversable<int|string, mixed> $data
      * @param callable(mixed $datum, int|string|null $key): bool $filter
-     * @param int|array<int, int> $n The occurrence(s) to find
+     * @param int|array<int, int> $n The match position(s) to find
      */
     public static function nth(iterable $data, callable $filter, int|array $n, bool $returnKey = false): mixed
     {

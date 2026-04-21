@@ -513,16 +513,16 @@ use ArrayLookup\Finder;
 $data = [10, 20, 30, 40, 50];
 $filter = static fn($datum): bool => $datum > 15;
 
-// Get the 2nd matching value (should be 30)
+// Get the 2nd matching value
 var_dump(Finder::nth($data, $filter, 2)); // 30
 
-// Get the 2nd matching key (should be 2)
+// Get the 2nd matching key
 var_dump(Finder::nth($data, $filter, 2, true)); // 2
 
-// Get the 1st and 3rd matching values (should be [20, 40])
+// Get the 1st and 3rd matching values
 var_dump(Finder::nth($data, $filter, [1, 3])); // [20, 40]
 
-// Get the 1st and 3rd matching keys (should be [1, 3])
+// Get the 1st and 3rd matching keys
 var_dump(Finder::nth($data, $filter, [1, 3], true)); // [1, 3]
 
 // No match (single)

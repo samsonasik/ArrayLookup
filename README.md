@@ -580,7 +580,7 @@ var_dump(
 ); // [1]
 ```
 
-#### 4. `Finder::partition()`
+#### 5. `Finder::partition()`
 
 It splits data into two arrays: matching and non-matching items based on a filter.
 

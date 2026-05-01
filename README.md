@@ -21,7 +21,7 @@ Features
 - [x] Verify in interval range: [`isInclusiveOf()`](#1-intervalisinclusiveof), [`isExclusiveOf()`](#2-intervalisexclusiveof)
 - [x] Verify all or none match: [`match()`](#1-allmatch), [`none()`](#2-allnone)
 - [x] Search data: [`first()`](#1-finderfirst), [`last()`](#2-finderlast), [`nth()`](#3-findernth), [`rows()`](#4-finderrows), [`partition()`](#5-finderpartition)
-- [x] Collect data with [filter and transform](#g-collector)
+- [x] Collect data with [`filter and transform`](#g-collector)
 
 Installation
 ------------

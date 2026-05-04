@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace ArrayLookup\Tests;
 
 use ArrayLookup\Interval;
-use InvalidArgumentException;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Webmozart\Assert\InvalidArgumentException;
 
 final class IntervalTest extends TestCase
 {

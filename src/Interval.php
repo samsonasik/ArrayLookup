@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ArrayLookup;
 
 use ArrayLookup\Assert\Filter;
-use InvalidArgumentException;
 use Traversable;
 use Webmozart\Assert\Assert;
 
@@ -58,12 +57,11 @@ final class Interval
         Assert::greaterThan($max, 0);
         Assert::lessThan($min, $max);
         Filter::boolean($filter);
-
-        if ($max - $min <= 1) {
-            throw new InvalidArgumentException(
-                'The difference between min and max must be greater than 1 for an exclusive interval.'
-            );
-        }
+        Assert::greaterThan(
+            $max - $min,
+            1,
+            'The difference between min and max must be greater than 1 for an exclusive interval.'
+        );
 
         $totalFound = 0;
         foreach ($data as $key => $datum) {

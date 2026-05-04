@@ -38,9 +38,7 @@ final class Filter
         };
 
         $returnType = $reflection->getReturnType();
-        if (! $returnType instanceof ReflectionType) {
-            throw new InvalidArgumentException(sprintf(self::MESSAGE, 'none'));
-        }
+        Assert::isInstanceOf($returnType, ReflectionType::class, sprintf(self::MESSAGE, 'none'));
 
         if ($returnType instanceof ReflectionUnionType || $returnType instanceof ReflectionIntersectionType) {
             $separator = $returnType instanceof ReflectionUnionType ? '|' : '&';

@@ -22,10 +22,9 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: /tmp/structarmed
-          key: ${{ runner.os }}-structarmed-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          key: ${{ runner.os }}-structarmed-v2-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
-            ${{ runner.os }}-structarmed-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-
-            ${{ runner.os }}-structarmed-
+            ${{ runner.os }}-structarmed-v2-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-
 
       - run: mkdir -p /tmp/structarmed
 
@@ -37,4 +36,4 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: /tmp/structarmed
-          key: ${{ runner.os }}-structarmed-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          key: ${{ runner.os }}-structarmed-v2-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-${{ github.run_id }}-${{ github.run_attempt }}

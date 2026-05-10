@@ -38,7 +38,6 @@ jobs:
         run: |
           composer phpstan
           composer rector
-          vendor/bin/structarmed analyze
       - name: "Run test suite"
         run: "composer test"
       - name: Upload coverage to Codecov

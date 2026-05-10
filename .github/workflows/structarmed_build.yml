@@ -1,0 +1,31 @@
+name: StructArmed
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+jobs:
+  structarmed:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Structarmed Cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/structarmed
+          key: ${{ runner.os }}-structarmed-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-structarmed-
+
+      - run: mkdir -p /tmp/structarmed
+
+      - name: Run StructArmed
+        run: vendor/bin/structarmed analyze

@@ -18,22 +18,14 @@ jobs:
 
       - run: composer install --no-interaction --no-progress --prefer-dist
 
-      - name: Restore StructArmed cache
-        uses: actions/cache/restore@v4
+      - name: Structarmed Cache
+        uses: actions/cache@v4
         with:
           path: /tmp/structarmed
-          key: ${{ runner.os }}-structarmed-v2-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: |
-            ${{ runner.os }}-structarmed-v2-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-
+          key: ${{ runner.os }}-rector-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-rector-
 
       - run: mkdir -p /tmp/structarmed
 
       - name: Run StructArmed
         run: vendor/bin/structarmed analyze
-
-      - name: Save StructArmed cache
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: /tmp/structarmed
-          key: ${{ runner.os }}-structarmed-v2-${{ hashFiles('composer.json', 'composer.lock', 'structarmed.php') }}-${{ github.run_id }}-${{ github.run_attempt }}

@@ -471,7 +471,6 @@ final class FinderTest extends TestCase
     }
 
     /**
-     * @param mixed $expected
      * @param int[] $data
      */
     #[DataProvider('nthDataProvider')]

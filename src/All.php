@@ -21,6 +21,7 @@ final class All
 
         foreach ($data as $key => $datum) {
             $isNonEmpty = true;
+            
 
             if (! $filter($datum, $key)) {
                 return false;
